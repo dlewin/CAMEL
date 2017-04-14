@@ -3,7 +3,7 @@
 #include <QSettings>
 #include <QDebug>
 
-Matrix::Matrix(QString Name,const quint16 Cols, const quint16 Rows, const quint16 Colors)
+Matrix::Matrix(const QString MName, const quint16 MCols, const quint16 MRows, const quint16 MColors):Name(MName),Cols(MCols),Rows(MRows),Colors( MColors)
 {
 }
 
@@ -36,12 +36,11 @@ bool Matrix::LoadFromFile(QString InifileName)
 
 bool Matrix::SaveToFile(const QString InifileName)
 {
-    QString Temp_String;
-
     QSettings settings( InifileName, QSettings::IniFormat )             ;
     settings.beginGroup("Matrix_Configuration")    ;
-        settings.setValue( "dimensions" , 8 ) ;
+        settings.setValue( "dimensions" , Cols ) ;
     settings.endGroup()                                                        ;
+
     return true ;
 }
 

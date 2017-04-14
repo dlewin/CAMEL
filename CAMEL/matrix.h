@@ -7,7 +7,11 @@
 class Matrix
 {
 public:
-    Matrix(QString Name="Matrix Name",const quint16 Cols=8 ,const quint16 Rows=8, const quint16 Colors=3);
+    Matrix(const QString MName="Matrix Name",const quint16 MCols=8 ,const quint16 MRows=8, const quint16 MColors=3);
+    const QString Name;
+    const quint16 Cols  ;
+    const quint16 Rows  ;
+    const quint16 Colors ;
     bool SaveToFile(const QString InifileName );
     ~Matrix();
     bool LoadFromFile(QString InifileName);
