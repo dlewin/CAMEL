@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+CONFIG   += c++11
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,8 +14,10 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        camel.cpp
+        camel.cpp \
+    matrix.cpp
 
-HEADERS  += camel.h
+HEADERS  += camel.h \
+    matrix.h
 
 FORMS    += camel.ui
