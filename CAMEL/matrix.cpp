@@ -5,7 +5,8 @@
 
 Matrix::Matrix(QString Name,const quint16 Cols, const quint16 Rows, const quint16 Colors)
 {
-
+ //Rien
+       QString pipo;
 }
 
 bool Matrix::LoadFromFile(QFile Filename)
