@@ -5,14 +5,11 @@
 
 Matrix::Matrix(QString Name,const quint16 Cols, const quint16 Rows, const quint16 Colors)
 {
- //Rien
-       QString pipo;
 }
 
-bool Matrix::LoadFromFile(QFile Filename)
+bool Matrix::LoadFromFile(QString InifileName)
 {
-
-    QFile Inifile("Camel.ini")   ;
+    QFile Inifile(InifileName) ;
     // Checks if the ini file exists
     if ( !Inifile.exists() )
     {
@@ -20,7 +17,7 @@ bool Matrix::LoadFromFile(QFile Filename)
         return false;
     }
 
-    QSettings settings( "FileCleaner.ini", QSettings::IniFormat )             ;
+    QSettings settings( InifileName , QSettings::IniFormat )             ;
 
 
     settings.beginGroup( "Filters" )                                          ;        // Reading the filters section
@@ -37,16 +34,14 @@ bool Matrix::LoadFromFile(QFile Filename)
  return true ;
 }
 
-bool Matrix::SaveToFile(const QFile Filename)
+bool Matrix::SaveToFile(const QString InifileName)
 {
     QString Temp_String;
 
-    QFile Inifile("Camel.ini")   ;
-    // Checks if the ini file exists
-
-    QSettings settings( "Camel.ini", QSettings::IniFormat )             ;
-    settings.setValue( "Expr_Type + Key_index ", Temp_String ) ;
-
+    QSettings settings( InifileName, QSettings::IniFormat )             ;
+    settings.beginGroup("Matrix_Configuration")    ;
+        settings.setValue( "dimensions" , 8 ) ;
+    settings.endGroup()                                                        ;
     return true ;
 }
 

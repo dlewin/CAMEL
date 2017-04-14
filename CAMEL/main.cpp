@@ -7,6 +7,7 @@ int main(int argc, char *argv[])
 {
 
     Matrix TestMatrix("TestName");
+    TestMatrix.SaveToFile("Camel.ini");
 
     QApplication a(argc, argv);
     Camel w;
