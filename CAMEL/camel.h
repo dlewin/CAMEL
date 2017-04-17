@@ -1,6 +1,8 @@
 #ifndef CAMEL_H
 #define CAMEL_H
 
+#include <QString>
+#include <QDebug>
 #include <QMainWindow>
 
 namespace Ui {
@@ -17,6 +19,7 @@ public:
 
 private:
     Ui::Camel *ui;
+    bool init();
 };
 
 #endif // CAMEL_H

@@ -12,3 +12,5 @@ Camel::~Camel()
 {
     delete ui;
 }
+
+

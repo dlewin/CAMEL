@@ -161,32 +161,24 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_boPkwB7eEeeC-8Tyaw4LDA" name="Configuration">
     <ownedAttribute xmi:id="_4IrJAB-GEeeV88w7qjGbjg" name="Sequences list"/>
-    <ownedOperation xmi:id="_LYUCIB-REeeV88w7qjGbjg" name="SavePattern"/>
-    <ownedOperation xmi:id="_L1tVUCHtEeeCW61HxoMsQQ" name="SaveToFile">
-      <ownedParameter xmi:id="_NNBtkCHtEeeCW61HxoMsQQ" name="FileName"/>
-    </ownedOperation>
-    <ownedOperation xmi:id="_OXZO8CHtEeeCW61HxoMsQQ" name="LoadFromFile">
-      <ownedParameter xmi:id="_PzCtkCHtEeeCW61HxoMsQQ" name="FileName"/>
-    </ownedOperation>
-    <ownedOperation xmi:id="_phMGwCHtEeeCW61HxoMsQQ" name="SaveSequence">
-      <ownedParameter xmi:id="_q9AkgCHtEeeCW61HxoMsQQ" name="SequenceName"/>
-    </ownedOperation>
+    <ownedOperation xmi:id="_yHe24B9rEeeT3MLwXNOzJg" name="Read"/>
+    <ownedOperation xmi:id="_0EFtgB9rEeeT3MLwXNOzJg" name="Write"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_zGc7oB7eEeeC-8Tyaw4LDA" name="MathMatrix">
+  <packagedElement xmi:type="uml:Class" xmi:id="_zGc7oB7eEeeC-8Tyaw4LDA" name="Matrix definition">
     <ownedAttribute xmi:id="_Zk5ccB9sEeeT3MLwXNOzJg" name="Model Name"/>
     <ownedAttribute xmi:id="_h-xRcB9sEeeT3MLwXNOzJg" name="Cols"/>
     <ownedAttribute xmi:id="_ll3T8B9sEeeT3MLwXNOzJg" name="Rows"/>
     <ownedAttribute xmi:id="_mXgMQB9sEeeT3MLwXNOzJg" name="Colors_Nb"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_zdNOwB7eEeeC-8Tyaw4LDA" name="SequenceManager">
-    <ownedAttribute xmi:id="_Bfkm8B-HEeeV88w7qjGbjg" name="Sequences List"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_zdNOwB7eEeeC-8Tyaw4LDA" name="Sequence">
+    <ownedAttribute xmi:id="_Bfkm8B-HEeeV88w7qjGbjg" name="Patterns List"/>
     <ownedAttribute xmi:id="_SmsjIB-LEeeV88w7qjGbjg" name="Timer"/>
-    <ownedOperation xmi:id="_3KX0EB-OEeeV88w7qjGbjg" name="PauseSequence" visibility="public"/>
-    <ownedOperation xmi:id="_qCzg4B-OEeeV88w7qjGbjg" name="PlaySequence" visibility="public">
+    <ownedOperation xmi:id="_3KX0EB-OEeeV88w7qjGbjg" name="Pause_Sequence" visibility="public"/>
+    <ownedOperation xmi:id="_qCzg4B-OEeeV88w7qjGbjg" name="Play_Sequence" visibility="public">
       <ownedParameter xmi:id="_s7LcMB-OEeeV88w7qjGbjg" name="Seq_Nb"/>
     </ownedOperation>
-    <ownedOperation xmi:id="_79_UEB-OEeeV88w7qjGbjg" name="StopSequence" visibility="public"/>
-    <ownedOperation xmi:id="_yZrsQB-OEeeV88w7qjGbjg" name="PlayBySteps" visibility="public"/>
+    <ownedOperation xmi:id="_79_UEB-OEeeV88w7qjGbjg" name="Stop_Sequence" visibility="public"/>
+    <ownedOperation xmi:id="_yZrsQB-OEeeV88w7qjGbjg" name="Step_by_Step" visibility="public"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_W4OV4B7fEeeC-8Tyaw4LDA" name="." memberEnd="_W4O88B7fEeeC-8Tyaw4LDA _W4SAQB7fEeeC-8Tyaw4LDA" navigableOwnedEnd="_W4SAQB7fEeeC-8Tyaw4LDA">
     <ownedEnd xmi:id="_W4O88B7fEeeC-8Tyaw4LDA" name="" type="_boPkwB7eEeeC-8Tyaw4LDA" association="_W4OV4B7fEeeC-8Tyaw4LDA">
@@ -209,8 +201,9 @@
     </ownedEnd>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_6RfD4B9rEeeT3MLwXNOzJg" name="Pattern">
+    <ownedAttribute xmi:id="_EccAsB-HEeeV88w7qjGbjg" name="Matrix Definition"/>
     <ownedAttribute xmi:id="_KC22oB-HEeeV88w7qjGbjg" name="Name"/>
-    <ownedAttribute xmi:id="_EccAsB-HEeeV88w7qjGbjg" name="PatternDefinition"/>
+    <ownedOperation xmi:id="_LYUCIB-REeeV88w7qjGbjg" name="Save"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_MP-CsB9sEeeT3MLwXNOzJg" name="." memberEnd="_MP-CsR9sEeeT3MLwXNOzJg _MP-pwR9sEeeT3MLwXNOzJg" navigableOwnedEnd="_MP-pwR9sEeeT3MLwXNOzJg">
     <ownedEnd xmi:id="_MP-CsR9sEeeT3MLwXNOzJg" name="" type="_zdNOwB7eEeeC-8Tyaw4LDA" association="_MP-CsB9sEeeT3MLwXNOzJg">
@@ -240,10 +233,6 @@
       <ownedParameter xmi:id="_k4tFcB-MEeeV88w7qjGbjg" name="Offset"/>
     </ownedOperation>
     <ownedOperation xmi:id="_mlwdIB-MEeeV88w7qjGbjg" name="Invert"/>
-    <ownedOperation xmi:id="_-1qmcCHsEeeCW61HxoMsQQ" name="SetValue">
-      <ownedParameter xmi:id="_-1qmcSHsEeeCW61HxoMsQQ" name="Row"/>
-      <ownedParameter xmi:id="_-1qmciHsEeeCW61HxoMsQQ" name="Col"/>
-    </ownedOperation>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_8D0hMB-MEeeV88w7qjGbjg" name="A_matrix_Toolss_patterns" memberEnd="_8D0hMR-MEeeV88w7qjGbjg _8D0hNB-MEeeV88w7qjGbjg" navigableOwnedEnd="_8D0hMR-MEeeV88w7qjGbjg _8D0hNB-MEeeV88w7qjGbjg">
     <ownedEnd xmi:id="_8D0hMR-MEeeV88w7qjGbjg" name="matrix_Toolss" type="_ff1_0B-LEeeV88w7qjGbjg" association="_8D0hMB-MEeeV88w7qjGbjg">
@@ -255,8 +244,19 @@
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_8D0hNh-MEeeV88w7qjGbjg" value="*"/>
     </ownedEnd>
   </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_m9lR0B-NEeeV88w7qjGbjg" name="Visualize"/>
   <packagedElement xmi:type="uml:Class" xmi:id="_nmuVcB-NEeeV88w7qjGbjg" name="Network_Client"/>
   <packagedElement xmi:type="uml:Class" xmi:id="_7ubDgB-NEeeV88w7qjGbjg" name="Protocol"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_KgkCIB-OEeeV88w7qjGbjg" memberEnd="_KgkpMB-OEeeV88w7qjGbjg _KglQQh-OEeeV88w7qjGbjg" navigableOwnedEnd="_KglQQh-OEeeV88w7qjGbjg">
+    <ownedEnd xmi:id="_KgkpMB-OEeeV88w7qjGbjg" name="sequences" type="_zdNOwB7eEeeC-8Tyaw4LDA" association="_KgkCIB-OEeeV88w7qjGbjg">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KglQQB-OEeeV88w7qjGbjg"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KglQQR-OEeeV88w7qjGbjg" value="*"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_KglQQh-OEeeV88w7qjGbjg" name="visualizes" type="_m9lR0B-NEeeV88w7qjGbjg" association="_KgkCIB-OEeeV88w7qjGbjg">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Kgl3UB-OEeeV88w7qjGbjg"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Kgl3UR-OEeeV88w7qjGbjg" value="*"/>
+    </ownedEnd>
+  </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_NTrC8B-OEeeV88w7qjGbjg" memberEnd="_NTrC8R-OEeeV88w7qjGbjg _NTrqAh-OEeeV88w7qjGbjg" navigableOwnedEnd="_NTrqAh-OEeeV88w7qjGbjg">
     <ownedEnd xmi:id="_NTrC8R-OEeeV88w7qjGbjg" name="sequences" type="_zdNOwB7eEeeC-8Tyaw4LDA" association="_NTrC8B-OEeeV88w7qjGbjg">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_NTrqAB-OEeeV88w7qjGbjg"/>
@@ -277,12 +277,32 @@
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ZrsIgx-OEeeV88w7qjGbjg" value="*"/>
     </ownedEnd>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_5iIDsB-QEeeV88w7qjGbjg" name="GuiMatrix">
+  <packagedElement xmi:type="uml:Class" xmi:id="_5iIDsB-QEeeV88w7qjGbjg" name="Button_Group">
     <ownedOperation xmi:id="_nWMagCBbEeeXGf0FaCM9UA" name="SetPixel">
       <ownedParameter xmi:id="_o1S1wCBbEeeXGf0FaCM9UA" name="row"/>
       <ownedParameter xmi:id="_p6otMCBbEeeXGf0FaCM9UA" name="Col"/>
       <ownedParameter xmi:id="_qwXbUCBbEeeXGf0FaCM9UA" name="Color"/>
     </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_lq4-EB-REeeV88w7qjGbjg" memberEnd="_lq4-ER-REeeV88w7qjGbjg _lq4-FB-REeeV88w7qjGbjg" navigableOwnedEnd="_lq4-ER-REeeV88w7qjGbjg _lq4-FB-REeeV88w7qjGbjg">
+    <ownedEnd xmi:id="_lq4-ER-REeeV88w7qjGbjg" name="button_Groups" type="_5iIDsB-QEeeV88w7qjGbjg" association="_lq4-EB-REeeV88w7qjGbjg">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_lq4-Eh-REeeV88w7qjGbjg"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_lq4-Ex-REeeV88w7qjGbjg" value="*"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_lq4-FB-REeeV88w7qjGbjg" name="matrix_Toolss" type="_ff1_0B-LEeeV88w7qjGbjg" association="_lq4-EB-REeeV88w7qjGbjg">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_lq4-FR-REeeV88w7qjGbjg"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_lq4-Fh-REeeV88w7qjGbjg" value="*"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_wUHmkB-REeeV88w7qjGbjg" memberEnd="_wUHmkR-REeeV88w7qjGbjg _wUHmlB-REeeV88w7qjGbjg" navigableOwnedEnd="_wUHmkR-REeeV88w7qjGbjg _wUHmlB-REeeV88w7qjGbjg">
+    <ownedEnd xmi:id="_wUHmkR-REeeV88w7qjGbjg" name="visualizes" type="_m9lR0B-NEeeV88w7qjGbjg" association="_wUHmkB-REeeV88w7qjGbjg">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_wUHmkh-REeeV88w7qjGbjg"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_wUHmkx-REeeV88w7qjGbjg" value="*"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_wUHmlB-REeeV88w7qjGbjg" name="button_Groups" type="_5iIDsB-QEeeV88w7qjGbjg" association="_wUHmkB-REeeV88w7qjGbjg">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_wUHmlR-REeeV88w7qjGbjg"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_wUHmlh-REeeV88w7qjGbjg" value="*"/>
+    </ownedEnd>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_YuuFsCBZEeeXGf0FaCM9UA" memberEnd="_YuuswCBZEeeXGf0FaCM9UA _YuuswyBZEeeXGf0FaCM9UA" navigableOwnedEnd="_YuuswCBZEeeXGf0FaCM9UA _YuuswyBZEeeXGf0FaCM9UA">
     <ownedEnd xmi:id="_YuuswCBZEeeXGf0FaCM9UA" name="patterns" type="_6RfD4B9rEeeT3MLwXNOzJg" association="_YuuFsCBZEeeXGf0FaCM9UA">
@@ -294,6 +314,4 @@
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_YuusxSBZEeeXGf0FaCM9UA" value="*"/>
     </ownedEnd>
   </packagedElement>
-  <packagedElement xmi:type="uml:Usage" xmi:id="_bIXo8CNfEeeg6tkJuVrahw" client="_ff1_0B-LEeeV88w7qjGbjg" supplier="_zGc7oB7eEeeC-8Tyaw4LDA"/>
-  <packagedElement xmi:type="uml:Dependency" xmi:id="_50-gMCNfEeeg6tkJuVrahw" client="_5iIDsB-QEeeV88w7qjGbjg" supplier="_zGc7oB7eEeeC-8Tyaw4LDA"/>
 </uml:Model>

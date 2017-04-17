@@ -172,7 +172,7 @@
       <ownedParameter xmi:id="_q9AkgCHtEeeCW61HxoMsQQ" name="SequenceName"/>
     </ownedOperation>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_zGc7oB7eEeeC-8Tyaw4LDA" name="MathMatrix">
+  <packagedElement xmi:type="uml:Class" xmi:id="_zGc7oB7eEeeC-8Tyaw4LDA" name="Matrix definition">
     <ownedAttribute xmi:id="_Zk5ccB9sEeeT3MLwXNOzJg" name="Model Name"/>
     <ownedAttribute xmi:id="_h-xRcB9sEeeT3MLwXNOzJg" name="Cols"/>
     <ownedAttribute xmi:id="_ll3T8B9sEeeT3MLwXNOzJg" name="Rows"/>
@@ -277,12 +277,22 @@
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ZrsIgx-OEeeV88w7qjGbjg" value="*"/>
     </ownedEnd>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_5iIDsB-QEeeV88w7qjGbjg" name="GuiMatrix">
+  <packagedElement xmi:type="uml:Class" xmi:id="_5iIDsB-QEeeV88w7qjGbjg" name="MatrixGui">
     <ownedOperation xmi:id="_nWMagCBbEeeXGf0FaCM9UA" name="SetPixel">
       <ownedParameter xmi:id="_o1S1wCBbEeeXGf0FaCM9UA" name="row"/>
       <ownedParameter xmi:id="_p6otMCBbEeeXGf0FaCM9UA" name="Col"/>
       <ownedParameter xmi:id="_qwXbUCBbEeeXGf0FaCM9UA" name="Color"/>
     </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_lq4-EB-REeeV88w7qjGbjg" memberEnd="_lq4-ER-REeeV88w7qjGbjg _lq4-FB-REeeV88w7qjGbjg" navigableOwnedEnd="_lq4-ER-REeeV88w7qjGbjg _lq4-FB-REeeV88w7qjGbjg">
+    <ownedEnd xmi:id="_lq4-ER-REeeV88w7qjGbjg" name="button_Groups" type="_5iIDsB-QEeeV88w7qjGbjg" association="_lq4-EB-REeeV88w7qjGbjg">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_lq4-Eh-REeeV88w7qjGbjg"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_lq4-Ex-REeeV88w7qjGbjg" value="*"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_lq4-FB-REeeV88w7qjGbjg" name="matrix_Toolss" type="_ff1_0B-LEeeV88w7qjGbjg" association="_lq4-EB-REeeV88w7qjGbjg">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_lq4-FR-REeeV88w7qjGbjg"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_lq4-Fh-REeeV88w7qjGbjg" value="*"/>
+    </ownedEnd>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_YuuFsCBZEeeXGf0FaCM9UA" memberEnd="_YuuswCBZEeeXGf0FaCM9UA _YuuswyBZEeeXGf0FaCM9UA" navigableOwnedEnd="_YuuswCBZEeeXGf0FaCM9UA _YuuswyBZEeeXGf0FaCM9UA">
     <ownedEnd xmi:id="_YuuswCBZEeeXGf0FaCM9UA" name="patterns" type="_6RfD4B9rEeeT3MLwXNOzJg" association="_YuuFsCBZEeeXGf0FaCM9UA">
@@ -294,6 +304,4 @@
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_YuusxSBZEeeXGf0FaCM9UA" value="*"/>
     </ownedEnd>
   </packagedElement>
-  <packagedElement xmi:type="uml:Usage" xmi:id="_bIXo8CNfEeeg6tkJuVrahw" client="_ff1_0B-LEeeV88w7qjGbjg" supplier="_zGc7oB7eEeeC-8Tyaw4LDA"/>
-  <packagedElement xmi:type="uml:Dependency" xmi:id="_50-gMCNfEeeg6tkJuVrahw" client="_5iIDsB-QEeeV88w7qjGbjg" supplier="_zGc7oB7eEeeC-8Tyaw4LDA"/>
 </uml:Model>

@@ -15,9 +15,21 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         camel.cpp \
-    matrix.cpp
+    matrix.cpp \
+    configurationmanager.cpp \
+    sequencemanager.cpp \
+    matrixtools.cpp \
+    projectmatrix.cpp \
+    guimatrix.cpp \
+    pattern.cpp
 
 HEADERS  += camel.h \
-    matrix.h
+    matrix.h \
+    configurationmanager.h \
+    sequencemanager.h \
+    matrixtools.h \
+    projectmatrix.h \
+    guimatrix.h \
+    pattern.h
 
 FORMS    += camel.ui

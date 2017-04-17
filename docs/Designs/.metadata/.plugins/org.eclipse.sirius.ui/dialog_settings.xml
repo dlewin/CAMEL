@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="ExportRepresentationsAsImagesDialog">
+		<item value="JPG" key="ExportRepresentationsAsImagesDialog.imageFormat"/>
+		<list key="ExportRepresentationsAsImagesDialog.file">
+			<item value="I:\Developements\Git_hub\CAMEL\docs\Designs\Leds_Matrix"/>
+			<item value="I:\Developements\Git_hub\CAMEL\docs\Designs\Leds_Matrix\Class Diagram.jpg"/>
+		</list>
+	</section>
+</section>
