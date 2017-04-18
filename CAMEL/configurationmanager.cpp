@@ -41,7 +41,8 @@ bool ConfigurationManager::SaveToFile(const QString InifileName)
 {
     QSettings settings( InifileName, QSettings::IniFormat )             ;
     settings.beginGroup("Matrix_Configuration")    ;
-   ///FIXME     settings.setValue( "Name" , QString( MathMatrix::Name) );
+   ///FIXME Need to be declared from ProjectMatrix to access MathMatrix
+   ///         settings.setValue( "Name" , QString( ProjectMatrix::Name) );
    ///         settings.setValue( "Cols" , MathMatrix::Cols ) ;
    ///         settings.setValue( "Rows" , MathMatrix::Rows ) ;
    ///         settings.setValue( "Colors" , MathMatrix::Colors ) ;

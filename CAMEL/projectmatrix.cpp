@@ -2,8 +2,7 @@
 
 
 
-ProjectMatrix::ProjectMatrix(const QString MName="Matrix Name",const quint16 MCols=8 ,const quint16 MRows=8, const quint16 MColors=3 )
-    :MathMatrix{MName, MCols, MRows, MColors}//,Pattern{},SequenceManager{},ConfigurationManager{}
+ProjectMatrix::ProjectMatrix(const QString M_Name, const quint16 M_Cols, const quint16 M_Rows, const quint16 M_Colors)
 {
-  qDebug() << MName ;
+    MathMatrix TestMatrix(M_Name,M_Cols,M_Rows,M_Colors);
 }

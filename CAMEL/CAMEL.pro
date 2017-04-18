@@ -20,8 +20,7 @@ SOURCES += main.cpp\
     sequencemanager.cpp \
     matrixtools.cpp \
     projectmatrix.cpp \
-    guimatrix.cpp \
-    pattern.cpp
+    guimatrix.cpp
 
 HEADERS  += camel.h \
     matrix.h \
@@ -29,7 +28,6 @@ HEADERS  += camel.h \
     sequencemanager.h \
     matrixtools.h \
     projectmatrix.h \
-    guimatrix.h \
-    pattern.h
+    guimatrix.h
 
 FORMS    += camel.ui

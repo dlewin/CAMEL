@@ -4,12 +4,11 @@
 #include "matrix.h"
 #include "configurationmanager.h"
 #include "sequencemanager.h"
-#include "pattern.h"
 
-class ProjectMatrix:MathMatrix
+class ProjectMatrix
 {
 public:
-    ProjectMatrix(const QString ,const quint16 ,const quint16 , const quint16 );
+    ProjectMatrix(const QString M_Name, const quint16 M_Cols, const quint16 M_Rows, const quint16 M_Colors);
 };
 
 #endif // PROJECTMATRIX_H

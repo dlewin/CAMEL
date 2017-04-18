@@ -1,12 +1,11 @@
 #include "camel.h"
 #include <QApplication>
 
-#include "matrix.h"
+#include "projectmatrix.h"
 
 int main(int argc, char *argv[])
 {
-
-    MathMatrix TestMatrix("Adafruit Bicolors I2C Leds Matrix");
+    ProjectMatrix workMatrix("Adafruit Bicolors I2C Leds Matrix", 8,8,3);
 
     QApplication a(argc, argv);
     Camel w;
