@@ -3,30 +3,70 @@
 #include <QSettings>
 #include <QDebug>
 
-MathMatrix::MathMatrix(const QString MName, const quint16 MCols, const quint16 MRows, const quint16 MColors):
+MathMatrix::MathMatrix(const QString MName, const quint16 MCols, const quint16 MRows, const quint32 MColors):
     Name(MName),Cols(MCols),Rows(MRows),Colors( MColors)
 {
-    QImage myMatrix(Cols,Rows,QImage::Format_RGB32); //will create a container of 8 by 8 bits (not bytes).
+     //QImage* WorkMatrix = new QImage(Cols,Rows,QImage::Format_RGB32);
 }
-
-
 
 MathMatrix::~MathMatrix()
-{
-
+{        
 }
 
-/*
-    myMatrix.fill(0); to turn everything off.
-    Point: myMatrix.setPixel(0,0,1);
-    Line(1): for(int i=0;i<myMatrix.width();++i) myMatrix.setPixel(0,i,1);
-    Column(1): for(int i=0;i<myMatrix.height();++i) myMatrix.setPixel(i,0,1);
-    Border: for(int i=0;i<myMatrix.width();++i) {myMatrix.setPixel(0,i,1); myMatrix.setPixel(myMatrix.height()-1,i,1);} for(int i=0;i<myMatrix.height();++i) {myMatrix.setPixel(i,0,1); myMatrix.setPixel(i,myMatrix.width()-1,1);}
-    Column Shift(1): myMatrix=myMatrix.transformed(QTransform().translate(1,0));
-    Column Shift(-1): myMatrix=myMatrix.transformed(QTransform().translate(-1,0));
-    Line Shift(1): myMatrix=myMatrix.transformed(QTransform().translate(0,1));
-    Line Shift(-1): myMatrix=myMatrix.transformed(QTransform().translate(0,-1));
-    Rotate(1): myMatrix=myMatrix.transformed(QTransform().rotate(270));
-    Rotate(-1): myMatrix=myMatrix.transformed(QTransform().rotate(90));
-    Invert: myMatrix.invertPixels();
-*/
+void MathMatrix::Fill(uint Value)
+{
+    WorkMatrix.fill(Value);
+}
+
+// Clear the whole Matrix with 0
+void MathMatrix::Reset()
+{
+    Fill(0) ;
+}
+
+void MathMatrix::SetPoint(int Col, int Row, quint32 Color)
+{
+    WorkMatrix.setPixel( Col, Row, Color );
+}
+
+void MathMatrix::SetLine(int Line,quint32 Color)
+{
+    for ( int i=0;i<WorkMatrix.width();++i )
+         SetPoint(0,i,Color);
+    /// TODO: change to apply for all lines
+}
+
+void MathMatrix::SetColumn(int Column,quint32 Color)
+{
+    for (int i=0; WorkMatrix.height();++i )
+        SetPoint(i,0,Color) ;
+    /// TODO: change to apply for all cols
+}
+
+void MathMatrix::SetBorder(quint32 Color)
+{
+    SetLine( 0, Color) ;
+    SetLine( WorkMatrix.height()-1 , Color) ;
+    SetColumn(0, Color) ;
+    SetColumn( WorkMatrix.width()-1,Color) ;
+}
+
+void MathMatrix::ColShift(int Offset)
+{
+    WorkMatrix = WorkMatrix.transformed(QTransform().translate(Offset,0));
+}
+
+void MathMatrix::LineShift(int Offset)
+{
+   WorkMatrix = WorkMatrix.transformed(QTransform().translate(0,Offset));
+}
+
+void MathMatrix::Rotate(int Angle)
+{
+    WorkMatrix = WorkMatrix.transformed(QTransform().rotate(Angle));
+}
+
+void MathMatrix::Invert()
+{
+   WorkMatrix.invertPixels();
+}

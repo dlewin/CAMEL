@@ -8,7 +8,7 @@
 class ProjectMatrix
 {
 public:
-    ProjectMatrix(const QString M_Name, const quint16 M_Cols, const quint16 M_Rows, const quint16 M_Colors);
+    ProjectMatrix(const QString M_Name, const quint16 M_Cols, const quint16 M_Rows, const quint32 M_Colors);
 };
 
 #endif // PROJECTMATRIX_H

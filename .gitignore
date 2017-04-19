@@ -36,3 +36,9 @@ Makefile*
 # QtCtreator CMake
 CMakeLists.txt.user
 
+*.properties
+*.xmi
+docs/Designs/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.obeonetwork.dsl.uml2.design.prefs
+*.db
+*.tree
+docs/Designs/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
