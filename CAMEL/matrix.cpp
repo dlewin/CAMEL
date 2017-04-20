@@ -18,32 +18,109 @@ MathMatrix::~MathMatrix()
 {        
 }
 
+// Checks that values are in the Matrix ranges (Col)
+bool MathMatrix::Check_ColRange(int Col)
+{
+    if (( Col <0 ) || ( Col> WorkMatrix->width() ))
+        return false;
+    else
+        return true ;
+}
+
+// Checks that values are in the Matrix ranges (Row)
+bool MathMatrix::Check_RowRange(int Row)
+{
+    if ( Row <0 || Row>WorkMatrix->height() )
+        return false;
+    else
+        return true ;
+}
+
+// Checks that values are in the Matrix ranges (width and Height)
+bool MathMatrix::CheckRanges(int Col, int Row)
+{
+    if ( Check_ColRange( Col) && Check_RowRange( Row) )
+        return true ;
+    else
+        return false ;
+}
+
 void MathMatrix::Fill(uint Value)
 {
     WorkMatrix->fill(Value);
 }
 
-// Clear the whole Matrix with 0
+void MathMatrix::Fill(QColor NamedColor )
+{
+    WorkMatrix->fill( NamedColor );
+}
+
 void MathMatrix::Reset()
 {
-    Fill(0) ;
+    QColor TempColor("transparent");
+    Fill( TempColor ) ;
 }
 
-void MathMatrix::SetPoint(int Col, int Row, quint32 Color)
+bool MathMatrix::SetPoint(int Col, int Row, quint32 Color)
 {
+    if (! CheckRanges( Col, Row))
+        return false;
     WorkMatrix->setPixel( Col, Row, Color );
+
+    return true ;
 }
 
-void MathMatrix::SetLine(uint Line,quint32 Color)
+bool  MathMatrix::SetPoint(int Col, int Row, QColor NamedColor)
 {
+   if (! CheckRanges( Col, Row))
+       return false;
+
+    QColor TempColor(NamedColor);
+    WorkMatrix->setPixelColor( Col, Row, TempColor );
+
+    return true ;
+}
+
+bool MathMatrix::SetLine(int Line,quint32 Color)
+{
+    if ( !Check_RowRange( Line))
+        return false;
     for ( int i=0;i<WorkMatrix->width();++i )
          SetPoint(Line,i,Color);
+    return true ;
 }
 
-void MathMatrix::SetColumn(uint Column,quint32 Color)
+bool MathMatrix::SetLine(int Line,QColor NamedColor)
 {
+    if ( !Check_RowRange( Line))
+        return false;
+     QColor TempColor(NamedColor);
+    for ( int i=0;i<WorkMatrix->width();++i )
+         SetPoint(Line,i,TempColor);
+   return true ;
+}
+
+bool MathMatrix::SetColumn(int Column,quint32 Color)
+{
+    if ( !Check_ColRange( Column))
+        return false;
+
     for (int i=0; WorkMatrix->height();++i )
         SetPoint(i,Column,Color) ;
+
+    return true ;
+}
+
+bool MathMatrix::SetColumn(int Column,QColor NamedColor)
+{
+    if ( !Check_ColRange( Column))
+        return false;
+
+    QColor TempColor(NamedColor);
+    for (int i=0; i< WorkMatrix->height();++i )
+        SetPoint(i,Column,TempColor) ;
+
+    return true ;
 }
 
 void MathMatrix::SetBorder(quint32 Color)
@@ -52,6 +129,15 @@ void MathMatrix::SetBorder(quint32 Color)
     SetLine( WorkMatrix->height()-1 , Color) ;
     SetColumn(0, Color) ;
     SetColumn( WorkMatrix->width()-1,Color) ;
+}
+
+void MathMatrix::SetBorder(QColor NamedColor)
+{
+    QColor TempColor(NamedColor);
+    SetLine( 0, TempColor) ;
+    SetLine( WorkMatrix->height()-1 , TempColor) ;
+    SetColumn(0, TempColor) ;
+    SetColumn( WorkMatrix->width()-1,TempColor) ;
 }
 
 QImage  MathMatrix::ColShift(int Offset)
@@ -78,9 +164,16 @@ void MathMatrix::TestMatrix()
 {
     qDebug() << "TestMatrix : " << WorkMatrix->width() << " - " << WorkMatrix->height();
     for(int i=0; i< WorkMatrix->width();++i )
-        for (int j=0; j< WorkMatrix->height();++j )
-        {
-            qDebug() <<  QString::number( WorkMatrix->pixel(i,j), 16 );
-        }
+    {
+       // for (int j=0; j< WorkMatrix->height();++j )
+            qDebug() <<  QString::number( WorkMatrix->pixel(i,0), 16 )
+                     <<  QString::number( WorkMatrix->pixel(i,1), 16 )
+                     <<  QString::number( WorkMatrix->pixel(i,2), 16 )
+                     <<  QString::number( WorkMatrix->pixel(i,3), 16 )
+                     <<  QString::number( WorkMatrix->pixel(i,4), 16 )
+                     <<  QString::number( WorkMatrix->pixel(i,5), 16 )
+                     <<  QString::number( WorkMatrix->pixel(i,6), 16 )
+                     <<  QString::number( WorkMatrix->pixel(i,7), 16 )  ;
+    }
 }
 

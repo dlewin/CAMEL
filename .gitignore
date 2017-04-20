@@ -47,3 +47,5 @@ docs/Designs/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.obeonetwo
 *.xmi
 docs/Designs/.metadata/.plugins/org.eclipse.jdt.core/index.db
 *.properties
+*.resources
+docs/Designs/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.obeonetwork.dsl.uml2.design.prefs
