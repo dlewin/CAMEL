@@ -42,3 +42,8 @@ docs/Designs/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.obeonetwo
 *.db
 *.tree
 docs/Designs/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
+*.resources
+docs/Designs/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.obeonetwork.dsl.uml2.design.prefs
+*.xmi
+docs/Designs/.metadata/.plugins/org.eclipse.jdt.core/index.db
+*.properties

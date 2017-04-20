@@ -8,11 +8,12 @@
 class MathMatrix
 {
 private:
-    const QString Name ;
-    const quint16 Cols ;
-    const quint16 Rows ;
-    const quint32 Colors ;
-    QImage WorkMatrix;
+    QString Name ;
+    quint16 Cols;
+    quint16 Rows ;
+    quint32 Colors ;
+    QImage *WorkMatrix; //(quint16,quint16,quint32 );
+
 public:
     MathMatrix(const QString MName="Matrix Name", const quint16 MCols=8 , const quint16 MRows=8, const quint32 MColors=3);
     ~MathMatrix();
@@ -24,13 +25,14 @@ public:
     void Fill(uint Value);
     void Reset();
     void SetPoint(int Col, int Row, quint32 Color);
-    void SetLine(int Line, quint32 Color);
-    void SetColumn(int Column, quint32 Color);
+    void SetLine(uint Line, quint32 Color);
+    void SetColumn(uint Column, quint32 Color);
     void SetBorder(quint32 Color); /// NOTE : Improve it with a <Depth> paramater
-    void ColShift(int Offset);
-    void LineShift(int Offset);
-    void Rotate(int Angle) ;
+    QImage ColShift(int Offset);
+    QImage LineShift(int Offset);
+    QImage Rotate(int Angle) ;
     void Invert() ;
+    void TestMatrix();
 };
 
 #endif // MATRIX_H
