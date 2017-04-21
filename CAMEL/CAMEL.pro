@@ -18,7 +18,6 @@ SOURCES += main.cpp\
     matrix.cpp \
     configurationmanager.cpp \
     sequencemanager.cpp \
-    matrixtools.cpp \
     projectmatrix.cpp \
     guimatrix.cpp
 
@@ -26,7 +25,6 @@ HEADERS  += camel.h \
     matrix.h \
     configurationmanager.h \
     sequencemanager.h \
-    matrixtools.h \
     projectmatrix.h \
     guimatrix.h
 
