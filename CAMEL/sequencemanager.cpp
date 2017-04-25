@@ -2,7 +2,6 @@
 
 SequenceManager::SequenceManager()
 {
-
 }
 
 /// NOTE : For animation with QPixmap and Qimage look @ http://www.qtcentre.org/threads/26911-PNG-based-animation

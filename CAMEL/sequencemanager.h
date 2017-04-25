@@ -4,6 +4,8 @@
 #include <QVector>
 #include <QImage>
 
+#include "projectmatrix.h"
+
 class SequenceManager
 {
 public:

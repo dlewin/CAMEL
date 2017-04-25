@@ -81,6 +81,14 @@ bool  MathMatrix::SetPoint(int Col, int Row, QColor NamedColor)
     return true ;
 }
 
+QRgb MathMatrix::GetPoint(int Col, int Row)
+{
+    if (! CheckRanges( Col, Row))
+        return 0x00000000;
+
+    return( WorkMatrix->pixel(Col,Row) );
+}
+
 bool MathMatrix::SetLine(int Line,quint32 Color)
 {
     if ( !Check_RowRange( Line))
@@ -94,7 +102,8 @@ bool MathMatrix::SetLine(int Line,QColor NamedColor)
 {
     if ( !Check_RowRange( Line))
         return false;
-     QColor TempColor(NamedColor);
+
+    QColor TempColor(NamedColor);
     for ( int i=0;i<WorkMatrix->width();++i )
          SetPoint(Line,i,TempColor);
    return true ;
@@ -105,7 +114,7 @@ bool MathMatrix::SetColumn(int Column,quint32 Color)
     if ( !Check_ColRange( Column))
         return false;
 
-    for (int i=0; WorkMatrix->height();++i )
+    for (int i=0; i< WorkMatrix->height();++i )
         SetPoint(i,Column,Color) ;
 
     return true ;
@@ -145,9 +154,9 @@ QImage  MathMatrix::ColShift(int Offset)
    return( WorkMatrix->transformed(QTransform().translate(Offset,0)) );
 }
 
-QImage  MathMatrix::LineShift(int Offset)
+void MathMatrix::LineShift( int Offset )
 {
-    return(  WorkMatrix->transformed(QTransform().translate(0,Offset)) );
+   *WorkMatrix = WorkMatrix->transformed(QTransform().translate(0,Offset)) ;
 }
 
 QImage  MathMatrix::Rotate(int Angle)
@@ -159,6 +168,16 @@ void MathMatrix::Invert()
 {
    WorkMatrix->invertPixels();
 }
+
+void MathMatrix::GetTableVector(  QVector<QRgb> &MatrixVector )
+{
+    for ( int row = 0; row < WorkMatrix->height() ; ++row )
+        for ( int col = 0; col < WorkMatrix->width(); ++col )
+        {
+            MatrixVector.push_back( GetPoint(row,col) );
+        }
+}
+
 
 void MathMatrix::TestMatrix()
 {

@@ -20,13 +20,15 @@ public:
     QString getName()   { return Name   ;}
     quint16 getCols()   { return Cols   ;}
     quint16 getRows()   { return Rows   ;}
-    quint32 getColors() { return Colors ;}
+    quint32 getColors() { return Colors ;}    
 
+    void GetImageVector(QVector<QRgb> &MatrixVector );
     bool Check_ColRange(int Col) ;
     bool Check_RowRange(int Row) ;
     bool CheckRanges(int Col, int Row);
     bool SetPoint(int Col, int Row, quint32 Color);
     bool SetPoint(int Col, int Row, QColor NamedColor);
+    QRgb GetPoint(int Col, int Row);
     void Fill(uint Value);
     void Fill(QColor NamedColor);
     void Reset();
@@ -37,7 +39,7 @@ public:
     void SetBorder(quint32 Color); /// NOTE : Improve it with a <Depth> paramater
     void SetBorder( QColor NamedColor );
     QImage ColShift(int Offset);
-    QImage LineShift(int Offset);
+    void LineShift(int Offset);
     QImage Rotate(int Angle) ;
     void Invert() ;
     void TestMatrix();
