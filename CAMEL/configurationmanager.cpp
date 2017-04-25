@@ -1,6 +1,6 @@
 #include <camel.h>
 #include <QDebug>
-#include <QFile>
+
 #include <QSettings>
 #include "configurationmanager.h"
 #include "projectmatrix.h"
