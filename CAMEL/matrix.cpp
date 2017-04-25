@@ -169,7 +169,7 @@ void MathMatrix::Invert()
    WorkMatrix->invertPixels();
 }
 
-void MathMatrix::GetTableVector(  QVector<QRgb> &MatrixVector )
+void MathMatrix::GetImageVector(  QVector<QRgb> &MatrixVector )
 {
     for ( int row = 0; row < WorkMatrix->height() ; ++row )
         for ( int col = 0; col < WorkMatrix->width(); ++col )

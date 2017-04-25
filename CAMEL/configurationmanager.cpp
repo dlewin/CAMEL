@@ -7,7 +7,10 @@
 
 ConfigurationManager::ConfigurationManager()
 {
+}
 
+ConfigurationManager::~ConfigurationManager()
+{
 }
 
 bool ConfigurationManager::LoadFromFile(QString InifileName)
@@ -37,16 +40,14 @@ bool ConfigurationManager::LoadFromFile(QString InifileName)
  return true ;
 }
 
-bool ConfigurationManager::SaveToFile(const QString InifileName)
+bool ConfigurationManager::SaveToFile(const QString InifileName, const QString MtxName,const quint16 MtxCols,const quint16 MtxRows,const quint32 MtxColorsDepth)
 {
     QSettings settings( InifileName, QSettings::IniFormat )             ;
     settings.beginGroup("Matrix_Configuration")    ;
-   ///FIXME Need to be declared from ProjectMatrix to access MathMatrix
-   ///         settings.setValue( "Name" , QString( ProjectMatrix::Name) );
-   ///         settings.setValue( "Cols" , MathMatrix::Cols ) ;
-   ///         settings.setValue( "Rows" , MathMatrix::Rows ) ;
-   ///         settings.setValue( "Colors" , MathMatrix::Colors ) ;
-
+        settings.setValue( "Name" , QString( MtxName) );
+        settings.setValue( "Cols" , MtxCols ) ;
+        settings.setValue( "Rows" , MtxRows ) ;
+        settings.setValue( "Colors" , MtxColorsDepth ) ;
     settings.endGroup()                                                        ;
 
     return true ;

@@ -177,10 +177,32 @@
     <ownedAttribute xmi:id="_h-xRcB9sEeeT3MLwXNOzJg" name="Cols"/>
     <ownedAttribute xmi:id="_ll3T8B9sEeeT3MLwXNOzJg" name="Rows"/>
     <ownedAttribute xmi:id="_mXgMQB9sEeeT3MLwXNOzJg" name="Colors_Nb"/>
+    <ownedOperation xmi:id="_NCca8B-MEeeV88w7qjGbjg" name="SetColumn">
+      <ownedParameter xmi:id="_SDUT0B-MEeeV88w7qjGbjg" name="col"/>
+    </ownedOperation>
+    <ownedOperation xmi:id="_pmnbgB-LEeeV88w7qjGbjg" name="SetLine">
+      <ownedParameter xmi:id="_ULDcYB-MEeeV88w7qjGbjg" name="Line"/>
+    </ownedOperation>
+    <ownedOperation xmi:id="_jxnhkB-MEeeV88w7qjGbjg" name="Rotate">
+      <ownedParameter xmi:id="_k4tFcB-MEeeV88w7qjGbjg" name="Offset"/>
+    </ownedOperation>
+    <ownedOperation xmi:id="_XBW7IB-MEeeV88w7qjGbjg" name="SetBorder"/>
+    <ownedOperation xmi:id="_ZQmZ4B-MEeeV88w7qjGbjg" name="Col_Shift">
+      <ownedParameter xmi:id="_bS3zoB-MEeeV88w7qjGbjg" name="Offset"/>
+    </ownedOperation>
+    <ownedOperation xmi:id="_mlwdIB-MEeeV88w7qjGbjg" name="Invert"/>
+    <ownedOperation xmi:id="_-1qmcCHsEeeCW61HxoMsQQ" name="SetValue">
+      <ownedParameter xmi:id="_-1qmcSHsEeeCW61HxoMsQQ" name="Row"/>
+      <ownedParameter xmi:id="_-1qmciHsEeeCW61HxoMsQQ" name="Col"/>
+    </ownedOperation>
+    <ownedOperation xmi:id="_eD6-8B-MEeeV88w7qjGbjg" name="Line_Shift">
+      <ownedParameter xmi:id="_i00iIB-MEeeV88w7qjGbjg" name="Offset"/>
+    </ownedOperation>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_zdNOwB7eEeeC-8Tyaw4LDA" name="SequenceManager">
     <ownedAttribute xmi:id="_Bfkm8B-HEeeV88w7qjGbjg" name="Sequences List"/>
     <ownedAttribute xmi:id="_SmsjIB-LEeeV88w7qjGbjg" name="Timer"/>
+    <ownedAttribute xmi:id="_EccAsB-HEeeV88w7qjGbjg" name="PatternDefinition"/>
     <ownedOperation xmi:id="_3KX0EB-OEeeV88w7qjGbjg" name="PauseSequence" visibility="public"/>
     <ownedOperation xmi:id="_qCzg4B-OEeeV88w7qjGbjg" name="PlaySequence" visibility="public">
       <ownedParameter xmi:id="_s7LcMB-OEeeV88w7qjGbjg" name="Seq_Nb"/>
@@ -206,53 +228,6 @@
     <ownedEnd xmi:id="_X7yrtB7fEeeC-8Tyaw4LDA" name="" type="_zdNOwB7eEeeC-8Tyaw4LDA" aggregation="composite" association="_X7yrsB7fEeeC-8Tyaw4LDA">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_X7zSwB7fEeeC-8Tyaw4LDA" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_X7zSwR7fEeeC-8Tyaw4LDA" value="*"/>
-    </ownedEnd>
-  </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_6RfD4B9rEeeT3MLwXNOzJg" name="Pattern">
-    <ownedAttribute xmi:id="_KC22oB-HEeeV88w7qjGbjg" name="Name"/>
-    <ownedAttribute xmi:id="_EccAsB-HEeeV88w7qjGbjg" name="PatternDefinition"/>
-  </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="_MP-CsB9sEeeT3MLwXNOzJg" name="." memberEnd="_MP-CsR9sEeeT3MLwXNOzJg _MP-pwR9sEeeT3MLwXNOzJg" navigableOwnedEnd="_MP-pwR9sEeeT3MLwXNOzJg">
-    <ownedEnd xmi:id="_MP-CsR9sEeeT3MLwXNOzJg" name="" type="_zdNOwB7eEeeC-8Tyaw4LDA" association="_MP-CsB9sEeeT3MLwXNOzJg">
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_MP-Csh9sEeeT3MLwXNOzJg" value="1"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_MP-pwB9sEeeT3MLwXNOzJg" value="1"/>
-    </ownedEnd>
-    <ownedEnd xmi:id="_MP-pwR9sEeeT3MLwXNOzJg" name="" type="_6RfD4B9rEeeT3MLwXNOzJg" aggregation="composite" association="_MP-CsB9sEeeT3MLwXNOzJg">
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_MP-pwh9sEeeT3MLwXNOzJg" value="1"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_MP-pwx9sEeeT3MLwXNOzJg" value="*"/>
-    </ownedEnd>
-  </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_ff1_0B-LEeeV88w7qjGbjg" name="Matrix_Tools">
-    <ownedOperation xmi:id="_pmnbgB-LEeeV88w7qjGbjg" name="SetLine">
-      <ownedParameter xmi:id="_ULDcYB-MEeeV88w7qjGbjg" name="Line"/>
-    </ownedOperation>
-    <ownedOperation xmi:id="_NCca8B-MEeeV88w7qjGbjg" name="SetColumn">
-      <ownedParameter xmi:id="_SDUT0B-MEeeV88w7qjGbjg" name="col"/>
-    </ownedOperation>
-    <ownedOperation xmi:id="_XBW7IB-MEeeV88w7qjGbjg" name="SetBorder"/>
-    <ownedOperation xmi:id="_ZQmZ4B-MEeeV88w7qjGbjg" name="Col_Shift">
-      <ownedParameter xmi:id="_bS3zoB-MEeeV88w7qjGbjg" name="Offset"/>
-    </ownedOperation>
-    <ownedOperation xmi:id="_eD6-8B-MEeeV88w7qjGbjg" name="Line_Shift">
-      <ownedParameter xmi:id="_i00iIB-MEeeV88w7qjGbjg" name="Offset"/>
-    </ownedOperation>
-    <ownedOperation xmi:id="_jxnhkB-MEeeV88w7qjGbjg" name="Rotate">
-      <ownedParameter xmi:id="_k4tFcB-MEeeV88w7qjGbjg" name="Offset"/>
-    </ownedOperation>
-    <ownedOperation xmi:id="_mlwdIB-MEeeV88w7qjGbjg" name="Invert"/>
-    <ownedOperation xmi:id="_-1qmcCHsEeeCW61HxoMsQQ" name="SetValue">
-      <ownedParameter xmi:id="_-1qmcSHsEeeCW61HxoMsQQ" name="Row"/>
-      <ownedParameter xmi:id="_-1qmciHsEeeCW61HxoMsQQ" name="Col"/>
-    </ownedOperation>
-  </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="_8D0hMB-MEeeV88w7qjGbjg" name="A_matrix_Toolss_patterns" memberEnd="_8D0hMR-MEeeV88w7qjGbjg _8D0hNB-MEeeV88w7qjGbjg" navigableOwnedEnd="_8D0hMR-MEeeV88w7qjGbjg _8D0hNB-MEeeV88w7qjGbjg">
-    <ownedEnd xmi:id="_8D0hMR-MEeeV88w7qjGbjg" name="matrix_Toolss" type="_ff1_0B-LEeeV88w7qjGbjg" association="_8D0hMB-MEeeV88w7qjGbjg">
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_8D0hMh-MEeeV88w7qjGbjg"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_8D0hMx-MEeeV88w7qjGbjg" value="*"/>
-    </ownedEnd>
-    <ownedEnd xmi:id="_8D0hNB-MEeeV88w7qjGbjg" name="patterns" type="_6RfD4B9rEeeT3MLwXNOzJg" association="_8D0hMB-MEeeV88w7qjGbjg">
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_8D0hNR-MEeeV88w7qjGbjg"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_8D0hNh-MEeeV88w7qjGbjg" value="*"/>
     </ownedEnd>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_nmuVcB-NEeeV88w7qjGbjg" name="Network_Client"/>
@@ -285,7 +260,7 @@
     </ownedOperation>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_YuuFsCBZEeeXGf0FaCM9UA" memberEnd="_YuuswCBZEeeXGf0FaCM9UA _YuuswyBZEeeXGf0FaCM9UA" navigableOwnedEnd="_YuuswCBZEeeXGf0FaCM9UA _YuuswyBZEeeXGf0FaCM9UA">
-    <ownedEnd xmi:id="_YuuswCBZEeeXGf0FaCM9UA" name="patterns" type="_6RfD4B9rEeeT3MLwXNOzJg" association="_YuuFsCBZEeeXGf0FaCM9UA">
+    <ownedEnd xmi:id="_YuuswCBZEeeXGf0FaCM9UA" name="patterns" type="_zdNOwB7eEeeC-8Tyaw4LDA" association="_YuuFsCBZEeeXGf0FaCM9UA">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_YuuswSBZEeeXGf0FaCM9UA"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_YuuswiBZEeeXGf0FaCM9UA" value="*"/>
     </ownedEnd>
@@ -294,6 +269,6 @@
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_YuusxSBZEeeXGf0FaCM9UA" value="*"/>
     </ownedEnd>
   </packagedElement>
-  <packagedElement xmi:type="uml:Usage" xmi:id="_bIXo8CNfEeeg6tkJuVrahw" client="_ff1_0B-LEeeV88w7qjGbjg" supplier="_zGc7oB7eEeeC-8Tyaw4LDA"/>
+  <packagedElement xmi:type="uml:Usage" xmi:id="_bIXo8CNfEeeg6tkJuVrahw" supplier="_zGc7oB7eEeeC-8Tyaw4LDA"/>
   <packagedElement xmi:type="uml:Dependency" xmi:id="_50-gMCNfEeeg6tkJuVrahw" client="_5iIDsB-QEeeV88w7qjGbjg" supplier="_zGc7oB7eEeeC-8Tyaw4LDA"/>
 </uml:Model>
