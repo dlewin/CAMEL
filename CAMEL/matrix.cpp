@@ -180,7 +180,7 @@ void MathMatrix::Invert()
 
 //  Format: vector<std::vector<QRgb>> array_2d(rows, std::vector<QRgb>(cols, 0));
 
-void MathMatrix::SavePattern( QVector<QVector<QRgb>> &MatrixVector, quint16 CurrentVector_Index)
+void MathMatrix::CopyPatternToSequence( QVector<QVector<QRgb>> &MatrixVector, quint16 CurrentVector_Index)
 {
     MatrixVector.push_back({}) ;                // New Empty Row
 
