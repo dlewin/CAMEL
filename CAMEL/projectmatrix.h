@@ -11,11 +11,13 @@ class ProjectMatrix
 {
 private:
     MathMatrix ProjMatrix ;
-    QVector<QRgb> MatrixToRead;
+
 
 public:
+    static QVector<QVector<QRgb>> MatrixToRead;
+    int CurVector_Index;
     ProjectMatrix(const QString M_Name, const quint16 M_Cols, const quint16 M_Rows, const quint32 M_ColorsDepth);
-    void ReadMatrix(MathMatrix ImgToRead);
+    void ReadMatrix(MathMatrix ImgToRead, QVector<QVector<QRgb>> MatrixToRead, quint16 CurVector_Index);
     void SavePattern(QString Filename);
 };
 

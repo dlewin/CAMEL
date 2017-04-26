@@ -3,10 +3,13 @@
 #include <QSettings>
 #include <QDebug>
 
+//quint16 MathMatrix::CurrentVector_Index=1 ;
+
 MathMatrix::MathMatrix(const QString MName, const quint16 MCols, const quint16 MRows, const quint32 MColors):
     Name(MName),Cols(MCols),Rows(MRows),Colors( MColors)
 {
      WorkMatrix = new QImage(Cols,Rows,QImage::Format_RGB32);
+
      Name = MName;
      Cols= MCols ;
      Rows = MRows;
@@ -81,8 +84,10 @@ bool  MathMatrix::SetPoint(int Col, int Row, QColor NamedColor)
     return true ;
 }
 
+///WARNING reversed Col  & row everywhere
+
 QRgb MathMatrix::GetPoint(int Col, int Row)
-{
+{    
     if (! CheckRanges( Col, Row))
         return 0x00000000;
 
@@ -169,12 +174,20 @@ void MathMatrix::Invert()
    WorkMatrix->invertPixels();
 }
 
-void MathMatrix::GetImageVector(  QVector<QRgb> &MatrixVector )
+// Goal : when you are happy with pattern, you need to "take a picture" of it and
+// save it into a sequence list.
+//Parse the matrix and retrieve the color for each of the points in a 2D (row,cols) Vector
+
+//  Format: vector<std::vector<QRgb>> array_2d(rows, std::vector<QRgb>(cols, 0));
+
+void MathMatrix::SavePattern( QVector<QVector<QRgb>> &MatrixVector, quint16 CurrentVector_Index)
 {
+    MatrixVector.push_back({}) ;                // New Empty Row
+
     for ( int row = 0; row < WorkMatrix->height() ; ++row )
         for ( int col = 0; col < WorkMatrix->width(); ++col )
         {
-            MatrixVector.push_back( GetPoint(row,col) );
+            MatrixVector[CurrentVector_Index].push_back( GetPoint(row,col) );
         }
 }
 

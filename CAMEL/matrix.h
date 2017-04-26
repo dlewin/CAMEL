@@ -13,6 +13,7 @@ private:
     quint16 Rows ;
     quint32 Colors ;
     QImage *WorkMatrix;
+  //  static quint16 CurrentVector_Index ;
 
 public:
     MathMatrix(const QString MName="Matrix Name", const quint16 MCols=8 , const quint16 MRows=8, const quint32 MColors=3);
@@ -22,7 +23,7 @@ public:
     quint16 getRows()   { return Rows   ;}
     quint32 getColors() { return Colors ;}    
 
-    void GetImageVector(QVector<QRgb> &MatrixVector );
+    void SavePattern(QVector<QVector<QRgb> > &MatrixVector, quint16 CurrentVector_Index );
     bool Check_ColRange(int Col) ;
     bool Check_RowRange(int Row) ;
     bool CheckRanges(int Col, int Row);
@@ -44,5 +45,7 @@ public:
     void Invert() ;
     void TestMatrix();
 };
+
+
 
 #endif // MATRIX_H
