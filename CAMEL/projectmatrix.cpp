@@ -2,7 +2,7 @@
 
 ProjectMatrix::ProjectMatrix(const QString M_Name, const quint16 M_Cols, const quint16 M_Rows, const quint32 M_ColorsDepth)       
 {
-    static quint16 CurrentVector_Index =0;
+
 
     MathMatrix ProjMatrix(M_Name,M_Cols,M_Rows,M_ColorsDepth);
     QVector<QVector<QRgb>> MatrixToRead(1);
@@ -10,10 +10,10 @@ ProjectMatrix::ProjectMatrix(const QString M_Name, const quint16 M_Cols, const q
     ProjMatrix.SetLine(1,0xFF000001) ;
     ProjMatrix.LineShift( 1);
 
-    ProjMatrix.CopyPatternToSequence(MatrixToRead, CurrentVector_Index++ );
+    ReadMatrix(ProjMatrix, MatrixToRead );
 
     ProjMatrix.SetLine(0,0xFF123456) ;
-    ProjMatrix.CopyPatternToSequence(MatrixToRead, CurrentVector_Index++ );
+    ReadMatrix(ProjMatrix, MatrixToRead );
 
     SequenceManager Sequencer();
     ConfigurationManager ConfMgr;
@@ -22,9 +22,11 @@ ProjectMatrix::ProjectMatrix(const QString M_Name, const quint16 M_Cols, const q
 }
 
 
-void ProjectMatrix::ReadMatrix(MathMatrix ImgToRead, QVector<QVector<QRgb>> MatrixToRead, quint16 CurVector_Index)
+void ProjectMatrix::ReadMatrix(MathMatrix ImgToRead, QVector<QVector<QRgb>> &MatrixVector)
 {
-    //ImgToRead.GetImageVector( MatrixToRead,CurVector_Index++  );
+    static quint16 CurrentVector_Index =0;
+
+    ImgToRead.CopyPatternToSequence( MatrixVector,CurrentVector_Index++  );
 }
 
 // Save the Current defined matrix as a pattern in a binary file
