@@ -26,10 +26,10 @@ public:
     void CopyPatternToSequence(QVector<QVector<QRgb> > &MatrixVector, quint16 CurrentVector_Index );
     bool Check_ColRange(int Col) ;
     bool Check_RowRange(int Row) ;
-    bool CheckRanges(int Col, int Row);
-    bool SetPoint(int Col, int Row, quint32 Color);
-    bool SetPoint(int Col, int Row, QColor NamedColor);
-    QRgb GetPoint(int Col, int Row);
+    bool CheckRanges(int Row, int Col);
+    bool SetPoint(int Row , int Col, quint32 Color);
+    bool SetPoint(int Row, int Col, QColor NamedColor);
+    QRgb GetPoint(int Row, int Col);
     void Fill(uint Value);
     void Fill(QColor NamedColor);
     void Reset();

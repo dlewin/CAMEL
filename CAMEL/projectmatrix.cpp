@@ -2,14 +2,11 @@
 
 ProjectMatrix::ProjectMatrix(const QString M_Name, const quint16 M_Cols, const quint16 M_Rows, const quint32 M_ColorsDepth)       
 {
-
-
     MathMatrix ProjMatrix(M_Name,M_Cols,M_Rows,M_ColorsDepth);
     QVector<QVector<QRgb>> MatrixToRead(1);
 
     ProjMatrix.SetLine(1,0xFF000001) ;
     ProjMatrix.LineShift( 1);
-
     ReadMatrix(ProjMatrix, MatrixToRead );
 
     ProjMatrix.SetLine(0,0xFF123456) ;

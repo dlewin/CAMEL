@@ -40,9 +40,9 @@ bool MathMatrix::Check_RowRange(int Row)
 }
 
 // Checks that values are in the Matrix ranges (width and Height)
-bool MathMatrix::CheckRanges(int Col, int Row)
+bool MathMatrix::CheckRanges(int Row, int Col)
 {
-    if ( Check_ColRange( Col) && Check_RowRange( Row) )
+    if ( Check_ColRange( Row) && Check_RowRange(Col ) )
         return true ;
     else
         return false ;
@@ -64,16 +64,16 @@ void MathMatrix::Reset()
     Fill( TempColor ) ;
 }
 
-bool MathMatrix::SetPoint(int Col, int Row, quint32 Color)
+bool MathMatrix::SetPoint(int Row, int Col, quint32 Color)
 {
-    if (! CheckRanges( Col, Row))
+    if (! CheckRanges( Row,Col ))
         return false;
-    WorkMatrix->setPixel( Col, Row, Color );
+    WorkMatrix->setPixel(Row ,Col , Color );
 
     return true ;
 }
 
-bool  MathMatrix::SetPoint(int Col, int Row, QColor NamedColor)
+bool  MathMatrix::SetPoint(int Row, int Col, QColor NamedColor)
 {
    if (! CheckRanges( Col, Row))
        return false;
@@ -84,14 +84,13 @@ bool  MathMatrix::SetPoint(int Col, int Row, QColor NamedColor)
     return true ;
 }
 
-///WARNING reversed Col  & row everywhere
 
-QRgb MathMatrix::GetPoint(int Col, int Row)
+QRgb MathMatrix::GetPoint(int Row, int Col)
 {    
-    if (! CheckRanges( Col, Row))
+    if (! CheckRanges( Row, Col))
         return 0x00000000;
 
-    return( WorkMatrix->pixel(Col,Row) );
+    return( WorkMatrix->pixel(Row,Col) );
 }
 
 bool MathMatrix::SetLine(int Line,quint32 Color)
