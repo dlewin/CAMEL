@@ -84,7 +84,6 @@ bool  MathMatrix::SetPoint(int Row, int Col, QColor NamedColor)
     return true ;
 }
 
-
 QRgb MathMatrix::GetPoint(int Row, int Col)
 {    
     if (! CheckRanges( Row, Col))
@@ -190,6 +189,7 @@ void MathMatrix::CopyPatternToSequence( QVector<QVector<QRgb>> &MatrixVector)
             MatrixVector.push_back(inner_vector);
         }
 }
+
 
 
 void MathMatrix::TestMatrix()

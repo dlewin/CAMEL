@@ -9,6 +9,7 @@
 
 #define EMPTY_SEQUENCE          -11
 
+///TODO : For the network sender = the code is in MyButtonGroup.Send
 ProjectMatrix::ProjectMatrix(const QString M_Name, const quint16 M_Cols, const quint16 M_Rows, const quint32 M_ColorsDepth)       
 {
     MathMatrix ProjMatrix(M_Name,M_Cols,M_Rows,M_ColorsDepth);
@@ -97,7 +98,7 @@ int ProjectMatrix::LoadPattern(QString Filename, QVector<QVector<QRgb> > &Matrix
     return 0 ;
 }
 
-
+// Read the current pattern defined in the working matrix and append it the sequence
 void ProjectMatrix::AppendPattern(MathMatrix ImgToRead, QVector<QVector<QRgb>> &MatrixVector)
 {
     ImgToRead.CopyPatternToSequence( MatrixVector );
@@ -105,7 +106,7 @@ void ProjectMatrix::AppendPattern(MathMatrix ImgToRead, QVector<QVector<QRgb>> &
 
 
 
-// Save all the patterns in the 2D Vector into a binary file
+// Save all the patterns in the 2D Vector into the Sequence binary file
 
 int ProjectMatrix::SavePattern(QString Filename, QVector<QVector<QRgb>> &MatrixVector)
 {
