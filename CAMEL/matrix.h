@@ -23,7 +23,7 @@ public:
     quint16 getRows()   { return Rows   ;}
     quint32 getColors() { return Colors ;}    
 
-    void CopyPatternToSequence(QVector<QVector<QRgb> > &MatrixVector, quint16 CurrentVector_Index );
+    void CopyPatternToSequence(QVector<QVector<QRgb> > &MatrixVector);
     bool Check_ColRange(int Col) ;
     bool Check_RowRange(int Row) ;
     bool CheckRanges(int Row, int Col);

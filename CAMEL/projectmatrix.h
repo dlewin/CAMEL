@@ -14,13 +14,17 @@ private:
     quint16 Cols={};
     quint16 Rows={};
     quint32 ColorDepth={} ;
+    void TestReadVector( QVector<QVector<QRgb> > &MatrixVector);
 public:
-    static QVector<QVector<QRgb>> MatrixToRead;
+    static QVector<QVector<QRgb>> Proj_VectorMatrix;
     int CurVector_Index;
     ProjectMatrix(const QString M_Name, const quint16 M_Cols, const quint16 M_Rows, const quint32 M_ColorsDepth);
-    void ReadMatrix(MathMatrix ImgToRead, QVector<QVector<QRgb> > &MatrixVector);
-    void SavePattern(QString Filename, QVector<QVector<QRgb> > &MatrixVector);
+    void AppendPattern(MathMatrix ImgToRead, QVector<QVector<QRgb> > &MatrixVector);
+    int SavePattern(QString Filename, QVector<QVector<QRgb> > &MatrixVector);
     int LoadPattern(QString Filename, QVector<QVector<QRgb> > &MatrixVector);
+    void append(QVector<QRgb> &Pattern );
+    int RemoveLastPattern(QVector<QVector<QRgb> > &MatrixVector) ;
+    void RemoveAllPatterns(QVector<QVector<QRgb> > &MatrixVector );
 };
 
 #endif // PROJECTMATRIX_H

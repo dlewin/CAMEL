@@ -7,6 +7,8 @@
 #define ERR_BAD_FILE_TOO_NEW    -3
 #define ERR_MTX_FMT_UNKNOWN     -4
 
+#define EMPTY_SEQUENCE          -11
+
 ProjectMatrix::ProjectMatrix(const QString M_Name, const quint16 M_Cols, const quint16 M_Rows, const quint32 M_ColorsDepth)       
 {
     MathMatrix ProjMatrix(M_Name,M_Cols,M_Rows,M_ColorsDepth);
@@ -14,30 +16,28 @@ ProjectMatrix::ProjectMatrix(const QString M_Name, const quint16 M_Cols, const q
     Rows=M_Rows;
     ColorDepth=M_ColorsDepth;
 
-    QVector<QVector<QRgb>> MatrixToRead(1);
-
-    ProjMatrix.SetLine(1,0xFF000001) ;
-    ProjMatrix.LineShift( 1);
-    ReadMatrix(ProjMatrix, MatrixToRead );
-
-    ProjMatrix.SetLine(0,0xFF123456) ;
-    ReadMatrix(ProjMatrix, MatrixToRead );
-
-    SequenceManager Sequencer();
-    ConfigurationManager ConfMgr;
-
-    ConfMgr.SaveToFile("Sequencefile.ini", M_Name,  M_Cols,  M_Rows,  M_ColorsDepth);
-
-    SavePattern("Pattern3.bin", MatrixToRead) ;
-
-    MatrixToRead.clear();
-    int ret = LoadPattern("Pattern3.bin", MatrixToRead) ;
-    if (ret<0)
-        qDebug() << "!! LoadPattern Error : " << ret ;          /// TODO : will be sent to Gui_Matrix with an Error management
+    QVector<QVector<QRgb>> Proj_VectorMatrix(1);
+    ProjMatrix.SetLine(1,0xFF123456) ;
+    AppendPattern(ProjMatrix, Proj_VectorMatrix );          // Copy the current Pattern Matrix into the current project Vector of patterns
+    TestReadVector(Proj_VectorMatrix) ;
 
 }
 
+void ProjectMatrix::RemoveAllPatterns(QVector<QVector<QRgb> > &MatrixVector)
+{
+    MatrixVector.clear();
+}
 
+int ProjectMatrix::RemoveLastPattern(QVector<QVector<QRgb> > &MatrixVector)
+{
+    if (MatrixVector.isEmpty() )
+        return EMPTY_SEQUENCE ;
+
+    MatrixVector.removeLast();
+    return 0 ;
+}
+
+ /// TODO : Retrieve LoadPattern return that will be sent to Gui_Matrix with an Error management
 int ProjectMatrix::LoadPattern(QString Filename, QVector<QVector<QRgb> > &MatrixVector)
 {
     QFile filein(Filename);
@@ -94,30 +94,24 @@ int ProjectMatrix::LoadPattern(QString Filename, QVector<QVector<QRgb> > &Matrix
     }
 
     MatrixVector = Temp_MatrixVector ;                      // now everything is ok : copy the  temp vector to the current working one
-
-//    for ( int indRow = 0; indRow < Temp_MatrixVector.size()  ; ++indRow )
-//        for ( int indCol = 0; indCol <Temp_MatrixVector[indRow].size() ; ++indCol )
-//        {
-//        qDebug() << Temp_MatrixVector[indRow][indCol] ;
-//        }
-
     return 0 ;
 }
 
 
-void ProjectMatrix::ReadMatrix(MathMatrix ImgToRead, QVector<QVector<QRgb>> &MatrixVector)
+void ProjectMatrix::AppendPattern(MathMatrix ImgToRead, QVector<QVector<QRgb>> &MatrixVector)
 {
-    static quint16 CurrentVector_Index =0;
-
-    ImgToRead.CopyPatternToSequence( MatrixVector,CurrentVector_Index++  );
+    ImgToRead.CopyPatternToSequence( MatrixVector );
 }
 
 
 
-// Save the Current defined matrix as a pattern in a binary file
+// Save all the patterns in the 2D Vector into a binary file
 
-void ProjectMatrix::SavePattern(QString Filename, QVector<QVector<QRgb>> &MatrixVector)
+int ProjectMatrix::SavePattern(QString Filename, QVector<QVector<QRgb>> &MatrixVector)
 {
+    if (MatrixVector.isEmpty() )
+        return EMPTY_SEQUENCE ;
+
     QFile fileout(Filename);
     if (fileout.open( QFile::WriteOnly ))
     {
@@ -141,4 +135,17 @@ void ProjectMatrix::SavePattern(QString Filename, QVector<QVector<QRgb>> &Matrix
         }
         fileout.close();
     }
+    return 0;
+}
+
+
+void ProjectMatrix::TestReadVector( QVector<QVector<QRgb> > &MatrixVector)
+{
+    if (MatrixVector.isEmpty() )
+        qDebug() << "Vector is Empty" ;
+    for ( int indRow = 0; indRow < MatrixVector.size()  ; ++indRow )
+        for ( int indCol = 0; indCol <MatrixVector[indRow].size() ; ++indCol )
+        {
+            qDebug() << MatrixVector[indRow][indCol] ;
+        }
 }

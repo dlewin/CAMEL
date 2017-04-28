@@ -153,6 +153,7 @@ void MathMatrix::SetBorder(QColor NamedColor)
     SetColumn( WorkMatrix->width()-1,TempColor) ;
 }
 
+///TODO: All "xShift and Rotate operations are not operatiional
 QImage  MathMatrix::ColShift(int Offset)
 {
    return( WorkMatrix->transformed(QTransform().translate(Offset,0)) );
@@ -179,14 +180,14 @@ void MathMatrix::Invert()
 
 //  Format: vector<std::vector<QRgb>> array_2d(rows, std::vector<QRgb>(cols, 0));
 
-void MathMatrix::CopyPatternToSequence( QVector<QVector<QRgb>> &MatrixVector, quint16 CurrentVector_Index)
+void MathMatrix::CopyPatternToSequence( QVector<QVector<QRgb>> &MatrixVector)
 {
-    MatrixVector.push_back({}) ;                // New Empty Row
-
     for ( int row = 0; row < WorkMatrix->height() ; ++row )
         for ( int col = 0; col < WorkMatrix->width(); ++col )
         {
-            MatrixVector[CurrentVector_Index].push_back( GetPoint(row,col) );
+            QVector<QRgb> inner_vector;
+            inner_vector.push_back( GetPoint(row,col) );
+            MatrixVector.push_back(inner_vector);
         }
 }
 
