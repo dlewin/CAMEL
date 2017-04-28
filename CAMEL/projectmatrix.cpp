@@ -31,7 +31,10 @@ ProjectMatrix::ProjectMatrix(const QString M_Name, const quint16 M_Cols, const q
     SavePattern("Pattern3.bin", MatrixToRead) ;
 
     MatrixToRead.clear();
-    LoadPattern("Pattern3.bin", MatrixToRead) ;
+    int ret = LoadPattern("Pattern3.bin", MatrixToRead) ;
+    if (ret<0)
+        qDebug() << "!! LoadPattern Error : " << ret ;          /// TODO : will be sent to Gui_Matrix with an Error management
+
 }
 
 
@@ -60,20 +63,19 @@ int ProjectMatrix::LoadPattern(QString Filename, QVector<QVector<QRgb> > &Matrix
     // Retrieve the sequence size ( how much patterns)
     quint32 SeqSize ;
     in >> SeqSize ;
-qDebug() << SeqSize ;
 
     //    MatrixFormat
-     quint16 SeqFileRows, SeqFileCols ;
-     quint32 SeqFileColors ;
+    quint16 SeqFileRows, SeqFileCols ;
+    quint32 SeqFileColors ;
     in >> SeqFileRows;
     in >> SeqFileCols;
     in >> SeqFileColors;
- qDebug()  << SeqFileRows << SeqFileCols << SeqFileColors ;
-    if ( SeqFileRows!=8 && SeqFileCols!=8 && SeqFileColors!=3 )     // Check the dims of the matrix in the seq file
-        return ERR_MTX_FMT_UNKNOWN ;        ///WARNING Matrix other than 8x8@3 are not handled
+
+    // Check the dims of the matrix in the seq file
+    if ( SeqFileRows!=8 && SeqFileCols!=8 && SeqFileColors!=3 )
+        return ERR_MTX_FMT_UNKNOWN ;                                ///WARNING Matrix other than 8x8@3 are not handled
 
     QVector<QVector<QRgb> > Temp_MatrixVector;
-
     QRgb RGBValue = 0 ;
 
     for(uint i = 0; i < SeqSize; ++i)
@@ -91,8 +93,13 @@ qDebug() << SeqSize ;
         }
     }
 
-    for (auto it: Temp_MatrixVector)
-        qDebug() << it ;
+    MatrixVector = Temp_MatrixVector ;                      // now everything is ok : copy the  temp vector to the current working one
+
+//    for ( int indRow = 0; indRow < Temp_MatrixVector.size()  ; ++indRow )
+//        for ( int indCol = 0; indCol <Temp_MatrixVector[indRow].size() ; ++indCol )
+//        {
+//        qDebug() << Temp_MatrixVector[indRow][indCol] ;
+//        }
 
     return 0 ;
 }
