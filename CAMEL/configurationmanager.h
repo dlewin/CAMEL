@@ -8,7 +8,7 @@ public:
     ConfigurationManager();
     ~ConfigurationManager();
     bool LoadFromFile(QString InifileName);
-    bool SaveToFile(const QString InifileName , const QString MtxName, const quint16 MtxCols, const quint16 MtxRows, const quint32 MtxColorsDepth);
+    bool SaveToFile(const QString InifileName , QString Matrix_Declaration);
 };
 
 #endif // CONFIGURATIONMANAGER_H

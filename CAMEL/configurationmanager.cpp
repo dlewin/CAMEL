@@ -40,14 +40,36 @@ bool ConfigurationManager::LoadFromFile(QString InifileName)
  return true ;
 }
 
-bool ConfigurationManager::SaveToFile(const QString InifileName, const QString MtxName,const quint16 MtxCols,const quint16 MtxRows,const quint32 MtxColorsDepth)
+/* Models section is where each model, ie: the physical leds matrix, is described
+ a model is :
+
+    [Models]
+    name = rowsxcolsxcolors
+
+ Sequence section is the container of the patterns Sequence
+ Each sequence must have at least :
+
+    [SequenceName]
+    Patterns=Patterns1.bin
+    Compatibility=8x8@3
+    1=Pattern1
+
+ and eventually:
+    2=tempo500
+    3=Pattern3
+    ....
+*/
+
+bool ConfigurationManager::SaveToFile(const QString InifileName, QString Matrix_Declaration)
 {
-    QSettings settings( InifileName, QSettings::IniFormat )             ;
-    settings.beginGroup("Matrix_Configuration")    ;
-        settings.setValue( "Name" , QString( MtxName) );
-        settings.setValue( "Cols" , MtxCols ) ;
-        settings.setValue( "Rows" , MtxRows ) ;
-        settings.setValue( "Colors" , MtxColorsDepth ) ;
+
+    QSettings settings( InifileName, QSettings::IniFormat )                     ;
+    settings.beginGroup("Models")                                                       ;
+    settings.endGroup()                                                        ;
+    settings.beginGroup("Sequence1")                                               ;
+        settings.setValue( "File" , "Pattern1.bin" ) ;
+        settings.setValue( "Compatibility" , "8x8@3" ) ;
+        settings.setValue ( "1","Pattern1" ) ;
     settings.endGroup()                                                        ;
 
     return true ;

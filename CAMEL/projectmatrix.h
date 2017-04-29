@@ -6,6 +6,7 @@
 #include "matrix.h"
 #include "configurationmanager.h"
 #include "sequencemanager.h"
+#include "guimatrix.h"
 
 class ProjectMatrix
 {
@@ -18,7 +19,7 @@ private:
 public:
     static QVector<QVector<QRgb>> Proj_VectorMatrix;
     int CurVector_Index;
-    ProjectMatrix(const QString M_Name, const quint16 M_Cols, const quint16 M_Rows, const quint32 M_ColorsDepth);
+    ProjectMatrix(const QString M_Name, const quint16 M_Cols, const quint16 M_Rows, const quint32 M_ColorsDepth, QWidget *centralWidget);
     void AppendPattern(MathMatrix ImgToRead, QVector<QVector<QRgb> > &MatrixVector);
     int SavePattern(QString Filename, QVector<QVector<QRgb> > &MatrixVector);
     int LoadPattern(QString Filename, QVector<QVector<QRgb> > &MatrixVector);
