@@ -65,6 +65,7 @@ bool ConfigurationManager::SaveToFile(const QString InifileName, QString Matrix_
 
     QSettings settings( InifileName, QSettings::IniFormat )                     ;
     settings.beginGroup("Models")                                                       ;
+        settings.setValue( "Adafruit_BicolorLEDSquarePixel" , Matrix_Declaration )        ;
     settings.endGroup()                                                        ;
     settings.beginGroup("Sequence1")                                               ;
         settings.setValue( "File" , "Pattern1.bin" ) ;

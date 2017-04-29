@@ -12,6 +12,7 @@ private :
 public:
     GuiMatrix(int Rows, int Cols, int Led_colors, QWidget *parentWidget);
     ~GuiMatrix();
+    void Populate(QGridLayout *layout, const int rows, const int cols)                       ;
 
 public slots:
     void buttonClick(QAbstractButton* button) ;

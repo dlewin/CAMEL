@@ -17,8 +17,29 @@ GuiMatrix::GuiMatrix(int Rows, int Cols, int Led_colors, QWidget *parentWidget)
     layout->addStretch(1)                                                               ;
 
     parentWidget->setLayout(layout)                                                     ;
-connect(this , SIGNAL(buttonClicked(QAbstractButton*)),this,SLOT(buttonClick(QAbstractButton*)));
 
+    Populate(Glayout,Rows,Cols);
+
+    connect(this , SIGNAL(buttonClicked(QAbstractButton*)),this,SLOT(buttonClick(QAbstractButton*)));
+
+
+}
+
+void GuiMatrix::Populate(QGridLayout *layout, const int rows, const int cols)
+{
+    for (uint i = 0; i < rows; ++ i)
+    {
+     for (uint j = 0; j < cols; ++j)
+     {
+      QString index = QStringLiteral("(%1,%2)").arg(i).arg(j)   ;
+      QPushButton* btn = new QPushButton("-")                 ;
+      btn->setFixedWidth(20);
+      btn->setStyleSheet("background-color:grey;")              ;
+      layout->addWidget(btn,i,j)                                ;
+
+      this->addButton(btn)                              ;
+     }
+    }
 }
 
 void GuiMatrix::buttonClick(QAbstractButton* button)
