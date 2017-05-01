@@ -9,6 +9,8 @@ CONFIG   += c++11
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+
+
 TARGET = CAMEL
 TEMPLATE = app
 
@@ -29,3 +31,8 @@ HEADERS  += camel.h \
     guimatrix.h
 
 FORMS    += camel.ui
+
+DISTFILES +=
+
+RESOURCES += \
+    camelrsc.qrc

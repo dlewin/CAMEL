@@ -59,17 +59,23 @@ bool ConfigurationManager::LoadFromFile(QString InifileName)
     3=Pattern3
     ....
 */
-
+///TODO change the Matrix_Declaration for colors
 bool ConfigurationManager::SaveToFile(const QString InifileName, QString Matrix_Declaration)
 {
-
     QSettings settings( InifileName, QSettings::IniFormat )                     ;
     settings.beginGroup("Models")                                                       ;
         settings.setValue( "Adafruit_BicolorLEDSquarePixel" , Matrix_Declaration )        ;
+        settings.setValue("Adafruit_BicolorLEDSquarePixel/Red","1");
+        settings.setValue("Adafruit_BicolorLEDSquarePixel/Green","1");
+        settings.setValue("Adafruit_BicolorLEDSquarePixel/Blued","0");
+        settings.setValue( "SenseHat" , Matrix_Declaration )        ;
+        settings.setValue("SenseHat/Red","255");
+        settings.setValue("SenseHat/Green","255");
+        settings.setValue("SenseHat/Blued","255");
     settings.endGroup()                                                        ;
     settings.beginGroup("Sequence1")                                               ;
         settings.setValue( "File" , "Pattern1.bin" ) ;
-        settings.setValue( "Compatibility" , "8x8@3" ) ;
+        settings.setValue( "Cols" , "8x8@3" ) ;
         settings.setValue ( "1","Pattern1" ) ;
     settings.endGroup()                                                        ;
 

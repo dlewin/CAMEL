@@ -10,7 +10,7 @@
 #define EMPTY_SEQUENCE          -11
 
 ///TODO : For the network sender = the code is in MyButtonGroup.Send
-ProjectMatrix::ProjectMatrix(const QString M_Name, const quint16 M_Cols, const quint16 M_Rows, const quint32 M_ColorsDepth, QWidget *centralWidget)
+ProjectMatrix::ProjectMatrix(const QString M_Name, const quint16 M_Cols, const quint16 M_Rows, const quint32 M_ColorsDepth)
 {
     MathMatrix ProjMatrix(M_Name,M_Cols,M_Rows,M_ColorsDepth);
     Cols=M_Cols;
@@ -26,7 +26,7 @@ ProjectMatrix::ProjectMatrix(const QString M_Name, const quint16 M_Cols, const q
     QString MatxDims = QString::number(Rows) +"x" +QString::number(Cols) +"@" +QString::number(ColorDepth) ;
     ConfMgr.SaveToFile("Camel.ini", MatxDims) ;
 
-    GuiMatrix Matrix_8x8x3(Cols,Rows,ColorDepth,centralWidget);
+    GuiMatrix Matrix_8x8x3(Cols,Rows,ColorDepth);
 
 }
 
