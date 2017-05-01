@@ -7,35 +7,15 @@ Camel::Camel(QWidget *parent) :
 {
     ui->setupUi(this);
     setDockNestingEnabled(true);
-    QWidget *widget = new QWidget;
-       setCentralWidget(widget);
+    QWidget *MatrixGui = new QWidget;
+    setCentralWidget(MatrixGui);
 
-       // First dock in the left top corner
-       QDockWidget *dockWidget = new QDockWidget("--- 1 ---");
-       dockWidget->setWidget(new QTextEdit);
-       addDockWidget(Qt::LeftDockWidgetArea, dockWidget);
+    CreateDock();
+    int Rows=8,Cols=8, ColorDepth=3 ; //Debug: will be provided by the wizard
+    GuiMatrix Matrix_8x8x3(Rows,Cols,ColorDepth,MatrixGui );
 
-       // Second dock below first one
-       QDockWidget *dockWidget2 = new QDockWidget("--- 2 ---");
-       dockWidget2->setWidget(new QPushButton );
-       addDockWidget(Qt::LeftDockWidgetArea, dockWidget2);
 
-       // Third in tab with second one
-       QDockWidget *dockWidget3 = new QDockWidget("--- 3 ---");
-       dockWidget3->setWidget(new QPushButton );
-       dockWidget3->setAllowedAreas(Qt::RightDockWidgetArea) ;
-       addDockWidget(Qt::LeftDockWidgetArea, dockWidget3);
-//       tabifyDockWidget(dockWidget2, dockWidget3);
-
-QPixmap matrix(":/matrix_icon");
-QPixmap wizard(":/wizard");
-QPixmap magic(":/magic");
-QToolBar *toolbar = addToolBar("main toolbar");
- toolbar->addAction(QIcon(matrix), "test");
-  toolbar->addAction(QIcon(wizard), "New Matrix");
-  toolbar->addAction(QIcon(magic), "New Matrix");
-
-   ProjectMatrix workMatrix("Adafruit Bicolors I2C Leds Matrix", 8,8,3);
+//    ProjectMatrix workMatrix("Adafruit Bicolors I2C Leds Matrix", 8,8,3);
 }
 
 Camel::~Camel()
@@ -45,17 +25,41 @@ Camel::~Camel()
 
 void Camel::CreateDock()
 {
+    // First dock in the left top corner
+    QDockWidget *dockWidget = new QDockWidget("--- 1 ---");
+    dockWidget->setWidget(new QTextEdit);
+    addDockWidget(Qt::LeftDockWidgetArea, dockWidget);
 
-//QDockWidget *dock = new QDockWidget(tr("Customers"), this);
-//    dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
-//    customerList = new QListWidget(dock);
-//    customerList->addItems(QStringList()
-//            << "John Doe, Harmony Enterprises, 12 Lakeside, Ambleton"
-//            << "Jane Doe, Memorabilia, 23 Watersedge, Beaton"
-//            << "Tammy Shea, Tiblanka, 38 Sea Views, Carlton"
-//            << "Tim Sheen, Caraba Gifts, 48 Ocean Way, Deal"
-//            << "Sol Harvey, Chicos Coffee, 53 New Springs, Eccleston"
-//            << "Sally Hobart, Tiroli Tea, 67 Long River, Fedula");
-//    dock->setWidget(customerList);
-//
+    // Second dock below first one
+    QDockWidget *dockWidget2 = new QDockWidget("--- 2 ---");
+    dockWidget2->setWidget(new QPushButton );
+    addDockWidget(Qt::LeftDockWidgetArea, dockWidget2);
+
+    // Third in tab with second one
+    QDockWidget *dockWidget3 = new QDockWidget("--- 3 ---");
+    dockWidget3->setWidget(new QPushButton );
+    dockWidget3->setAllowedAreas(Qt::RightDockWidgetArea) ;
+    addDockWidget(Qt::RightDockWidgetArea, dockWidget3);
+
+    QPixmap matrix(":/matrix_icon");
+    QPixmap wizard(":/wizard");
+    QPixmap magic(":/magic");
+    QPixmap colors(":/colors");
+
+    QToolBar *toolbar = addToolBar("main toolbar");
+    toolbar->addAction(QIcon(matrix), "test");
+    toolbar->addAction(QIcon(wizard), "New Matrix");
+    toolbar->addAction(QIcon(magic), "New Matrix");
+     SelectColors_Action =toolbar->addAction (QIcon(colors), "Select color");
+
+     connect(SelectColors_Action, SIGNAL(triggered()), this, SLOT(color_selector() ));
+}
+
+void Camel::color_selector()
+{
+    QColor color = QColorDialog::getColor(Qt::yellow, this );
+    if( color.isValid() )
+    {
+        qDebug() << "Color Choosen : " << color.name();
+    }
 }

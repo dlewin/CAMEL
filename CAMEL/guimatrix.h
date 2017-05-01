@@ -15,7 +15,7 @@ class GuiMatrix: public QButtonGroup
     Q_OBJECT
 private :
 public:
-    GuiMatrix(int Rows, int Cols, int Led_colors);
+    GuiMatrix(int Rows, int Cols, int Led_colors, QWidget *parentWidget);
     ~GuiMatrix();
     void Populate(QGridLayout *layout, const int rows, const int cols)                       ;
 //    QLabel *colorLabel;

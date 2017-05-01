@@ -7,6 +7,7 @@
 #include <QtWidgets>
 #include <QToolBar>
 
+#include "guimatrix.h"
 #include "projectmatrix.h"
 
 namespace Ui {
@@ -16,20 +17,16 @@ class Camel;
 class Camel : public QMainWindow
 {
     Q_OBJECT
-
+private:
+    QAction* SelectColors_Action;
+    Ui::Camel *ui;
+    void CreateDock();
 public:
     explicit Camel(QWidget *parent = 0);
     ~Camel();
-    void CreateDock();
 
-private:
-    Ui::Camel *ui;
-    bool init();
-    void createActions();
-    void createStatusBar();
-    void createDockWindows();
-
-    QListWidget *customerList;
+private slots:
+    void color_selector();
 };
 
 #endif // CAMEL_H

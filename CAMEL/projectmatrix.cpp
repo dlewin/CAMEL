@@ -26,7 +26,7 @@ ProjectMatrix::ProjectMatrix(const QString M_Name, const quint16 M_Cols, const q
     QString MatxDims = QString::number(Rows) +"x" +QString::number(Cols) +"@" +QString::number(ColorDepth) ;
     ConfMgr.SaveToFile("Camel.ini", MatxDims) ;
 
-    GuiMatrix Matrix_8x8x3(Cols,Rows,ColorDepth);
+
 
 }
 

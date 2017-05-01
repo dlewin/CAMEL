@@ -3,5 +3,7 @@
         <file alias="matrix_icon">Images/aMatrix_icon.png</file>
         <file alias="wizard">Images/ON40SA0.jpg</file>
         <file alias="magic">Images/8145.jpg</file>
+        <file alias="exit">Images/O4YIGZ0.jpg</file>
+        <file alias="colors">Images/Color-picker-icon.png</file>
     </qresource>
 </RCC>

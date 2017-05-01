@@ -6,7 +6,6 @@
 #include "matrix.h"
 #include "configurationmanager.h"
 #include "sequencemanager.h"
-#include "guimatrix.h"
 
 class ProjectMatrix
 {

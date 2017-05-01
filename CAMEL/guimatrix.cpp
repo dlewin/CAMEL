@@ -1,18 +1,11 @@
 #include "guimatrix.h"
 #include "projectmatrix.h"
 
-#define MESSAGE \
-    GuiMatrix::tr("<p>Message boxes have a caption, a text, " \
-               "and any number of buttons, each with standard or custom texts." \
-               "<p>Click a button to close the message box. Pressing the Esc button " \
-               "will activate the detected escape button (if any).")
-
-
-GuiMatrix::GuiMatrix(int Rows, int Cols, int Led_colors)
+GuiMatrix::GuiMatrix(int Rows, int Cols, int Led_colors,QWidget * parentWidget)
 {
     // Let's create the HMI that accepts click as input and also represent the MainMatrix states
 // MyButtonGroup* group   = new MyButtonGroup(centralWidget)   ;
-//    setParent(parentWidget)  ;
+    setParent(parentWidget)  ;
 
     QVBoxLayout *layout     = new QVBoxLayout()                             ;
     QHBoxLayout *Hlayout    = new QHBoxLayout()                                         ;
@@ -26,13 +19,7 @@ GuiMatrix::GuiMatrix(int Rows, int Cols, int Led_colors)
 
     Populate(Glayout,Rows,Cols);
 
-//    errorMessageDialog = new QErrorMessage();
-//   colorLabel = new QLabel;
-//   QPushButton *colorButton = new QPushButton(tr("QColorDialog"));
-//   Glayout->addWidget(colorButton);
-
-//   parentWidget->setLayout(layout)                                                     ;
-//   connect(colorButton, SIGNAL(clicked()), this, SLOT( setColor() ));
+   parentWidget->setLayout(layout)                                                     ;
    connect(this , SIGNAL(buttonClicked(QAbstractButton*)),this,SLOT(buttonClick(QAbstractButton*)));
 
 
