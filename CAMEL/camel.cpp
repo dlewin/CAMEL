@@ -7,13 +7,13 @@ Camel::Camel(QWidget *parent) :
 {
     ui->setupUi(this);
     setDockNestingEnabled(true);
-    QWidget *MatrixGui = new QWidget;
-    setCentralWidget(MatrixGui);
+    QWidget *MatrixGui = new QWidget();
 
     CreateDock();
     int Rows=8,Cols=8, ColorDepth=3 ; //Debug: will be provided by the wizard
-    GuiMatrix Matrix_8x8x3(Rows,Cols,ColorDepth,MatrixGui );
+    GuiMatrix* Matrix_8x8x3 = new GuiMatrix(Rows,Cols,ColorDepth,MatrixGui );
 
+    setCentralWidget(MatrixGui);
 
 //    ProjectMatrix workMatrix("Adafruit Bicolors I2C Leds Matrix", 8,8,3);
 }

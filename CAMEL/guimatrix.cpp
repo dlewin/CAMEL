@@ -4,7 +4,6 @@
 GuiMatrix::GuiMatrix(int Rows, int Cols, int Led_colors,QWidget * parentWidget)
 {
     // Let's create the HMI that accepts click as input and also represent the MainMatrix states
-// MyButtonGroup* group   = new MyButtonGroup(centralWidget)   ;
     setParent(parentWidget)  ;
 
     QVBoxLayout *layout     = new QVBoxLayout()                             ;
@@ -19,17 +18,16 @@ GuiMatrix::GuiMatrix(int Rows, int Cols, int Led_colors,QWidget * parentWidget)
 
     Populate(Glayout,Rows,Cols);
 
-   parentWidget->setLayout(layout)                                                     ;
    connect(this , SIGNAL(buttonClicked(QAbstractButton*)),this,SLOT(buttonClick(QAbstractButton*)));
 
-
+ parentWidget->setLayout(layout)                                                     ;
 }
 
 void GuiMatrix::Populate(QGridLayout *layout, const int rows, const int cols)
 {
-    for (uint i = 0; i < rows; ++ i)
+    for ( int i = 0; i < rows; ++ i)
     {
-     for (uint j = 0; j < cols; ++j)
+     for ( int j = 0; j < cols; ++j)
      {
 //      QString index = QStringLiteral("(%1,%2)").arg(i).arg(j)   ;
       QPushButton* btn = new QPushButton(" ")                 ;
