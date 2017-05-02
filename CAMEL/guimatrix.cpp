@@ -1,6 +1,12 @@
 #include "guimatrix.h"
 #include "projectmatrix.h"
 
+
+#define BTNCOLOR_GREY "#808080"
+#define BTNCOLOR_ORANGE "#ffa500"
+#define BTNCOLOR_GREEN "#008000"
+
+
 GuiMatrix::GuiMatrix(int Rows, int Cols, int Led_colors,QWidget * parentWidget)
 {
     // Let's create the HMI that accepts click as input and also represent the MainMatrix states
@@ -42,7 +48,25 @@ void GuiMatrix::Populate(QGridLayout *layout, const int rows, const int cols)
 
 void GuiMatrix::buttonClick(QAbstractButton* button)
 {
-    qDebug() << "in buttonClick" ;
+    QColor  Btn_Color = button->palette().color(QPalette::Button) ;
+    QString BtnColorName= Btn_Color.name();
+
+    if (BtnColorName == BTNCOLOR_GREY)
+    {
+        button->setStyleSheet("background-color:green;")     ;
+    }
+    else if (BtnColorName == BTNCOLOR_GREEN )
+    {
+        button->setStyleSheet("background-color:orange;")    ;
+    }
+    else if (BtnColorName == BTNCOLOR_ORANGE)
+    {
+        button->setStyleSheet("background-color:red;")       ;
+    }
+    else
+    {
+        button->setStyleSheet("background-color:grey;")      ;
+    }
 }
 
 GuiMatrix::~GuiMatrix()
@@ -50,19 +74,7 @@ GuiMatrix::~GuiMatrix()
 }
 
 /*
-void GuiMatrix::setColor()
-{
-    qDebug() << "in Setcolor" ;
-    QColor color;
 
-        color = QColorDialog::getColor(Qt::green, parentWidget);
-
-    if (color.isValid()) {
-        colorLabel->setText(color.name());
-        colorLabel->setPalette(QPalette(color));
-        colorLabel->setAutoFillBackground(true);
-    }
-}
 
 
 void GuiMatrix::criticalMessage(QWidget *parentWidget)
