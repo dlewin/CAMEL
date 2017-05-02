@@ -25,17 +25,28 @@ bool ConfigurationManager::LoadFromFile(QString InifileName)
 
     QSettings settings( InifileName , QSettings::IniFormat )             ;
 
-
-    settings.beginGroup( "Filters" )                                          ;        // Reading the filters section
+    QStringList AllKeysList ( settings.allKeys()) ;
+    for (auto it: AllKeysList)
     {
-        QStringList childKeys = settings.childKeys()                            ;
-        QString Cur_Value                                          ;
-        foreach (const QString &childKey, childKeys)
-        {
-            Cur_Value =  settings.value(childKey).toString()                      ;
-        }
+        qDebug() << it << " : " <<settings.value(it).toString()                  ;
+
     }
-    settings.endGroup()                                                        ;
+qDebug() << "childGroups" << settings.childGroups() ;
+//    settings.beginGroup( "Models" )                                          ;        // Reading the filters section
+//    {
+//        QStringList ModelsName = settings.childKeys()                            ;
+//        QString ModelText                                          ;
+//        foreach (const QString &childKey, ModelsName)
+//        {
+//            ModelText =  settings.value(childKey).toString()                      ;
+//        }
+//    }
+//    settings.endGroup()                                                        ;
+
+
+
+
+
 
  return true ;
 }
@@ -60,22 +71,30 @@ bool ConfigurationManager::LoadFromFile(QString InifileName)
     ....
 */
 ///TODO change the Matrix_Declaration for colors
-bool ConfigurationManager::SaveToFile(const QString InifileName, QString Matrix_Declaration)
+bool ConfigurationManager::SaveToFile(const QString InifileName, quint16 Rows ,quint16 Cols  )
 {
     QSettings settings( InifileName, QSettings::IniFormat )                     ;
     settings.beginGroup("Models")                                                       ;
-        settings.setValue( "Adafruit_BicolorLEDSquarePixel" , Matrix_Declaration )        ;
-        settings.setValue("Adafruit_BicolorLEDSquarePixel/Red","1");
-        settings.setValue("Adafruit_BicolorLEDSquarePixel/Green","1");
-        settings.setValue("Adafruit_BicolorLEDSquarePixel/Blued","0");
-        settings.setValue( "SenseHat" , Matrix_Declaration )        ;
-        settings.setValue("SenseHat/Red","255");
-        settings.setValue("SenseHat/Green","255");
-        settings.setValue("SenseHat/Blued","255");
+        settings.setValue( "Adafruit_BicolorLEDSquarePixel" , "2 Colors Leds Matrix" )        ;
+        settings.setValue( "SenseHat" , "The SenseHat" )        ;
     settings.endGroup()                                                        ;
+    settings.beginGroup("Adafruit_BicolorLEDSquarePixel") ;
+        settings.setValue( "Rows",Rows);
+        settings.setValue( "Cols", Cols);
+        settings.setValue( "Colors/Red", "0x800000");
+        settings.setValue( "Colors/Green","0x008000");
+        settings.setValue( "Colors/Orange","0xffa500");
+    settings.endGroup()                                                        ;
+    settings.beginGroup("SenseHat") ;
+        settings.setValue( "Rows",Rows);
+        settings.setValue( "Cols", Cols);
+        settings.setValue( "Colors","0xFFFFFF");
+    settings.endGroup()  ;
     settings.beginGroup("Sequence1")                                               ;
         settings.setValue( "File" , "Pattern1.bin" ) ;
-        settings.setValue( "Cols" , "8x8@3" ) ;
+        settings.setValue( "Rows",Rows);
+        settings.setValue( "Cols", Cols);
+        settings.setValue( "Colors","0x000003");
         settings.setValue ( "1","Pattern1" ) ;
     settings.endGroup()                                                        ;
 

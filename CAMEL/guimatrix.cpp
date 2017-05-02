@@ -35,7 +35,6 @@ void GuiMatrix::Populate(QGridLayout *layout, const int rows, const int cols)
     {
      for ( int j = 0; j < cols; ++j)
      {
-//      QString index = QStringLiteral("(%1,%2)").arg(i).arg(j)   ;
       QPushButton* btn = new QPushButton(" ")                 ;
       btn->setFixedWidth(20);
       btn->setStyleSheet("background-color:grey;")              ;

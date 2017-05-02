@@ -1,4 +1,5 @@
 #include "camel.h"
+
 #include "ui_camel.h"
 
 Camel::Camel(QWidget *parent) :
@@ -10,12 +11,12 @@ Camel::Camel(QWidget *parent) :
     QWidget *MatrixGui = new QWidget();
 
     CreateDock();
-    int Rows=8,Cols=8, ColorDepth=3 ; //Debug: will be provided by the wizard
+    int Rows=8,Cols=8, ColorDepth=3 ; //Debug: will be provided by the wizard and given for ProkectMatrix Instanciation
     GuiMatrix* Matrix_8x8x3 = new GuiMatrix(Rows,Cols,ColorDepth,MatrixGui );
 
     setCentralWidget(MatrixGui);
 
-//    ProjectMatrix workMatrix("Adafruit Bicolors I2C Leds Matrix", 8,8,3);
+    ProjectMatrix workMatrix("Adafruit Bicolors I2C Leds Matrix", 8,8,3);
 }
 
 Camel::~Camel()
@@ -37,9 +38,18 @@ void Camel::CreateDock()
 
     // Third in tab with second one
     QDockWidget *dockWidget3 = new QDockWidget("--- 3 ---");
-    dockWidget3->setWidget(new QPushButton );
     dockWidget3->setAllowedAreas(Qt::RightDockWidgetArea) ;
+
+    QListWidget *ColorList = new QListWidget  ;
+    ColorList->insertItem(0,"1ER Label");
+    ColorList->insertItem(1,"2ER Label");
+    ColorList->item(0)->setForeground(*(new QBrush(Qt::red)));
+    ColorList->item(0)->setBackground(*(new QBrush(Qt::green)));
+
+    dockWidget2->setWidget(ColorList);
+
     addDockWidget(Qt::RightDockWidgetArea, dockWidget3);
+
 
     QPixmap matrix(":/matrix_icon");
     QPixmap wizard(":/wizard");
@@ -57,6 +67,7 @@ void Camel::CreateDock()
 
 void Camel::color_selector()
 {
+
     QColor color = QColorDialog::getColor(Qt::yellow, this );
     if( color.isValid() )
     {

@@ -20,12 +20,12 @@ ProjectMatrix::ProjectMatrix(const QString M_Name, const quint16 M_Cols, const q
     QVector<QVector<QRgb>> Proj_VectorMatrix(1);
     ProjMatrix.SetLine(1,0xFF123456) ;
     AppendPattern(ProjMatrix, Proj_VectorMatrix );          // Copy the current Pattern Matrix into the current project Vector of patterns
-    TestReadVector(Proj_VectorMatrix) ;
+//    TestReadVector(Proj_VectorMatrix) ;
 
     ConfigurationManager ConfMgr ;
-    QString MatxDims = QString::number(Rows) +"x" +QString::number(Cols) +"@" +QString::number(ColorDepth) ;
-    ConfMgr.SaveToFile("Camel.ini", MatxDims) ;
-
+//    QString MatxDims = QString::number(Rows) +"x" +QString::number(Cols) +"@" +QString::number(ColorDepth) ;
+    ConfMgr.SaveToFile("Camel.ini",Rows, Cols) ;
+    ConfMgr.LoadFromFile("Camel.ini") ;
 
 
 }

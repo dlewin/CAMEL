@@ -9,11 +9,8 @@ CONFIG   += c++11
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-
-
 TARGET = CAMEL
 TEMPLATE = app
-
 
 SOURCES += main.cpp\
         camel.cpp \
@@ -21,18 +18,19 @@ SOURCES += main.cpp\
     configurationmanager.cpp \
     sequencemanager.cpp \
     projectmatrix.cpp \
-    guimatrix.cpp
+    guimatrix.cpp \
+
 
 HEADERS  += camel.h \
     matrix.h \
     configurationmanager.h \
     sequencemanager.h \
     projectmatrix.h \
-    guimatrix.h
+    guimatrix.h \
 
-FORMS    += camel.ui
+FORMS    += camel.ui \
 
-DISTFILES +=
+RESOURCES += camelrsc.qrc
 
-RESOURCES += \
-    camelrsc.qrc
+
+
