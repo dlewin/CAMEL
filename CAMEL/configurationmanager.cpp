@@ -24,31 +24,42 @@ bool ConfigurationManager::LoadFromFile(QString InifileName)
     }
 
     QSettings settings( InifileName , QSettings::IniFormat )             ;
-
     QStringList AllKeysList ( settings.allKeys()) ;
+
+    QStringList TempModel ;
     for (auto it: AllKeysList)
     {
-        qDebug() << it << " : " <<settings.value(it).toString()                  ;
+         TempModel << it.split('/');
+
+//        qDebug() << it.split('/') << " => " <<   settings.value(it).toString()              ;
 
     }
-qDebug() << "childGroups" << settings.childGroups() ;
-//    settings.beginGroup( "Models" )                                          ;        // Reading the filters section
-//    {
-//        QStringList ModelsName = settings.childKeys()                            ;
-//        QString ModelText                                          ;
-//        foreach (const QString &childKey, ModelsName)
-//        {
-//            ModelText =  settings.value(childKey).toString()                      ;
-//        }
-//    }
-//    settings.endGroup()                                                        ;
+
+    QStringList ModelsList ;
+     settings.beginGroup("Models");
+        ModelsList << settings.childKeys() ;
+     settings.endGroup();
+
+     for (auto it2: ModelsList)
+     {
+         qDebug()<< "Model:" << it2 << "Title:" << settings.value(it2).toString();
+
+         settings.beginGroup(it2);
+//            qDebug() << it2 << "-" <<settings.allKeys() ;
+            for (auto iter :settings.allKeys() )
+            {
+               QString pipo= iter ;
+               if (pipo.contains("Colors/"))
+                   qDebug()<< "Colors: " <<  pipo.remove(QRegExp("Colors/")) << "=" << settings.value(iter).toString() ;
+               else
+                    qDebug() << iter << "=>" <<settings.value(iter).toString()  ;
+            }
+
+         settings.endGroup();
+     }
 
 
-
-
-
-
- return true ;
+    return true ;
 }
 
 /* Models section is where each model, ie: the physical leds matrix, is described
