@@ -18,7 +18,7 @@ private:
 public:
     static QVector<QVector<QRgb>> Proj_VectorMatrix;
     int CurVector_Index;
-    ProjectMatrix(const QString M_Name, const quint16 M_Cols, const quint16 M_Rows, const quint32 M_ColorsDepth);
+    ProjectMatrix(const QString M_Name, const quint16 M_Rows, const quint16 M_Cols, const quint32 M_ColorsDepth);
     void AppendPattern(MathMatrix ImgToRead, QVector<QVector<QRgb> > &MatrixVector);
     int SavePattern(QString Filename, QVector<QVector<QRgb> > &MatrixVector);
     int LoadPattern(QString Filename, QVector<QVector<QRgb> > &MatrixVector);

@@ -10,9 +10,9 @@
 #define EMPTY_SEQUENCE          -11
 
 ///TODO : For the network sender = the code is in MyButtonGroup.Send
-ProjectMatrix::ProjectMatrix(const QString M_Name, const quint16 M_Cols, const quint16 M_Rows, const quint32 M_ColorsDepth)
+ProjectMatrix::ProjectMatrix(const QString M_Name, const quint16 M_Rows, const quint16 M_Cols, const quint32 M_ColorsDepth)
 {
-    MathMatrix ProjMatrix(M_Name,M_Cols,M_Rows,M_ColorsDepth);
+    MathMatrix ProjMatrix(M_Name,M_Rows,M_Cols,M_ColorsDepth);
     Cols=M_Cols;
     Rows=M_Rows;
     ColorDepth=M_ColorsDepth;

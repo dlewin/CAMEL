@@ -39,10 +39,15 @@ bool ConfigurationManager::LoadFromFile(QString InifileName)
 
      qDebug() << ModelText  ;
 
+    QVector<Matrix_Model> AllModels ;
 
      for (auto it2: ModelsList)
      {
+
+         Matrix_Model Temp_Model;
+
          qDebug()<< "Model:" << it2 ;
+         Temp_Model.Name= QString(it2) ;
 
          settings.beginGroup(it2);
 //            qDebug() << it2 << "-" <<settings.allKeys() ;
@@ -52,12 +57,24 @@ bool ConfigurationManager::LoadFromFile(QString InifileName)
                if (pipo.contains("Colors/"))
                    qDebug()<< "Colors: " <<  pipo.remove(QRegExp("Colors/")) << "=" << settings.value(iter).toString() ;
                else
-                    qDebug() << iter << "=>" <<settings.value(iter).toString()  ;
+               {
+                   if ( pipo.contains("Cols") )
+                       Temp_Model.Cols = settings.value(iter).toUInt();
+                   else if ( pipo.contains("Rows") )
+                        Temp_Model.Rows= settings.value(iter).toUInt() ;
+                   qDebug() << iter << "=>" <<settings.value(iter).toString()  ;
+               }
             }
 
          settings.endGroup();
+
+         // We now have all the elements to create a complete model
+       AllModels.push_back(Temp_Model );
+
      }
 
+     for ( int i=0; i<AllModels.size(); i++)
+        qDebug() << AllModels[i].Name <<"Struct" ;
 
     return true ;
 }
