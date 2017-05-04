@@ -26,23 +26,23 @@ bool ConfigurationManager::LoadFromFile(QString InifileName)
     QSettings settings( InifileName , QSettings::IniFormat )             ;
     QStringList AllKeysList ( settings.allKeys()) ;
 
-    QStringList TempModel ;
-    for (auto it: AllKeysList)
-    {
-         TempModel << it.split('/');
-
-//        qDebug() << it.split('/') << " => " <<   settings.value(it).toString()              ;
-
-    }
-
-    QStringList ModelsList ;
-     settings.beginGroup("Models");
-        ModelsList << settings.childKeys() ;
+    QStringList ModelsList, ModelText ;
+    settings.beginGroup("Models");
+        {
+              ModelsList << settings.childKeys()                            ;
+              foreach (const QString &childKey, ModelsList)
+              {
+                  ModelText <<  settings.value(childKey).toString()                      ;
+              }
+          }
      settings.endGroup();
+
+     qDebug() << ModelText  ;
+
 
      for (auto it2: ModelsList)
      {
-         qDebug()<< "Model:" << it2 << "Title:" << settings.value(it2).toString();
+         qDebug()<< "Model:" << it2 ;
 
          settings.beginGroup(it2);
 //            qDebug() << it2 << "-" <<settings.allKeys() ;
@@ -81,7 +81,7 @@ bool ConfigurationManager::LoadFromFile(QString InifileName)
     3=Pattern3
     ....
 */
-///TODO change the Matrix_Declaration for colors
+
 bool ConfigurationManager::SaveToFile(const QString InifileName, quint16 Rows ,quint16 Cols  )
 {
     QSettings settings( InifileName, QSettings::IniFormat )                     ;
