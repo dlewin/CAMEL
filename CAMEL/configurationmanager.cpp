@@ -53,16 +53,24 @@ bool ConfigurationManager::LoadFromFile(QString InifileName)
 //            qDebug() << it2 << "-" <<settings.allKeys() ;
             for (auto iter :settings.allKeys() )
             {
-               QString pipo= iter ;
-               if (pipo.contains("Colors/"))
-                   qDebug()<< "Colors: " <<  pipo.remove(QRegExp("Colors/")) << "=" << settings.value(iter).toString() ;
+               QString buffer= iter ;
+               if (buffer.contains("Colors/"))      // Looking for a Color List Name = Value
+               {
+                   QString ColorName = buffer.remove(QRegExp("Colors/"));
+                   QColor ColorValue=  QColor(settings.value(iter).toInt()) ;
+
+                Temp_Model.ColorsList << QPair<QString, QColor> ( ColorName,ColorValue ) ;
+                   qDebug()<< "Colors: " <<  buffer.remove(QRegExp("Colors/")) << ".=." << settings.value(iter).toString() ;
+               }
                else
                {
-                   if ( pipo.contains("Cols") )
+                   if ( buffer.contains("Cols") )
                        Temp_Model.Cols = settings.value(iter).toUInt();
-                   else if ( pipo.contains("Rows") )
-                        Temp_Model.Rows= settings.value(iter).toUInt() ;
-                   qDebug() << iter << "=>" <<settings.value(iter).toString()  ;
+                   else if ( buffer.contains("Rows") )
+                        Temp_Model.Rows = settings.value(iter).toUInt() ;
+                   else if ( buffer.contains("colorsdepth") )                        // Looking for a ColorDepth = Value
+                        Temp_Model.ColorsDepth = settings.value(iter).toUInt() ;
+//                   qDebug() << buffer << "=>" <<settings.value(iter).toString()  ;
                }
             }
 
@@ -74,7 +82,9 @@ bool ConfigurationManager::LoadFromFile(QString InifileName)
      }
 
      for ( int i=0; i<AllModels.size(); i++)
-        qDebug() << AllModels[i].Name <<"Struct" ;
+     {
+        qDebug() << AllModels[i].Name <<" / " << AllModels[i].Description <<" / "<< AllModels[i].ColorsDepth <<" / "<< AllModels[i].ColorsList <<" / ";
+     }
 
     return true ;
 }
@@ -109,20 +119,20 @@ bool ConfigurationManager::SaveToFile(const QString InifileName, quint16 Rows ,q
     settings.beginGroup("Adafruit_BicolorLEDSquarePixel") ;
         settings.setValue( "Rows",Rows);
         settings.setValue( "Cols", Cols);
-        settings.setValue( "Colors/Red", "0x800000");
-        settings.setValue( "Colors/Green","0x008000");
-        settings.setValue( "Colors/Orange","0xffa500");
+        settings.setValue( "Colors/Red", "8388608");
+        settings.setValue( "Colors/Green","32768");
+        settings.setValue( "Colors/Orange","16753920");
     settings.endGroup()                                                        ;
     settings.beginGroup("SenseHat") ;
         settings.setValue( "Rows",Rows);
         settings.setValue( "Cols", Cols);
-        settings.setValue( "Colors","0xFFFFFF");
+        settings.setValue( "colorsdepth","16777215");
     settings.endGroup()  ;
     settings.beginGroup("Sequence1")                                               ;
         settings.setValue( "File" , "Pattern1.bin" ) ;
         settings.setValue( "Rows",Rows);
         settings.setValue( "Cols", Cols);
-        settings.setValue( "Colors","0x000003");
+        settings.setValue( "Colors","000003");
         settings.setValue ( "1","Pattern1" ) ;
     settings.endGroup()                                                        ;
 

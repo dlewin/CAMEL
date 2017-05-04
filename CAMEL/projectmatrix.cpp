@@ -24,7 +24,7 @@ ProjectMatrix::ProjectMatrix(const QString M_Name, const quint16 M_Rows, const q
 
     ConfigurationManager ConfMgr ;
 //    QString MatxDims = QString::number(Rows) +"x" +QString::number(Cols) +"@" +QString::number(ColorDepth) ;
-//    ConfMgr.SaveToFile("Camel.ini",Rows, Cols) ;
+    ConfMgr.SaveToFile("Camel.ini",Rows, Cols) ;
     ConfMgr.LoadFromFile("Camel.ini") ;
 
 

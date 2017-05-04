@@ -10,7 +10,7 @@ struct Matrix_Model
     quint16 Rows ;
     quint16 Cols ;
     quint32 ColorsDepth ;
-    QVector<quint32> ColorsList ;
+    QVector< QPair<QString, QColor> > ColorsList ;
 };
 
 class ConfigurationManager
