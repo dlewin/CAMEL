@@ -1,4 +1,5 @@
 #include "projectmatrix.h"
+#include <QDebug>
 
 #define MAGIC_NUMBER            0xDEADFACE
 #define BIN_FILE_VERSION        1
@@ -9,7 +10,7 @@
 
 #define EMPTY_SEQUENCE          -11
 
-///TODO : For the network sender = the code is in MyButtonGroup.Send
+///NOTE : For the network sender = the code is in MyButtonGroup.Send
 ProjectMatrix::ProjectMatrix(const QString M_Name, const quint16 M_Rows, const quint16 M_Cols, const quint32 M_ColorsDepth)
 {
     MathMatrix ProjMatrix(M_Name,M_Rows,M_Cols,M_ColorsDepth);
@@ -21,12 +22,6 @@ ProjectMatrix::ProjectMatrix(const QString M_Name, const quint16 M_Rows, const q
     ProjMatrix.SetLine(1,0xFF123456) ;
     AppendPattern(ProjMatrix, Proj_VectorMatrix );          // Copy the current Pattern Matrix into the current project Vector of patterns
 //    TestReadVector(Proj_VectorMatrix) ;
-
-    ConfigurationManager ConfMgr ;
-//    QString MatxDims = QString::number(Rows) +"x" +QString::number(Cols) +"@" +QString::number(ColorDepth) ;
-    ConfMgr.SaveToFile("Camel.ini",Rows, Cols) ;
-    ConfMgr.LoadFromFile("Camel.ini") ;
-
 
 }
 
@@ -44,7 +39,7 @@ int ProjectMatrix::RemoveLastPattern(QVector<QVector<QRgb> > &MatrixVector)
     return 0 ;
 }
 
- /// TODO : Retrieve LoadPattern return that will be sent to Gui_Matrix with an Error management
+ /// WARNING : Retrieve LoadPattern return that will be sent to Gui_Matrix with an Error management
 int ProjectMatrix::LoadPattern(QString Filename, QVector<QVector<QRgb> > &MatrixVector)
 {
     QFile filein(Filename);

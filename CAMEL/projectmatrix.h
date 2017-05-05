@@ -4,7 +4,6 @@
 #include <QFile>
 
 #include "matrix.h"
-#include "configurationmanager.h"
 #include "sequencemanager.h"
 
 class ProjectMatrix

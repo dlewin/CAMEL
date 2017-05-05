@@ -15,7 +15,6 @@ TEMPLATE = app
 SOURCES += main.cpp\
         camel.cpp \
     matrix.cpp \
-    configurationmanager.cpp \
     sequencemanager.cpp \
     projectmatrix.cpp \
     guimatrix.cpp \
@@ -23,7 +22,6 @@ SOURCES += main.cpp\
 
 HEADERS  += camel.h \
     matrix.h \
-    configurationmanager.h \
     sequencemanager.h \
     projectmatrix.h \
     guimatrix.h \

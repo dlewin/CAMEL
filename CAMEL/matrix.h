@@ -37,7 +37,7 @@ public:
     bool SetLine(int Line, QColor NamedColor);
     bool SetColumn(int Column, quint32 Color);
     bool SetColumn(int Column, QColor NamedColor);
-    void SetBorder(quint32 Color); /// NOTE : Improve it with a <Depth> paramater
+    void SetBorder(quint32 Color);
     void SetBorder( QColor NamedColor );
     QImage ColShift(int Offset);
     void LineShift(int Offset);
