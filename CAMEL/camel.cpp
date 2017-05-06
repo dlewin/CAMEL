@@ -18,11 +18,6 @@ Camel::Camel(QWidget *parent) :
 
     SaveToFile("Camel.ini",Rows, Cols) ;
     LoadFromFile("Camel.ini") ;
-
-
-//    ProjectMatrix* workMatrix   = new ProjectMatrix("Adafruit Bicolors I2C Leds Matrix", 8,8,3);
-
-
 }
 
 
@@ -48,8 +43,6 @@ bool Camel::LoadFromFile(QString InifileName)
               }
           }
      settings.endGroup();
-
-//    QVector<Matrix_Model> AllModels ;
 
      for (auto it2: ModelsList)
      {
@@ -196,17 +189,37 @@ void Camel::CreateDock()
      SelectColors_Action =toolbar->addAction (QIcon(colors), "Select color");
      connect(SelectColors_Action, SIGNAL(triggered()), this, SLOT(color_selector() ));
 }
+
+
+
 int Camel::Wizard()
 {
+    int ColorNb ;
     QStringList items;
-    items << tr("Spring") << tr("Summer") << tr("Fall") << tr("Winter");
+    for ( int i=0; i<MatrixModels.size(); i++)
+        items << MatrixModels[i].Name ;
 
     bool ok;
     QString item = QInputDialog::getItem(this, tr("Matrix Selection"),
-                                         tr("Model:"), items, 0, false, &ok);
+                                         tr("Select a model:"), items, 0, false, &ok);
     if (ok && !item.isEmpty())
     {
-        qDebug() << "item:" << item;
+        int Model_index = -1;
+        for ( int i=0; i<MatrixModels.size(); i++)
+        {
+            if ( item.compare( MatrixModels[i].Name ) ==0 )       // Look for the selected model
+                Model_index = i;
+        }
+
+        // Compute the colors or colordepth
+        if( MatrixModels[Model_index].ColorsList.size() !=0)
+            ColorNb= MatrixModels[Model_index].ColorsList.size() ;
+        else if (MatrixModels[Model_index].ColorsDepth !=0 )
+            ColorNb =  MatrixModels[Model_index].ColorsDepth ;
+        else return -2 ;                                    // Error: nothing about colors from the model
+
+        ProjectMatrix* workMatrix   = new ProjectMatrix( MatrixModels[Model_index].Name, MatrixModels[Model_index].Rows , MatrixModels[Model_index].Cols, ColorNb);
+
         return 0 ;
     }
     return -1 ;

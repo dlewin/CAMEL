@@ -39,6 +39,7 @@ private:
     bool SaveToFile(const QString InifileName , quint16 Rows, quint16 Cols);
 
 public:
+    ProjectMatrix* workMatrix ;
     explicit Camel(QWidget *parent = 0);
     ~Camel();
 
