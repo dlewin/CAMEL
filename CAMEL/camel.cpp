@@ -8,13 +8,13 @@ Camel::Camel(QWidget *parent) :
 {
     ui->setupUi(this);
     setDockNestingEnabled(true);
-    QWidget *MatrixGui = new QWidget();
+
 
     CreateDock();
     int Rows=8,Cols=8, ColorDepth=3 ; //Debug: will be provided by the wizard and given for ProkectMatrix Instanciation
-    GuiMatrix* Matrix_8x8x3 = new GuiMatrix(Rows,Cols,ColorDepth,MatrixGui );
 
-    setCentralWidget(MatrixGui);
+
+
 
     SaveToFile("Camel.ini",Rows, Cols) ;
     LoadFromFile("Camel.ini") ;
@@ -194,7 +194,7 @@ void Camel::CreateDock()
 
 int Camel::Wizard()
 {
-    int ColorNb ;
+    int ColorNb ;    
     QStringList items;
     for ( int i=0; i<MatrixModels.size(); i++)
         items << MatrixModels[i].Name ;
@@ -218,7 +218,11 @@ int Camel::Wizard()
             ColorNb =  MatrixModels[Model_index].ColorsDepth ;
         else return -2 ;                                    // Error: nothing about colors from the model
 
+
         ProjectMatrix* workMatrix   = new ProjectMatrix( MatrixModels[Model_index].Name, MatrixModels[Model_index].Rows , MatrixModels[Model_index].Cols, ColorNb);
+        QWidget *MatrixGui = new QWidget();
+        GuiMatrix* Matrix_8x8x3 = new GuiMatrix(MatrixModels[Model_index].Rows,MatrixModels[Model_index].Cols,ColorNb,MatrixGui );
+        setCentralWidget(MatrixGui);
 
         return 0 ;
     }
