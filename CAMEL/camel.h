@@ -30,8 +30,12 @@ class Camel : public QMainWindow
 {
     Q_OBJECT
 private:
+    GuiMatrix* CurrentGUIMatrix ;
+//    ProjectMatrix workMatrix ;
+    QVector<QVector<QRgb>> Proj_VectorMatrix;
     QVector<Matrix_Model> MatrixModels ;
     QAction* SelectColors_Action;
+    QAction*  SaveGUIPattern_Action ;
     QAction* Wizard_Action;
     Ui::Camel *ui;
     void CreateDock();
@@ -39,11 +43,12 @@ private:
     bool SaveToFile(const QString InifileName , quint16 Rows, quint16 Cols);
 
 public:
-    ProjectMatrix* workMatrix ;
     explicit Camel(QWidget *parent = 0);
     ~Camel();
 
+
 private slots:
+    int SaveGUIPattern();
     void color_selector();
     int Wizard();
 };

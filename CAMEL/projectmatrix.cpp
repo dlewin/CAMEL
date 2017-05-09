@@ -1,5 +1,7 @@
-#include "projectmatrix.h"
 #include <QDebug>
+#include "projectmatrix.h"
+
+
 
 #define MAGIC_NUMBER            0xDEADFACE
 #define BIN_FILE_VERSION        1
@@ -10,20 +12,25 @@
 
 #define EMPTY_SEQUENCE          -11
 
+
 ///NOTE : For the network sender = the code is in MyButtonGroup.Send
-ProjectMatrix::ProjectMatrix(const QString M_Name, const quint16 M_Rows, const quint16 M_Cols, const quint32 M_ColorsDepth)
+ProjectMatrix::ProjectMatrix(const QString M_Name, const quint16 M_Rows, const quint16 M_Cols, const quint32 M_ColorsDepth,
+                             QVector<QVector<QRgb>> &Proj_VectorMatrix)
 {
     MathMatrix ProjMatrix(M_Name,M_Rows,M_Cols,M_ColorsDepth);
     Cols=M_Cols;
     Rows=M_Rows;
     ColorDepth=M_ColorsDepth;
 
-    QVector<QVector<QRgb>> Proj_VectorMatrix(1);
+//    QVector<QVector<QRgb>> Proj_VectorMatrix(1);
     ProjMatrix.SetLine(1,0xFF123456) ;
     AppendPattern(ProjMatrix, Proj_VectorMatrix );          // Copy the current Pattern Matrix into the current project Vector of patterns
+    qDebug()<< "Proj_VectorMatrix" << &Proj_VectorMatrix ;
 //    TestReadVector(Proj_VectorMatrix) ;
 
 }
+
+
 
 void ProjectMatrix::RemoveAllPatterns(QVector<QVector<QRgb> > &MatrixVector)
 {
@@ -99,7 +106,7 @@ int ProjectMatrix::LoadPattern(QString Filename, QVector<QVector<QRgb> > &Matrix
     return 0 ;
 }
 
-// Read the current pattern defined in the working matrix and append it the sequence
+// Read the current vector pattern defined in the working matrix and append it the sequence
 void ProjectMatrix::AppendPattern(MathMatrix ImgToRead, QVector<QVector<QRgb>> &MatrixVector)
 {
     ImgToRead.CopyPatternToSequence( MatrixVector );

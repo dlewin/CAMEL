@@ -9,14 +9,11 @@ Camel::Camel(QWidget *parent) :
     ui->setupUi(this);
     setDockNestingEnabled(true);
 
+            Proj_VectorMatrix;
 
     CreateDock();
-    int Rows=8,Cols=8, ColorDepth=3 ; //Debug: will be provided by the wizard and given for ProkectMatrix Instanciation
 
-
-
-
-    SaveToFile("Camel.ini",Rows, Cols) ;
+    SaveToFile("Camel.ini",8, 8) ;
     LoadFromFile("Camel.ini") ;
 }
 
@@ -148,17 +145,17 @@ Camel::~Camel()
 
 void Camel::CreateDock()
 {
-    // First dock in the left top corner
+        // 1st dock item
     QDockWidget *dockWidget = new QDockWidget("--- 1 ---");
     dockWidget->setWidget(new QTextEdit);
     addDockWidget(Qt::LeftDockWidgetArea, dockWidget);
 
-    // Second dock below first one
+        // 2nd dock item
     QDockWidget *dockWidget2 = new QDockWidget("--- 2 ---");
     dockWidget2->setWidget(new QPushButton );
     addDockWidget(Qt::LeftDockWidgetArea, dockWidget2);
 
-    // Third in tab with second one
+        // 3rd dock item
     QDockWidget *dockWidget3 = new QDockWidget("--- 3 ---");
     dockWidget3->setAllowedAreas(Qt::RightDockWidgetArea) ;
 
@@ -167,12 +164,11 @@ void Camel::CreateDock()
     ColorList->insertItem(1,"2ER Label");
     ColorList->item(0)->setForeground(*(new QBrush(Qt::red)));
     ColorList->item(0)->setBackground(*(new QBrush(Qt::green)));
-
     dockWidget2->setWidget(ColorList);
 
     addDockWidget(Qt::RightDockWidgetArea, dockWidget3);
 
-
+        // Icons from resources
     QPixmap matrix(":/matrix_icon");
     QPixmap wizard(":/wizard");
     QPixmap magic(":/magic");
@@ -183,14 +179,24 @@ void Camel::CreateDock()
     toolbar->addAction(QIcon(wizard), "New Matrix");
     toolbar->addAction(QIcon(magic), "New Matrix");
 
-    Wizard_Action =toolbar->addAction (QIcon(wizard), "Wizard");
-    connect(Wizard_Action, SIGNAL(triggered()), this, SLOT(Wizard() ));
+    Wizard_Action =toolbar->addAction (QIcon(wizard), "Wizard");        // Manage Wizard Action
+    connect(Wizard_Action, SIGNAL(triggered()), this, SLOT(Wizard() )); // and its event
 
-     SelectColors_Action =toolbar->addAction (QIcon(colors), "Select color");
-     connect(SelectColors_Action, SIGNAL(triggered()), this, SLOT(color_selector() ));
+    SelectColors_Action =toolbar->addAction (QIcon(colors), "Select color");           // Manage Color Action
+    connect(SelectColors_Action, SIGNAL(triggered()), this, SLOT(color_selector() ));  // and its event
+
+    SaveGUIPattern_Action =toolbar->addAction (QIcon(matrix), "Save the current Pattern");           // Manage Color Action
+    connect(SaveGUIPattern_Action, SIGNAL(triggered()), this, SLOT(SaveGUIPattern() ));  // and its event
 }
 
 
+/* Parse the Graphical Matrix to read all the configured colors
+     and save it to the Matrix */
+
+int Camel::SaveGUIPattern()
+{
+//  return (workMatrix->SaveGUIPattern(*CurrentGUIMatrix)) ;
+}
 
 int Camel::Wizard()
 {
@@ -219,10 +225,15 @@ int Camel::Wizard()
         else return -2 ;                                    // Error: nothing about colors from the model
 
 
-        ProjectMatrix* workMatrix   = new ProjectMatrix( MatrixModels[Model_index].Name, MatrixModels[Model_index].Rows , MatrixModels[Model_index].Cols, ColorNb);
+//        Proj_VectorMatrix();
+
+        ProjectMatrix workMatrix( MatrixModels[Model_index].Name, MatrixModels[Model_index].Rows , MatrixModels[Model_index].Cols, ColorNb, Proj_VectorMatrix);
+
         QWidget *MatrixGui = new QWidget();
-        GuiMatrix* Matrix_8x8x3 = new GuiMatrix(MatrixModels[Model_index].Rows,MatrixModels[Model_index].Cols,ColorNb,MatrixGui );
         setCentralWidget(MatrixGui);
+        CurrentGUIMatrix = new GuiMatrix(MatrixModels[Model_index].Rows,MatrixModels[Model_index].Cols,ColorNb,MatrixGui, Proj_VectorMatrix );
+
+//        CurrentGUIMatrix->truc = &Proj_VectorMatrix;
 
         return 0 ;
     }

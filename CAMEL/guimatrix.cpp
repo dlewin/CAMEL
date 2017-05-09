@@ -1,20 +1,20 @@
 #include "guimatrix.h"
-#include "projectmatrix.h"
+#include <QDebug>
 
+#define BTNCOLOR_GREY 8421504
+#define BTNCOLOR_ORANGE 16753920
+#define BTNCOLOR_GREEN 32768
+#define BTNCOLOR_RED 8388608
 
-#define BTNCOLOR_GREY "#808080"
-#define BTNCOLOR_ORANGE "#ffa500"
-#define BTNCOLOR_GREEN "#008000"
-
-
-GuiMatrix::GuiMatrix(int Rows, int Cols, int Led_colors,QWidget * parentWidget)
+GuiMatrix::GuiMatrix(int Rows, int Cols, int Led_colors,QWidget * parentWidget, QVector<QVector<QRgb> > &Proj_VectorMatrix )
+    : truc(&Proj_VectorMatrix),        MatxRows(Rows),         MatxCols(Cols)
 {
     // Let's create the HMI that accepts click as input and also represent the MainMatrix states
     setParent(parentWidget)  ;
 
     QVBoxLayout *layout     = new QVBoxLayout()                             ;
     QHBoxLayout *Hlayout    = new QHBoxLayout()                                         ;
-    QGridLayout *Glayout    = new QGridLayout()                                         ;
+    Glayout    = new QGridLayout()                                         ;
     Glayout->setSpacing(0)                                                              ;
     Hlayout->addStretch(1)                                                              ;
     Hlayout->addLayout(Glayout)                                                         ;
@@ -45,27 +45,41 @@ void GuiMatrix::Populate(QGridLayout *layout, const int rows, const int cols)
     }
 }
 
+
+///TODO need to manage the colors declared from model (only 3 here)
 void GuiMatrix::buttonClick(QAbstractButton* button)
 {
     QColor  Btn_Color = button->palette().color(QPalette::Button) ;
-    QString BtnColorName= Btn_Color.name();
+//    QString BtnColorName= Btn_Color.name();
+    int BtnColorValue= Btn_Color.value() ;
+    QRgb CurrentBtnColor ;
 
-    if (BtnColorName == BTNCOLOR_GREY)
+    if (BtnColorValue == BTNCOLOR_GREY)
     {
         button->setStyleSheet("background-color:green;")     ;
+        CurrentBtnColor = BTNCOLOR_GREEN;
     }
-    else if (BtnColorName == BTNCOLOR_GREEN )
+    else if (BtnColorValue == BTNCOLOR_GREEN )
     {
         button->setStyleSheet("background-color:orange;")    ;
+        CurrentBtnColor = BTNCOLOR_ORANGE;
     }
-    else if (BtnColorName == BTNCOLOR_ORANGE)
+    else if (BtnColorValue == BTNCOLOR_ORANGE)
     {
         button->setStyleSheet("background-color:red;")       ;
+        CurrentBtnColor = BTNCOLOR_RED;
     }
     else
     {
         button->setStyleSheet("background-color:grey;")      ;
+        CurrentBtnColor = BTNCOLOR_GREEN;
     }
+
+    int BtnID= abs(this->id(button)) -2 ;
+    int Current_Row,Current_Col ;
+
+
+   qDebug()<< "truc" << truc[0][0] << BtnID ;
 }
 
 GuiMatrix::~GuiMatrix()
