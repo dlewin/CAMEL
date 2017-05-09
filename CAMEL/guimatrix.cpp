@@ -76,10 +76,10 @@ void GuiMatrix::buttonClick(QAbstractButton* button)
     }
 
     int BtnID= abs(this->id(button)) -2 ;
-    int Current_Row,Current_Col ;
+    uint Current_Row= BtnID/8 ;
+    uint Current_Col = BtnID -(8*Current_Row);
 
 
-   qDebug()<< "truc" << truc[0][0] << BtnID ;
 }
 
 GuiMatrix::~GuiMatrix()
