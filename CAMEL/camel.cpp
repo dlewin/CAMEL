@@ -2,6 +2,18 @@
 
 #include "ui_camel.h"
 
+#define MAGIC_NUMBER            0xDEADFACE
+#define BIN_FILE_VERSION        1
+#define ERR_BAD_FILE_FORMAT     -1
+#define ERR_BAD_FILE_TOO_OLD    -2
+#define ERR_BAD_FILE_TOO_NEW    -3
+#define ERR_MTX_FMT_UNKNOWN     -4
+
+#define EMPTY_SEQUENCE          -11
+
+
+///NOTE : For the network sender = the code is in MyButtonGroup.Send
+
 Camel::Camel(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Camel)
@@ -9,16 +21,16 @@ Camel::Camel(QWidget *parent) :
     ui->setupUi(this);
     setDockNestingEnabled(true);
 
-            Proj_VectorMatrix;
+//    Proj_VectorMatrix;
 
     CreateDock();
 
-    SaveToFile("Camel.ini",8, 8) ;
-    LoadFromFile("Camel.ini") ;
+    SaveConfig("Camel.ini",8, 8) ;
+    LoadConfig("Camel.ini") ;
 }
 
 
-bool Camel::LoadFromFile(QString InifileName)
+bool Camel::LoadConfig(QString InifileName)
 {
     QSettings settings( InifileName , QSettings::IniFormat ) ;
     QFile Inifile(InifileName) ;
@@ -32,13 +44,13 @@ bool Camel::LoadFromFile(QString InifileName)
 
      QStringList ModelsList, ModelText ;
      settings.beginGroup("Models");
-        {
-              ModelsList << settings.childKeys()                            ;
-              foreach (const QString &childKey, ModelsList)
-              {
-                  ModelText <<  settings.value(childKey).toString()                      ;
-              }
-          }
+     {
+         ModelsList << settings.childKeys()                            ;
+         foreach (const QString &childKey, ModelsList)
+         {
+             ModelText <<  settings.value(childKey).toString()                      ;
+         }
+     }
      settings.endGroup();
 
      for (auto it2: ModelsList)
@@ -53,9 +65,9 @@ bool Camel::LoadFromFile(QString InifileName)
                if (buffer.contains("Colors/"))      // Looking for a Color List Name = Value
                {
                    QString ColorName = buffer.remove(QRegExp("Colors/"));
-                   QColor ColorValue=  QColor(settings.value(iter).toInt()) ;
+                   QRgb ColorValue=  QRgb(settings.value(iter).toUInt()) ;
 
-                Temp_Model.ColorsList << QPair<QString, QColor> ( ColorName,ColorValue ) ;
+                Temp_Model.ColorsList << QPair<QString, QRgb> ( ColorName,ColorValue ) ;
 //                   qDebug()<< "Colors: " <<  buffer.remove(QRegExp("Colors/")) << ".=." << settings.value(iter).toString() ;
                }
                else
@@ -76,7 +88,7 @@ bool Camel::LoadFromFile(QString InifileName)
        MatrixModels.push_back(Temp_Model );
 
      }
-
+            //Testing
      for ( int i=0; i<MatrixModels.size(); i++)
      {
         qDebug() << MatrixModels[i].Name  <<" / "<< MatrixModels[i].ColorsDepth <<" / "<< MatrixModels[i].ColorsList ;
@@ -106,7 +118,7 @@ bool Camel::LoadFromFile(QString InifileName)
     ....
 */
 
-bool Camel::SaveToFile(const QString InifileName, quint16 Rows ,quint16 Cols  )
+bool Camel::SaveConfig(const QString InifileName, quint16 Rows ,quint16 Cols  )
 {
     QSettings settings( InifileName, QSettings::IniFormat )                     ;
     settings.beginGroup("Models")                                                       ;
@@ -175,9 +187,9 @@ void Camel::CreateDock()
     QPixmap colors(":/colors");
 
     QToolBar *toolbar = addToolBar("main toolbar");
-    toolbar->addAction(QIcon(matrix), "test");
-    toolbar->addAction(QIcon(wizard), "New Matrix");
-    toolbar->addAction(QIcon(magic), "New Matrix");
+//    toolbar->addAction(QIcon(matrix), "test");
+//    toolbar->addAction(QIcon(wizard), "New Matrix");
+//    toolbar->addAction(QIcon(magic), "New Matrix");
 
     Wizard_Action =toolbar->addAction (QIcon(wizard), "Wizard");        // Manage Wizard Action
     connect(Wizard_Action, SIGNAL(triggered()), this, SLOT(Wizard() )); // and its event
@@ -190,13 +202,6 @@ void Camel::CreateDock()
 }
 
 
-/* Parse the Graphical Matrix to read all the configured colors
-     and save it to the Matrix */
-
-int Camel::SaveGUIPattern()
-{
-//  return (workMatrix->SaveGUIPattern(*CurrentGUIMatrix)) ;
-}
 
 int Camel::Wizard()
 {
@@ -224,20 +229,162 @@ int Camel::Wizard()
             ColorNb =  MatrixModels[Model_index].ColorsDepth ;
         else return -2 ;                                    // Error: nothing about colors from the model
 
-
-//        Proj_VectorMatrix();
-
-        ProjectMatrix workMatrix( MatrixModels[Model_index].Name, MatrixModels[Model_index].Rows , MatrixModels[Model_index].Cols, ColorNb, Proj_VectorMatrix);
+        MatxRows = MatrixModels[Model_index].Rows;
+        MatxCols = MatrixModels[Model_index].Cols ;
 
         QWidget *MatrixGui = new QWidget();
         setCentralWidget(MatrixGui);
-        CurrentGUIMatrix = new GuiMatrix(MatrixModels[Model_index].Rows,MatrixModels[Model_index].Cols,ColorNb,MatrixGui, Proj_VectorMatrix );
+        QVector< QPair<QString, QRgb> > ColorsL = MatrixModels[Model_index].ColorsList ;
 
-//        CurrentGUIMatrix->truc = &Proj_VectorMatrix;
+//        qDebug()<< "Avant l'appel: " << ColorNb ;
+//        for (auto iter: ColorsL)
+//            qDebug() << iter << " "<< iter.second ;
+        CurrentGUIMatrix = new GuiMatrix(MatxRows,MatxCols,ColorNb,MatrixGui, ColorsL );
+
 
         return 0 ;
     }
     return -1 ;
+}
+
+// Goal : when you are happy with pattern, you need to "take a picture" of it and
+// save it into a sequence list.
+//Parse the GUImatrix and retrieve the color for each of the points in a 2D (row,cols) Vector
+
+//  Format: vector<std::vector<QRgb>> array_2d(rows, std::vector<QRgb>(cols, 0));
+
+void Camel::CopyGUIPatternToSequence( )
+{
+    QLayoutItem * truc ;
+
+    for ( int currentRow = 0; currentRow < MatxRows ; ++currentRow )
+        for ( int currentCol = 0; currentCol < MatxCols; ++currentCol )
+        {
+            QVector<QRgb> inner_vector;
+//            inner_vector.push_back( truc->widget()->styleSheet().toUInt() );  // ICI : Convertir en value QRGb
+            Proj_VectorMatrix.push_back(inner_vector);
+        }
+
+    truc = CurrentGUIMatrix->Glayout->itemAtPosition(0,1) ;
+//    QPalette pal = truc->widget()->palette();
+//    pal.setColor(truc->widget()->backgroundRole(), Qt::blue);
+//    truc->widget()->setPalette(pal);
+
+//    truc->widget()->palette().setColor(QPalette::Button,QColor(255, 0, 0, 127)); // ->setStyleSheet("background:rgb(200,100,150);");  // ou
+    qDebug() << "itemAtposition 0,0: " << truc->widget()->palette().button().color() ;
+//    PrintMatrix();
+}
+
+
+void Camel::SaveGUIPattern()
+{
+    CopyGUIPatternToSequence();
+}
+
+void Camel::RemoveAllPatterns(QVector<QVector<QRgb> > &MatrixVector)
+{
+    MatrixVector.clear();
+}
+
+int Camel::RemoveLastPattern(QVector<QVector<QRgb> > &MatrixVector)
+{
+    if (MatrixVector.isEmpty() )
+        return EMPTY_SEQUENCE ;
+
+    MatrixVector.removeLast();
+    return 0 ;
+}
+
+// Save all the patterns in the 2D Vector into the Sequence binary file
+
+int Camel::SaveSequence(QString Filename, QVector<QVector<QRgb>> &MatrixVector)
+{
+    if (MatrixVector.isEmpty() )
+        return EMPTY_SEQUENCE ;
+
+    QFile fileout(Filename);
+    if (fileout.open( QFile::WriteOnly ))
+    {
+        QDataStream out(&fileout);
+        // Header
+        out << (quint32) MAGIC_NUMBER ;             // Magic Number
+        out << (quint16) BIN_FILE_VERSION;
+        out << (quint16) MatrixVector.size() - 1;  // Tells how much patterns this sequence file have
+        out << (quint16) MatxRows;
+        out << (quint16) MatxCols;
+//        out << (quint32) MatrixModels[Model_index].ColorsDepth;
+
+
+        // now save the Patterns Data from the 2D Vector
+        for(int i = 0;i < MatrixVector.size();++i)
+        {
+              for(int j = 0;j < MatrixVector[i].size();++j)
+              {
+                 out <<  MatrixVector[i][j] ;
+              }
+        }
+        fileout.close();
+    }
+    return 0;
+}
+
+int Camel::LoadSequence(QString Filename, QVector<QVector<QRgb> > &MatrixVector)
+{
+    QFile filein(Filename);
+    if (!filein.open(QIODevice::ReadOnly))
+            return -1;
+
+    QDataStream in(&filein);
+
+    // Read and check the header
+    quint32 magic;
+    in >> magic;
+    if (magic != MAGIC_NUMBER)
+        return ERR_BAD_FILE_FORMAT;
+
+    // Read the version
+    quint16 version;
+    in >> version;
+    if (version < BIN_FILE_VERSION)
+        return ERR_BAD_FILE_TOO_OLD;
+    if (version > BIN_FILE_VERSION)
+        return ERR_BAD_FILE_TOO_NEW;
+
+    // Retrieve the sequence size ( how much patterns)
+    quint32 SeqSize ;
+    in >> SeqSize ;
+
+    //    MatrixFormat
+    quint16 SeqFileRows, SeqFileCols ;
+    quint32 SeqFileColors ;
+    in >> SeqFileRows;
+    in >> SeqFileCols;
+    in >> SeqFileColors;
+
+    // Check the dims of the matrix in the seq file
+    if ( SeqFileRows!=8 && SeqFileCols!=8 && SeqFileColors!=3 )
+        return ERR_MTX_FMT_UNKNOWN ;                                ///WARNING Matrix other than 8x8@3 are not handled
+
+    QVector<QVector<QRgb> > Temp_MatrixVector;
+    QRgb RGBValue = 0 ;
+
+    for(uint i = 0; i < SeqSize; ++i)
+    {
+        for(uint indRow = 0;indRow < SeqFileRows; ++indRow )
+        {
+            for(uint indCol = 0;indCol < SeqFileCols ;++indCol)
+            {
+                QVector<QRgb> inner_vector;
+                in >> RGBValue;
+
+                inner_vector.push_back(RGBValue);
+                Temp_MatrixVector.push_back(inner_vector);
+            }
+        }
+    }
+
+    MatrixVector = Temp_MatrixVector ;                      // now everything is ok : copy the  temp vector to the current working one
+    return 0 ;
 }
 
 void Camel::color_selector()
@@ -250,3 +397,19 @@ void Camel::color_selector()
     }
 }
 
+
+void Camel::PrintMatrix()
+{
+    if (Proj_VectorMatrix.isEmpty() )
+        qDebug() << "Vector is Empty" ;
+
+    for ( int indRow = 0; indRow < Proj_VectorMatrix.size()  ; ++indRow )
+//        for ( int indCol = 0; indCol <MatrixVector[indRow].size() ; ++indCol )
+        {
+            qDebug() << Proj_VectorMatrix[indRow][0] << Proj_VectorMatrix[indRow][1]
+                     << Proj_VectorMatrix[indRow][2]  << Proj_VectorMatrix[indRow][3]
+                    << Proj_VectorMatrix[indRow][4]  << Proj_VectorMatrix[indRow][5]
+                    << Proj_VectorMatrix[indRow][6]  << Proj_VectorMatrix[indRow][7] ;
+        }
+
+}

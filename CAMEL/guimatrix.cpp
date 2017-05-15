@@ -1,13 +1,35 @@
 #include "guimatrix.h"
 #include <QDebug>
 
-#define BTNCOLOR_GREY 8421504
+#define BTNCOLOR_GREY 32768
 #define BTNCOLOR_ORANGE 16753920
-#define BTNCOLOR_GREEN 32768
+#define BTNCOLOR_GREEN 8421504
 #define BTNCOLOR_RED 8388608
 
-GuiMatrix::GuiMatrix(int Rows, int Cols, int Led_colors,QWidget * parentWidget, QVector<QVector<QRgb> > &Proj_VectorMatrix )
-    : truc(&Proj_VectorMatrix),        MatxRows(Rows),         MatxCols(Cols)
+template<typename T> struct matrix
+{
+    matrix(unsigned m, unsigned n) : m(m), n(n), vs(m*n) {}
+    const T& operator ()     (unsigned i, unsigned j) const
+    {
+        return vs[i + m * j];
+    }
+
+    T& operator ()     (unsigned i, unsigned j)
+     {
+        return vs[i + m * j];
+    }
+
+private:
+    unsigned m;
+    unsigned n;
+    std::vector<T> vs;
+};
+
+GuiMatrix::GuiMatrix(uint Rows, uint Cols, quint32 Led_colors, QWidget * parentWidget, QVector< QPair<QString, QRgb> >& ColorsList )
+    : MatxRows(Rows),
+      MatxCols(Cols),
+      GUIMtx_BtnColorsArray(MatxRows * MatxCols, BTNCOLOR_GREY),
+      Palette()
 {
     // Let's create the HMI that accepts click as input and also represent the MainMatrix states
     setParent(parentWidget)  ;
@@ -24,9 +46,36 @@ GuiMatrix::GuiMatrix(int Rows, int Cols, int Led_colors,QWidget * parentWidget, 
 
     Populate(Glayout,Rows,Cols);
 
-   connect(this , SIGNAL(buttonClicked(QAbstractButton*)),this,SLOT(buttonClick(QAbstractButton*)));
+    /* A model will either have:
+     *  - a color depth, ie: the total number of colors
+     *  - a colors list: a list of the named colors
+     */
+    if ( ColorsList.size() ==0 )
+    {
+        for (int ind; ind <Led_colors; ind++)
+            Palette[ind]= ind ;
 
- parentWidget->setLayout(layout)                                                     ;
+        qDebug()<< "Palette (Led_colors) =" << Palette <<" " <<Led_colors ;
+    }
+    else
+    {
+         for (auto iter: ColorsList )
+         {
+            Palette<< iter.second ;
+          }
+
+         qDebug()<< "Palette (ColorsList) =" << Palette.size() << "ColorsList.size " << ColorsList.size() ;
+         for (auto iter: Palette)
+             qDebug() << iter ;
+    }
+
+    parentWidget->setLayout(layout)                                                     ;
+    connect(this , SIGNAL(buttonClicked(QAbstractButton*)),this,SLOT(buttonClick(QAbstractButton*)));
+
+ // ou aussi : matrix<uint>* mymatrix(8,8);
+// matrix<uint> mymatrix(8,8);
+// mymatrix(0,0)= 12;
+// qDebug() <<mymatrix(0,0);
 }
 
 void GuiMatrix::Populate(QGridLayout *layout, const int rows, const int cols)
@@ -49,37 +98,13 @@ void GuiMatrix::Populate(QGridLayout *layout, const int rows, const int cols)
 ///TODO need to manage the colors declared from model (only 3 here)
 void GuiMatrix::buttonClick(QAbstractButton* button)
 {
-    QColor  Btn_Color = button->palette().color(QPalette::Button) ;
-//    QString BtnColorName= Btn_Color.name();
-    int BtnColorValue= Btn_Color.value() ;
-    QRgb CurrentBtnColor ;
-
-    if (BtnColorValue == BTNCOLOR_GREY)
-    {
-        button->setStyleSheet("background-color:green;")     ;
-        CurrentBtnColor = BTNCOLOR_GREEN;
-    }
-    else if (BtnColorValue == BTNCOLOR_GREEN )
-    {
-        button->setStyleSheet("background-color:orange;")    ;
-        CurrentBtnColor = BTNCOLOR_ORANGE;
-    }
-    else if (BtnColorValue == BTNCOLOR_ORANGE)
-    {
-        button->setStyleSheet("background-color:red;")       ;
-        CurrentBtnColor = BTNCOLOR_RED;
-    }
-    else
-    {
-        button->setStyleSheet("background-color:grey;")      ;
-        CurrentBtnColor = BTNCOLOR_GREEN;
-    }
+    QRgb BtnColorValue ;
 
     int BtnID= abs(this->id(button)) -2 ;
     uint Current_Row= BtnID/8 ;
     uint Current_Col = BtnID -(8*Current_Row);
 
-
+    GUIMtx_BtnColorsArray[BtnID]= 1234 ;
 }
 
 GuiMatrix::~GuiMatrix()

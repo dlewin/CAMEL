@@ -10,20 +10,19 @@
 #include <QColorDialog>
 #include <QMessageBox>
 
-#include "projectmatrix.h"
 
 class GuiMatrix: public QButtonGroup
 {
     Q_OBJECT
 private :
-        int MatxRows;
-        int MatxCols;
-        QVector<QVector<QRgb> > Project_VectorMtx() ;
+        uint MatxRows;
+        uint MatxCols;
+        QVector<QRgb> GUIMtx_BtnColorsArray  ;       // Creating the internal color representation of the buttons matrix, assigned as Grey
+        QList<QRgb> Palette ;
 
 public:
-    QVector<QVector<QRgb> >* truc{} ;
     QGridLayout *Glayout;
-    GuiMatrix(int Rows, int Cols, int Led_colors, QWidget *parentWidget, QVector<QVector<QRgb> > &Proj_VectorMatrix);
+    GuiMatrix(uint Rows, uint Cols, quint32 Led_colors, QWidget *parentWidget, QVector<QPair<QString, QRgb> > &ColorsList);
     ~GuiMatrix();
     void Populate(QGridLayout *layout, const int rows, const int cols)                       ;
 

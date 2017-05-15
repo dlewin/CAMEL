@@ -13,20 +13,15 @@
 #define EMPTY_SEQUENCE          -11
 
 
-///NOTE : For the network sender = the code is in MyButtonGroup.Send
 ProjectMatrix::ProjectMatrix(const QString M_Name, const quint16 M_Rows, const quint16 M_Cols, const quint32 M_ColorsDepth,
-                             QVector<QVector<QRgb>> &Proj_VectorMatrix)
+                             QVector<QVector<QRgb>> &Proj_VectorMatrix):
+                             Cols(M_Cols) ,Rows(M_Rows), ColorDepth(M_ColorsDepth)
 {
     MathMatrix ProjMatrix(M_Name,M_Rows,M_Cols,M_ColorsDepth);
-    Cols=M_Cols;
-    Rows=M_Rows;
-    ColorDepth=M_ColorsDepth;
 
-//    QVector<QVector<QRgb>> Proj_VectorMatrix(1);
     ProjMatrix.SetLine(1,0xFF123456) ;
     AppendPattern(ProjMatrix, Proj_VectorMatrix );          // Copy the current Pattern Matrix into the current project Vector of patterns
-    qDebug()<< "Proj_VectorMatrix" << &Proj_VectorMatrix ;
-//    TestReadVector(Proj_VectorMatrix) ;
+    TestReadVector(Proj_VectorMatrix) ;
 
 }
 
