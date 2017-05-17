@@ -236,11 +236,7 @@ int Camel::Wizard()
         setCentralWidget(MatrixGui);
         QVector< QPair<QString, QRgb> > ColorsL = MatrixModels[Model_index].ColorsList ;
 
-//        qDebug()<< "Avant l'appel: " << ColorNb ;
-//        for (auto iter: ColorsL)
-//            qDebug() << iter << " "<< iter.second ;
         CurrentGUIMatrix = new GuiMatrix(MatxRows,MatxCols,ColorNb,MatrixGui, ColorsL );
-
 
         return 0 ;
     }

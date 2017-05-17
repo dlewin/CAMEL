@@ -98,13 +98,23 @@ void GuiMatrix::Populate(QGridLayout *layout, const int rows, const int cols)
 ///TODO need to manage the colors declared from model (only 3 here)
 void GuiMatrix::buttonClick(QAbstractButton* button)
 {
-    QRgb BtnColorValue ;
-
     int BtnID= abs(this->id(button)) -2 ;
+
+    QRgb BtnColorValue = GUIMtx_BtnColorsArray[BtnID];
+
     uint Current_Row= BtnID/8 ;
     uint Current_Col = BtnID -(8*Current_Row);
 
-    GUIMtx_BtnColorsArray[BtnID]= 1234 ;
+    int indexPalette = Palette.indexOf(BtnColorValue) ;
+    if ( Palette[indexPalette] == Palette.last() )
+         GUIMtx_BtnColorsArray[BtnID]= Palette.first() ;
+    else
+         GUIMtx_BtnColorsArray[BtnID]= Palette[++indexPalette] ;
+
+    BtnColorValue = GUIMtx_BtnColorsArray[BtnID] ;
+    QString ColorString = "background-color: " +   QString("#%1").arg(BtnColorValue, 6, 16, QLatin1Char( '0' ))  + ";";
+
+    button->setStyleSheet(ColorString)  ;
 }
 
 GuiMatrix::~GuiMatrix()
