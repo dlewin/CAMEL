@@ -28,6 +28,8 @@ public:
 
 public slots:
     void buttonClick(QAbstractButton* button) ;
+private slots:
+    void mousePressEvent(QEvent *e);
 };
 
 #endif // GUIMATRIX_H

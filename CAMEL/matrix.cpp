@@ -152,7 +152,6 @@ void MathMatrix::SetBorder(QColor NamedColor)
     SetColumn( WorkMatrix->width()-1,TempColor) ;
 }
 
-///FIXME: All "xShift and Rotate operations are not operatiional
 QImage  MathMatrix::ColShift(int Offset)
 {
    return( WorkMatrix->transformed(QTransform().translate(Offset,0)) );

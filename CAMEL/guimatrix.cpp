@@ -6,25 +6,6 @@
 #define BTNCOLOR_GREEN 8421504
 #define BTNCOLOR_RED 8388608
 
-template<typename T> struct matrix
-{
-    matrix(unsigned m, unsigned n) : m(m), n(n), vs(m*n) {}
-    const T& operator ()     (unsigned i, unsigned j) const
-    {
-        return vs[i + m * j];
-    }
-
-    T& operator ()     (unsigned i, unsigned j)
-     {
-        return vs[i + m * j];
-    }
-
-private:
-    unsigned m;
-    unsigned n;
-    std::vector<T> vs;
-};
-
 GuiMatrix::GuiMatrix(uint Rows, uint Cols, quint32 Led_colors, QWidget * parentWidget, QVector< QPair<QString, QRgb> >& ColorsList )
     : MatxRows(Rows),
       MatxCols(Cols),
@@ -72,10 +53,7 @@ GuiMatrix::GuiMatrix(uint Rows, uint Cols, quint32 Led_colors, QWidget * parentW
     parentWidget->setLayout(layout)                                                     ;
     connect(this , SIGNAL(buttonClicked(QAbstractButton*)),this,SLOT(buttonClick(QAbstractButton*)));
 
- // ou aussi : matrix<uint>* mymatrix(8,8);
-// matrix<uint> mymatrix(8,8);
-// mymatrix(0,0)= 12;
-// qDebug() <<mymatrix(0,0);
+
 }
 
 void GuiMatrix::Populate(QGridLayout *layout, const int rows, const int cols)
@@ -95,9 +73,9 @@ void GuiMatrix::Populate(QGridLayout *layout, const int rows, const int cols)
 }
 
 
-///TODO need to manage the colors declared from model (only 3 here)
 void GuiMatrix::buttonClick(QAbstractButton* button)
 {
+
     int BtnID= abs(this->id(button)) -2 ;
 
     QRgb BtnColorValue = GUIMtx_BtnColorsArray[BtnID];
@@ -115,6 +93,16 @@ void GuiMatrix::buttonClick(QAbstractButton* button)
     QString ColorString = "background-color: " +   QString("#%1").arg(BtnColorValue, 6, 16, QLatin1Char( '0' ))  + ";";
 
     button->setStyleSheet(ColorString)  ;
+}
+
+
+void GuiMatrix::mousePressEvent(QEvent *event)
+{
+    if(  this->event(event) == Qt::RightButton)
+    {
+        qDebug()<< "Right click" ;
+    }
+
 }
 
 GuiMatrix::~GuiMatrix()
