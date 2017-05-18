@@ -21,6 +21,7 @@ private :
         QList<QRgb> Palette ;
 
 public:
+    QRgb GetButtonColor(int Btn_ID)    ;
     QGridLayout *Glayout;
     GuiMatrix(uint Rows, uint Cols, quint32 Led_colors, QWidget *parentWidget, QVector<QPair<QString, QRgb> > &ColorsList);
     ~GuiMatrix();

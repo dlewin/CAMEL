@@ -34,12 +34,11 @@ private:
     bool SaveConfig(const QString InifileName , quint16 Rows, quint16 Cols);
     int SaveSequence(QString Filename, QVector<QVector<QRgb> > &MatrixVector);
     int LoadSequence(QString Filename, QVector<QVector<QRgb> > &MatrixVector);
-    void CopyGUIPatternToSequence();
     int RemoveLastPattern(QVector<QVector<QRgb> > &MatrixVector) ;
     void RemoveAllPatterns(QVector<QVector<QRgb> > &MatrixVector );
     uint MatxRows, MatxCols ;
     GuiMatrix* CurrentGUIMatrix ;
-    QVector<QVector<QRgb>> Proj_VectorMatrix;
+    QVector<QVector<QRgb>> SequenceVect;
     QVector<Matrix_Model> MatrixModels ;
     QAction* SelectColors_Action;
     QAction*  SaveGUIPattern_Action ;
@@ -55,7 +54,7 @@ public:
 private slots:
     void color_selector();
     int Wizard();
-    void SaveGUIPattern();
+    void PushGUIPattern_ToSequence();
 };
 
 #endif // CAMEL_H

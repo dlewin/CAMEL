@@ -21,7 +21,7 @@ Camel::Camel(QWidget *parent) :
     ui->setupUi(this);
     setDockNestingEnabled(true);
 
-//    Proj_VectorMatrix;
+    SequenceVect;
 
     CreateDock();
 
@@ -198,7 +198,7 @@ void Camel::CreateDock()
     connect(SelectColors_Action, SIGNAL(triggered()), this, SLOT(color_selector() ));  // and its event
 
     SaveGUIPattern_Action =toolbar->addAction (QIcon(matrix), "Save the current Pattern");           // Manage Color Action
-    connect(SaveGUIPattern_Action, SIGNAL(triggered()), this, SLOT(SaveGUIPattern() ));  // and its event
+    connect(SaveGUIPattern_Action, SIGNAL(triggered()), this, SLOT(PushGUIPattern_ToSequence() ));  // and its event
 }
 
 
@@ -243,38 +243,24 @@ int Camel::Wizard()
     return -1 ;
 }
 
+
+
 // Goal : when you are happy with pattern, you need to "take a picture" of it and
 // save it into a sequence list.
 //Parse the GUImatrix and retrieve the color for each of the points in a 2D (row,cols) Vector
 
 //  Format: vector<std::vector<QRgb>> array_2d(rows, std::vector<QRgb>(cols, 0));
-
-void Camel::CopyGUIPatternToSequence( )
+void Camel::PushGUIPattern_ToSequence()
 {
-    QLayoutItem * truc ;
-
-    for ( int currentRow = 0; currentRow < MatxRows ; ++currentRow )
-        for ( int currentCol = 0; currentCol < MatxCols; ++currentCol )
+//    for ( int currentRow = 0; currentRow < MatxRows ; ++currentRow )
+        for ( uint BtnID = 0; BtnID < MatxRows*MatxCols; ++BtnID )
         {
             QVector<QRgb> inner_vector;
-//            inner_vector.push_back( truc->widget()->styleSheet().toUInt() );  // ICI : Convertir en value QRGb
-            Proj_VectorMatrix.push_back(inner_vector);
+            inner_vector.push_back( CurrentGUIMatrix->GetButtonColor(BtnID)     );
+            SequenceVect.push_back(inner_vector);
         }
 
-    truc = CurrentGUIMatrix->Glayout->itemAtPosition(0,1) ;
-//    QPalette pal = truc->widget()->palette();
-//    pal.setColor(truc->widget()->backgroundRole(), Qt::blue);
-//    truc->widget()->setPalette(pal);
-
-//    truc->widget()->palette().setColor(QPalette::Button,QColor(255, 0, 0, 127)); // ->setStyleSheet("background:rgb(200,100,150);");  // ou
-    qDebug() << "itemAtposition 0,0: " << truc->widget()->palette().button().color() ;
 //    PrintMatrix();
-}
-
-
-void Camel::SaveGUIPattern()
-{
-    CopyGUIPatternToSequence();
 }
 
 void Camel::RemoveAllPatterns(QVector<QVector<QRgb> > &MatrixVector)
@@ -396,16 +382,16 @@ void Camel::color_selector()
 
 void Camel::PrintMatrix()
 {
-    if (Proj_VectorMatrix.isEmpty() )
+    if (SequenceVect.isEmpty() )
         qDebug() << "Vector is Empty" ;
 
-    for ( int indRow = 0; indRow < Proj_VectorMatrix.size()  ; ++indRow )
+    for ( int indRow = 0; indRow < SequenceVect.size()  ; ++indRow )
 //        for ( int indCol = 0; indCol <MatrixVector[indRow].size() ; ++indCol )
         {
-            qDebug() << Proj_VectorMatrix[indRow][0] << Proj_VectorMatrix[indRow][1]
-                     << Proj_VectorMatrix[indRow][2]  << Proj_VectorMatrix[indRow][3]
-                    << Proj_VectorMatrix[indRow][4]  << Proj_VectorMatrix[indRow][5]
-                    << Proj_VectorMatrix[indRow][6]  << Proj_VectorMatrix[indRow][7] ;
+            qDebug() << SequenceVect[indRow][0] << SequenceVect[indRow][1]
+                     << SequenceVect[indRow][2]  << SequenceVect[indRow][3]
+                    << SequenceVect[indRow][4]  << SequenceVect[indRow][5]
+                    << SequenceVect[indRow][6]  << SequenceVect[indRow][7] ;
         }
 
 }

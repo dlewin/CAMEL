@@ -72,6 +72,10 @@ void GuiMatrix::Populate(QGridLayout *layout, const int rows, const int cols)
     }
 }
 
+QRgb GuiMatrix::GetButtonColor(int Btn_ID)
+{
+    return GUIMtx_BtnColorsArray[Btn_ID] ;
+}
 
 void GuiMatrix::buttonClick(QAbstractButton* button)
 {
