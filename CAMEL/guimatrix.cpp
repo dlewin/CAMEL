@@ -2,7 +2,7 @@
 #include "matrixbutton.h"
 #include <QDebug>
 
-#define BTNCOLOR_GREY 32768
+#define BTNCOLOR_GREY 10526880
 
 GuiMatrix::GuiMatrix(uint Rows, uint Cols, quint32 Led_colors, QWidget * parentWidget, QVector< QPair<QString, QRgb> >& ColorsList )
     : MatxRows(Rows),
@@ -39,6 +39,7 @@ GuiMatrix::GuiMatrix(uint Rows, uint Cols, quint32 Led_colors, QWidget * parentW
          for (auto iter: ColorsList )
          {
             Palette<< iter.second ;
+            qDebug()<< "couleur:"<< iter.second ;
           }
     }
 
@@ -75,18 +76,21 @@ void GuiMatrix::buttonClick(QAbstractButton* button)
 {
     int BtnID= abs(this->id(button)) -2 ;
 
-    ulong BtnColorValue = GUIMtx_BtnColorsArray[BtnID];
+    QRgb BtnColorValue = GUIMtx_BtnColorsArray[BtnID];
 
     int indexPalette = Palette.indexOf(BtnColorValue) ;
 
-    if (indexPalette == 0)                                      // we have found the color in the list
+    if (BtnColorValue == BTNCOLOR_GREY)                                // The 1st time the let button is grey (off)
+        GUIMtx_BtnColorsArray[BtnID]= Palette.first() ;
+    else if (indexPalette != -1 )                                      // we have found the color in the list
     {
         if ( Palette[indexPalette] == Palette.last() )
             GUIMtx_BtnColorsArray[BtnID]= Palette.first() ;
         else
             GUIMtx_BtnColorsArray[BtnID]= Palette[++indexPalette] ;
     }
-    else qDebug() << "buttonClick problem, the color is not in the Palette list: " <<BtnColorValue ; // if not: there is a problem
+    else
+        qDebug() << "buttonClick problem, the color is not in the Palette list: " <<BtnColorValue ; // if not: there is a problem
 
 
     BtnColorValue = GUIMtx_BtnColorsArray[BtnID] ;

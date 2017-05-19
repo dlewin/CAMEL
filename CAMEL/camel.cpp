@@ -25,7 +25,7 @@ Camel::Camel(QWidget *parent) :
 
     CreateDock();
 
-    SaveConfig("Camel.ini",8, 8) ;
+//    SaveConfig("Camel.ini",8, 8) ;
     LoadConfig("Camel.ini") ;
 }
 
