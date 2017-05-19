@@ -18,7 +18,7 @@ private :
         uint MatxRows;
         uint MatxCols;
         QVector<QRgb> GUIMtx_BtnColorsArray  ;       // Creating the internal color representation of the buttons matrix, assigned as Grey
-        QList<QRgb> Palette ;
+        QList<ulong> Palette ;
 
 public:
     QRgb GetButtonColor(int Btn_ID)    ;

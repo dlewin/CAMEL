@@ -128,8 +128,8 @@ bool Camel::SaveConfig(const QString InifileName, quint16 Rows ,quint16 Cols  )
     settings.beginGroup("Adafruit_BicolorLEDSquarePixel") ;
         settings.setValue( "Rows",Rows);
         settings.setValue( "Cols", Cols);
-        settings.setValue( "Colors/Red", "8388608");
-        settings.setValue( "Colors/Green","32768");
+        settings.setValue( "Colors/Red",   "16724787");
+        settings.setValue( "Colors/Green", "65280");
         settings.setValue( "Colors/Orange","16753920");
     settings.endGroup()                                                        ;
     settings.beginGroup("SenseHat") ;
@@ -244,15 +244,12 @@ int Camel::Wizard()
 }
 
 
-
 // Goal : when you are happy with pattern, you need to "take a picture" of it and
 // save it into a sequence list.
-//Parse the GUImatrix and retrieve the color for each of the points in a 2D (row,cols) Vector
+// Parse the GUImatrix and retrieve the color for each of the points in a 2D Vector
 
-//  Format: vector<std::vector<QRgb>> array_2d(rows, std::vector<QRgb>(cols, 0));
 void Camel::PushGUIPattern_ToSequence()
 {
-//    for ( int currentRow = 0; currentRow < MatxRows ; ++currentRow )
         for ( uint BtnID = 0; BtnID < MatxRows*MatxCols; ++BtnID )
         {
             QVector<QRgb> inner_vector;

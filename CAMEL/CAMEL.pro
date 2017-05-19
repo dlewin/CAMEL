@@ -14,11 +14,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         camel.cpp \
-    guimatrix.cpp \
+    guimatrix.cpp
+#\    matrixbutton.cpp
 
 
 HEADERS  += camel.h \
     guimatrix.h \
+    matrixbutton.h
 
 FORMS    += camel.ui \
 

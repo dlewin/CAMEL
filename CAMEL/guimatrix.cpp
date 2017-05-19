@@ -1,10 +1,8 @@
 #include "guimatrix.h"
+#include "matrixbutton.h"
 #include <QDebug>
 
 #define BTNCOLOR_GREY 32768
-#define BTNCOLOR_ORANGE 16753920
-#define BTNCOLOR_GREEN 8421504
-#define BTNCOLOR_RED 8388608
 
 GuiMatrix::GuiMatrix(uint Rows, uint Cols, quint32 Led_colors, QWidget * parentWidget, QVector< QPair<QString, QRgb> >& ColorsList )
     : MatxRows(Rows),
@@ -33,10 +31,8 @@ GuiMatrix::GuiMatrix(uint Rows, uint Cols, quint32 Led_colors, QWidget * parentW
      */
     if ( ColorsList.size() ==0 )
     {
-        for (int ind; ind <Led_colors; ind++)
+        for (uint ind; ind <Led_colors; ind++)
             Palette[ind]= ind ;
-
-        qDebug()<< "Palette (Led_colors) =" << Palette <<" " <<Led_colors ;
     }
     else
     {
@@ -44,10 +40,6 @@ GuiMatrix::GuiMatrix(uint Rows, uint Cols, quint32 Led_colors, QWidget * parentW
          {
             Palette<< iter.second ;
           }
-
-         qDebug()<< "Palette (ColorsList) =" << Palette.size() << "ColorsList.size " << ColorsList.size() ;
-         for (auto iter: Palette)
-             qDebug() << iter ;
     }
 
     parentWidget->setLayout(layout)                                                     ;
@@ -60,15 +52,17 @@ void GuiMatrix::Populate(QGridLayout *layout, const int rows, const int cols)
 {
     for ( int i = 0; i < rows; ++ i)
     {
-     for ( int j = 0; j < cols; ++j)
-     {
-      QPushButton* btn = new QPushButton(" ")                 ;
-      btn->setFixedWidth(20);
-      btn->setStyleSheet("background-color:grey;")              ;
-      layout->addWidget(btn,i,j)                                ;
+        for ( int j = 0; j < cols; ++j)
+        {
+            MatrixButton *btn= new MatrixButton();
+            btn->setFixedWidth(20);
+            btn->setStyleSheet("QPushButton{background-color:#A0A0A0;}"
+                               "QPushButton[_rightClicked = true]{background-color:#A0A0A0;}")      ;
 
-      this->addButton(btn)                              ;
-     }
+            layout->addWidget(btn,i,j)                                ;
+
+            this->addButton(btn)                              ;
+        }
     }
 }
 
@@ -79,22 +73,25 @@ QRgb GuiMatrix::GetButtonColor(int Btn_ID)
 
 void GuiMatrix::buttonClick(QAbstractButton* button)
 {
-
     int BtnID= abs(this->id(button)) -2 ;
 
-    QRgb BtnColorValue = GUIMtx_BtnColorsArray[BtnID];
-
-    uint Current_Row= BtnID/8 ;
-    uint Current_Col = BtnID -(8*Current_Row);
+    ulong BtnColorValue = GUIMtx_BtnColorsArray[BtnID];
 
     int indexPalette = Palette.indexOf(BtnColorValue) ;
-    if ( Palette[indexPalette] == Palette.last() )
-         GUIMtx_BtnColorsArray[BtnID]= Palette.first() ;
-    else
-         GUIMtx_BtnColorsArray[BtnID]= Palette[++indexPalette] ;
+
+    if (indexPalette == 0)                                      // we have found the color in the list
+    {
+        if ( Palette[indexPalette] == Palette.last() )
+            GUIMtx_BtnColorsArray[BtnID]= Palette.first() ;
+        else
+            GUIMtx_BtnColorsArray[BtnID]= Palette[++indexPalette] ;
+    }
+    else qDebug() << "buttonClick problem, the color is not in the Palette list: " <<BtnColorValue ; // if not: there is a problem
+
 
     BtnColorValue = GUIMtx_BtnColorsArray[BtnID] ;
-    QString ColorString = "background-color: " +   QString("#%1").arg(BtnColorValue, 6, 16, QLatin1Char( '0' ))  + ";";
+    QString ColorString = "QPushButton{background-color: " +   QString("#%1").arg(BtnColorValue, 6, 16, QLatin1Char( '0' ))  + ";} "
+                          "QPushButton[_rightClicked = true]{background-color:#A0A0A0;} ";
 
     button->setStyleSheet(ColorString)  ;
 }
@@ -102,7 +99,7 @@ void GuiMatrix::buttonClick(QAbstractButton* button)
 
 void GuiMatrix::mousePressEvent(QEvent *event)
 {
-    if(  this->event(event) == Qt::RightButton)
+    if(  this->event(event) != Qt::LeftButton )
     {
         qDebug()<< "Right click" ;
     }
