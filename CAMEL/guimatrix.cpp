@@ -39,7 +39,6 @@ GuiMatrix::GuiMatrix(uint Rows, uint Cols, quint32 Led_colors, QWidget * parentW
          for (auto iter: ColorsList )
          {
             Palette<< iter.second ;
-            qDebug()<< "couleur:"<< iter.second ;
           }
     }
 
@@ -47,6 +46,43 @@ GuiMatrix::GuiMatrix(uint Rows, uint Cols, quint32 Led_colors, QWidget * parentW
     connect(this , SIGNAL(buttonClicked(QAbstractButton*)),this,SLOT(buttonClick(QAbstractButton*)));
 
 
+}
+
+
+void GuiMatrix::Reset(uint Rows, uint Cols, quint32 Led_colors, QVector<QPair<QString, QRgb> > &ColorsList)
+{
+
+    for ( int i = 0; i < MatxRows; ++ i)
+    {
+        for ( int j = 0; j < MatxCols; ++j)
+        {
+    QAbstractButton* butn = (QAbstractButton*)Glayout->itemAt(i)->widget() ;
+   this->removeButton(butn );
+
+        }
+    }
+
+
+
+//    this->buttons().clear();
+
+
+    qDebug()<<"Appel de reset " ;
+   Palette.resize(Cols*Rows);
+   Palette.clear();
+
+   if ( ColorsList.size() ==0 )
+   {
+       for (uint ind; ind <Led_colors; ind++)
+           Palette[ind]= ind ;
+   }
+   else
+   {
+        for (auto iter: ColorsList )
+        {
+           Palette<< iter.second ;
+         }
+   }
 }
 
 void GuiMatrix::Populate(QGridLayout *layout, const int rows, const int cols)
@@ -101,14 +137,7 @@ void GuiMatrix::buttonClick(QAbstractButton* button)
 }
 
 
-void GuiMatrix::mousePressEvent(QEvent *event)
-{
-    if(  this->event(event) != Qt::LeftButton )
-    {
-        qDebug()<< "Right click" ;
-    }
 
-}
 
 GuiMatrix::~GuiMatrix()
 {

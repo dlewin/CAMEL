@@ -22,8 +22,17 @@ Camel::Camel(QWidget *parent) :
     setDockNestingEnabled(true);
 
     SequenceVect;
-
     CreateDock();
+
+    QWidget *MatrixGui = new QWidget();
+    setCentralWidget(MatrixGui);
+
+    MatrixGui->resize(3,3);
+        // Create default instances
+    QVector< QPair<QString, QRgb> > ColorsL = {{"Color1",16724787},{"Color2",65280},{"Color3",16753920}} ;
+    MatxRows= MatxCols = 8 ;
+    CurrentGUIMatrix = new GuiMatrix(MatxRows,MatxCols,3,MatrixGui, ColorsL );
+
 
 //    SaveConfig("Camel.ini",8, 8) ;
     LoadConfig("Camel.ini") ;
@@ -205,7 +214,7 @@ void Camel::CreateDock()
 
 int Camel::Wizard()
 {
-    int ColorNb ;    
+    int ColorNb ;
     QStringList items;
     for ( int i=0; i<MatrixModels.size(); i++)
         items << MatrixModels[i].Name ;
@@ -232,11 +241,16 @@ int Camel::Wizard()
         MatxRows = MatrixModels[Model_index].Rows;
         MatxCols = MatrixModels[Model_index].Cols ;
 
-        QWidget *MatrixGui = new QWidget();
-        setCentralWidget(MatrixGui);
-        QVector< QPair<QString, QRgb> > ColorsL = MatrixModels[Model_index].ColorsList ;
+        /// FIXME need to resize matrix and GUImatrix from wizard & from LoadSequence
 
-        CurrentGUIMatrix = new GuiMatrix(MatxRows,MatxCols,ColorNb,MatrixGui, ColorsL );
+        //        QWidget *MatrixGui = new QWidget();
+        //        setCentralWidget(MatrixGui);
+
+        ColorsL.clear();
+        ColorsL = MatrixModels[Model_index].ColorsList ;
+        //Debug        CurrentGUIMatrix->Reset(MatxRows,MatxCols,ColorNb, ColorsL );
+        //         CurrentGUIMatrix->deleteLater();
+        //                 CurrentGUIMatrix->Reset(10,MatxCols,ColorNb, ColorsL );
 
         return 0 ;
     }
@@ -250,7 +264,7 @@ int Camel::Wizard()
 
 void Camel::PushGUIPattern_ToSequence()
 {
-        for ( uint BtnID = 0; BtnID < MatxRows*MatxCols; ++BtnID )
+        for ( uint BtnID = 0; BtnID < MatxRows*MatxCols; BtnID++ )
         {
             QVector<QRgb> inner_vector;
             inner_vector.push_back( CurrentGUIMatrix->GetButtonColor(BtnID)     );

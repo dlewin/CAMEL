@@ -28,6 +28,7 @@ class Camel : public QMainWindow
 {
     Q_OBJECT
 private:    
+    QWidget *MatrixGui ;
     void PrintMatrix();
     void CreateDock();
     bool LoadConfig(QString InifileName) ;
@@ -38,6 +39,7 @@ private:
     void RemoveAllPatterns(QVector<QVector<QRgb> > &MatrixVector );
     uint MatxRows, MatxCols ;
     GuiMatrix* CurrentGUIMatrix ;
+    QVector< QPair<QString, QRgb> > ColorsL ;
     QVector<QVector<QRgb>> SequenceVect;
     QVector<Matrix_Model> MatrixModels ;
     QAction* SelectColors_Action;

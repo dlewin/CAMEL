@@ -15,12 +15,13 @@ class GuiMatrix: public QButtonGroup
 {
     Q_OBJECT
 private :
-        uint MatxRows;
-        uint MatxCols;
-        QVector<QRgb> GUIMtx_BtnColorsArray  ;       // Creating the internal color representation of the buttons matrix, assigned as Grey
-        QList<QRgb> Palette ;
+    uint MatxRows;
+    uint MatxCols;
+    QVector<QRgb> GUIMtx_BtnColorsArray  ;       // Creating the internal color representation of the buttons matrix, assigned as Grey
+    QVector<QRgb> Palette ;
 
 public:
+    void Reset(uint Rows, uint Cols, quint32 Led_colors,QVector<QPair<QString, QRgb> > &ColorsList);
     QRgb GetButtonColor(int Btn_ID)    ;
     QGridLayout *Glayout;
     GuiMatrix(uint Rows, uint Cols, quint32 Led_colors, QWidget *parentWidget, QVector<QPair<QString, QRgb> > &ColorsList);
@@ -29,8 +30,6 @@ public:
 
 public slots:
     void buttonClick(QAbstractButton* button) ;
-private slots:
-    void mousePressEvent(QEvent *e);
 };
 
 #endif // GUIMATRIX_H
