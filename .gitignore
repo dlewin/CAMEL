@@ -44,3 +44,7 @@ docs/Designs/.metadata/
 
 gtest/
 
+*.xmi
+docs/Designs/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.obeonetwork.dsl.uml2.design.prefs
+*.xmi
+docs/Designs/.metadata/.plugins/org.eclipse.jdt.core/index.db
