@@ -19,6 +19,8 @@ Camel::Camel(QWidget *parent) :
     ui(new Ui::Camel)
 {
     ui->setupUi(this);
+    MatxRows= MatxCols = 8 ;
+
     setDockNestingEnabled(true);
 
     SequenceVect;
@@ -30,7 +32,7 @@ Camel::Camel(QWidget *parent) :
     MatrixGui->resize(3,3);
         // Create default instances
     QVector< QPair<QString, QRgb> > ColorsL = {{"Color1",16724787},{"Color2",65280},{"Color3",16753920}} ;
-    MatxRows= MatxCols = 8 ;
+
     CurrentGUIMatrix = new GuiMatrix(MatxRows,MatxCols,3,MatrixGui, ColorsL );
 
 
@@ -207,9 +209,24 @@ void Camel::CreateDock()
     QPainter p;
     p.begin(&imageTest);
     p.setPen(QPen(QColor(Qt::black)));
-    p.setBrush(QBrush(QColor(Qt::red)));
-    p.drawRect(QRect(0,0,5,5));
-    p.drawRect(QRect(3,3,5,5));
+    QVector<QLine> GridLines ;
+    uint GridWith = 40 ;
+    uint step= GridWith/MatxRows ;
+
+    // Draw the grid : Vertical Lines
+    for (uint ind=0; ind < MatxCols ; ind++)
+        GridLines.append( QLine( step+(ind*step),0,step+(ind*step),GridWith ));
+
+    // Draw the grid : Vertical Lines
+    for (uint ind=0; ind < MatxRows ; ind++)
+        GridLines.append( QLine( 0,step+(ind*step),GridWith,step+(ind*step) ));
+
+    p.drawLines(GridLines);
+
+// WIP   p.setBrush(QBrush(QColor(Qt::red)));
+//    QRect GridRect(0,0,20,20) ;
+//    p.drawRect(GridRect);
+//    GridRect.translate(25,0) ;
     p.end();
 
     QListWidgetItem *item2 = new QListWidgetItem("", SequenceList);
