@@ -172,12 +172,17 @@ void Camel::CreateDock()
     QPixmap magic(":/magic");
     QPixmap colors(":/colors");
 
-        // 1st dock item
+
+    ///NOTE For MVD List, check example:
+    /// http://doc.qt.io/qt-5/qtwidgets-itemviews-puzzle-mainwindow-cpp.html
+    ///
+
+        // 1st dock item ---------------------------------------------
     QDockWidget *dockWidget = new QDockWidget("--- 1 ---");
     dockWidget->setWidget(new QTextEdit);
     addDockWidget(Qt::LeftDockWidgetArea, dockWidget);
 
-        // 2nd dock item
+        // 2nd dock item ---------------------------------------------
     QDockWidget *dockWidget2 = new QDockWidget("--- 2 ---");
     dockWidget2->setWidget(new QPushButton );
     QListWidget *ColorList = new QListWidget  ;
@@ -188,7 +193,7 @@ void Camel::CreateDock()
     dockWidget2->setWidget(ColorList);
     addDockWidget(Qt::LeftDockWidgetArea, dockWidget2);
 
-    // 3rd dock item
+        // 3rd dock item----------------------------------------------
     QDockWidget *dockWidget3 = new QDockWidget("--- 3 ---");
     dockWidget3->setAllowedAreas(Qt::RightDockWidgetArea) ;
     QListWidget *SequenceList = new QListWidget  ;
@@ -196,6 +201,20 @@ void Camel::CreateDock()
 
     QListWidgetItem *item1 = new QListWidgetItem(QIcon(":/matrix_icon"), "", SequenceList);
     SequenceList->insertItem(0, item1);
+
+    QImage imageTest(40, 40, QImage::Format_RGB32);
+    imageTest.fill(Qt::gray);
+    QPainter p;
+    p.begin(&imageTest);
+    p.setPen(QPen(QColor(Qt::color0)));
+    p.setBrush(QBrush(QColor(Qt::color0), Qt::NoBrush));
+    p.drawRect(QRect(0,0,5,5));
+    p.drawRect(QRect(3,3,5,5));
+    p.end();
+
+    QListWidgetItem *item2 = new QListWidgetItem("", SequenceList);
+    item2->setData(Qt::DecorationRole, QPixmap::fromImage(imageTest));
+    SequenceList->insertItem(1, item2);
 
     dockWidget3->setWidget(SequenceList);
     addDockWidget(Qt::RightDockWidgetArea, dockWidget3);
