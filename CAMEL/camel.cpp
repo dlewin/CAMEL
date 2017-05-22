@@ -166,6 +166,12 @@ Camel::~Camel()
 
 void Camel::CreateDock()
 {
+    // Icons from resources
+    QPixmap matrix(":/matrix_icon");
+    QPixmap wizard(":/wizard");
+    QPixmap magic(":/magic");
+    QPixmap colors(":/colors");
+
         // 1st dock item
     QDockWidget *dockWidget = new QDockWidget("--- 1 ---");
     dockWidget->setWidget(new QTextEdit);
@@ -174,26 +180,27 @@ void Camel::CreateDock()
         // 2nd dock item
     QDockWidget *dockWidget2 = new QDockWidget("--- 2 ---");
     dockWidget2->setWidget(new QPushButton );
-    addDockWidget(Qt::LeftDockWidgetArea, dockWidget2);
-
-        // 3rd dock item
-    QDockWidget *dockWidget3 = new QDockWidget("--- 3 ---");
-    dockWidget3->setAllowedAreas(Qt::RightDockWidgetArea) ;
-
     QListWidget *ColorList = new QListWidget  ;
     ColorList->insertItem(0,"1ER Label");
     ColorList->insertItem(1,"2ER Label");
     ColorList->item(0)->setForeground(*(new QBrush(Qt::red)));
     ColorList->item(0)->setBackground(*(new QBrush(Qt::green)));
     dockWidget2->setWidget(ColorList);
+    addDockWidget(Qt::LeftDockWidgetArea, dockWidget2);
 
+    // 3rd dock item
+    QDockWidget *dockWidget3 = new QDockWidget("--- 3 ---");
+    dockWidget3->setAllowedAreas(Qt::RightDockWidgetArea) ;
+    QListWidget *SequenceList = new QListWidget  ;
+
+
+    QListWidgetItem *item1 = new QListWidgetItem(QIcon(":/matrix_icon"), "", SequenceList);
+    SequenceList->insertItem(0, item1);
+
+    dockWidget3->setWidget(SequenceList);
     addDockWidget(Qt::RightDockWidgetArea, dockWidget3);
 
-        // Icons from resources
-    QPixmap matrix(":/matrix_icon");
-    QPixmap wizard(":/wizard");
-    QPixmap magic(":/magic");
-    QPixmap colors(":/colors");
+
 
     QToolBar *toolbar = addToolBar("main toolbar");
 //    toolbar->addAction(QIcon(matrix), "test");
