@@ -206,8 +206,8 @@ void Camel::CreateDock()
     imageTest.fill(Qt::gray);
     QPainter p;
     p.begin(&imageTest);
-    p.setPen(QPen(QColor(Qt::color0)));
-    p.setBrush(QBrush(QColor(Qt::color0), Qt::NoBrush));
+    p.setPen(QPen(QColor(Qt::black)));
+    p.setBrush(QBrush(QColor(Qt::red)));
     p.drawRect(QRect(0,0,5,5));
     p.drawRect(QRect(3,3,5,5));
     p.end();
