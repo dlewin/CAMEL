@@ -231,33 +231,37 @@ void Camel::CreateDock()
 
     // now let's copy the current Pattern into the grid
      uint Current_Row = 0, Current_Col=0 ;
-    p.setBrush(QBrush(QColor(Qt::red)));
-    p.setPen(QPen(QColor(Qt::yellow)));
+
+    p.setPen(QPen(QColor(Qt::red)));
     QRect ARectangle(0,0, (step-1), ( step -1)) ;             // -1 : nicer if a rectangle is < grid rect dims
-//    for ( uint BtnID = 0; BtnID < MatxRows*MatxCols; BtnID++ )
-//    {
+    QVector<QRect> MatxRects ;
+
+    for ( uint BtnID = 0; BtnID < MatxRows*MatxCols; BtnID++ )
+    {
 //        p.setBrush(QBrush(QColor(CurrentGUIMatrix->GetButtonColor(BtnID))));
-//        ARectangle.translate(25,0) ;
-//    }
-    QRgb BtnID = 0 ;
-    Current_Row= BtnID/8 ;
-    Current_Col = BtnID -(8*Current_Row);
-    ARectangle.translate(Current_Row,Current_Col) ;
+        Current_Row= BtnID/8 ;
+        Current_Col = BtnID -(8*Current_Row);
+        MatxRects.append( QRect(Current_Col*step, Current_Row*step, 5,5)) ;
+//        qDebug() << "==>"  <<Current_Col*step << " / "<< Current_Row*step  ;
+    }
 
+//    uint BtnID = 0 ;
+//    Current_Row= BtnID/8 ;
+//    Current_Col = BtnID -(8*Current_Row);
+//    MatxRects.append( QRect(Current_Col*step, Current_Row*step, 5,5)) ;
 
-//     ARectangle.translate(0,0) ;
-     p.drawRect(ARectangle);
+//     BtnID = 1 ;
+//    Current_Row= BtnID/8 ;
+//    Current_Col = BtnID -(8*Current_Row);
+//    MatxRects.append( QRect(Current_Col*step, Current_Row*step, 5,5)) ;
+//     BtnID = 2 ;
+//    Current_Row= BtnID/8 ;
+//    Current_Col = BtnID -(8*Current_Row);
+//    MatxRects.append( QRect(Current_Col*step, Current_Row*step, 5,5)) ;
 
-     BtnID = 63 ;
-     Current_Row= BtnID/8 ;
-     Current_Col = BtnID -(8*Current_Row);
-     ARectangle.translate(Current_Col*step, Current_Row*step) ;
-     qDebug() <<"Current_Row,Current_Col" << Current_Row<<Current_Col ;
-
-//     ARectangle.translate(20,0) ;
-    p.drawRect(ARectangle);
-
+    p.drawRects(MatxRects) ;
     p.end();
+
 
     QListWidgetItem *item2 = new QListWidgetItem("", SequenceList);
     item2->setData(Qt::DecorationRole, QPixmap::fromImage(imageTest));
