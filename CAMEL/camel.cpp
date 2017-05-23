@@ -204,29 +204,59 @@ void Camel::CreateDock()
     QListWidgetItem *item1 = new QListWidgetItem(QIcon(":/matrix_icon"), "", SequenceList);
     SequenceList->insertItem(0, item1);
 
-    QImage imageTest(40, 40, QImage::Format_RGB32);
+        // Let's create Image as the extract for the current Matrix
+    uint GridWith = 40, GridHeight = 40 ;
+    QImage imageTest(GridWith, GridHeight, QImage::Format_RGB32);
+
+//  Inutile si redessiné avec les translate ?
     imageTest.fill(Qt::gray);
+
     QPainter p;
     p.begin(&imageTest);
+
+    //    Draw the grid
     p.setPen(QPen(QColor(Qt::black)));
     QVector<QLine> GridLines ;
-    uint GridWith = 40 ;
-    uint step= GridWith/MatxRows ;
+    uint step= GridWith/MatxCols ;
 
-    // Draw the grid : Vertical Lines
+    // Vertical Lines
     for (uint ind=0; ind < MatxCols ; ind++)
         GridLines.append( QLine( step+(ind*step),0,step+(ind*step),GridWith ));
 
-    // Draw the grid : Vertical Lines
+    // Horizontal Lines
     for (uint ind=0; ind < MatxRows ; ind++)
-        GridLines.append( QLine( 0,step+(ind*step),GridWith,step+(ind*step) ));
+        GridLines.append( QLine( 0, step +(ind*step),GridHeight,step + (ind*step) ));
 
     p.drawLines(GridLines);
 
-// WIP   p.setBrush(QBrush(QColor(Qt::red)));
-//    QRect GridRect(0,0,20,20) ;
-//    p.drawRect(GridRect);
-//    GridRect.translate(25,0) ;
+    // now let's copy the current Pattern into the grid
+     uint Current_Row = 0, Current_Col=0 ;
+    p.setBrush(QBrush(QColor(Qt::red)));
+    p.setPen(QPen(QColor(Qt::yellow)));
+    QRect ARectangle(0,0, (step-1), ( step -1)) ;             // -1 : nicer if a rectangle is < grid rect dims
+//    for ( uint BtnID = 0; BtnID < MatxRows*MatxCols; BtnID++ )
+//    {
+//        p.setBrush(QBrush(QColor(CurrentGUIMatrix->GetButtonColor(BtnID))));
+//        ARectangle.translate(25,0) ;
+//    }
+    QRgb BtnID = 0 ;
+    Current_Row= BtnID/8 ;
+    Current_Col = BtnID -(8*Current_Row);
+    ARectangle.translate(Current_Row,Current_Col) ;
+
+
+//     ARectangle.translate(0,0) ;
+     p.drawRect(ARectangle);
+
+     BtnID = 63 ;
+     Current_Row= BtnID/8 ;
+     Current_Col = BtnID -(8*Current_Row);
+     ARectangle.translate(Current_Col*step, Current_Row*step) ;
+     qDebug() <<"Current_Row,Current_Col" << Current_Row<<Current_Col ;
+
+//     ARectangle.translate(20,0) ;
+    p.drawRect(ARectangle);
+
     p.end();
 
     QListWidgetItem *item2 = new QListWidgetItem("", SequenceList);
@@ -236,12 +266,7 @@ void Camel::CreateDock()
     dockWidget3->setWidget(SequenceList);
     addDockWidget(Qt::RightDockWidgetArea, dockWidget3);
 
-
-
     QToolBar *toolbar = addToolBar("main toolbar");
-//    toolbar->addAction(QIcon(matrix), "test");
-//    toolbar->addAction(QIcon(wizard), "New Matrix");
-//    toolbar->addAction(QIcon(magic), "New Matrix");
 
     Wizard_Action =toolbar->addAction (QIcon(wizard), "Wizard");        // Manage Wizard Action
     connect(Wizard_Action, SIGNAL(triggered()), this, SLOT(Wizard() )); // and its event
@@ -253,7 +278,21 @@ void Camel::CreateDock()
     connect(SaveGUIPattern_Action, SIGNAL(triggered()), this, SLOT(PushGUIPattern_ToSequence() ));  // and its event
 }
 
+// Goal : when you are happy with pattern, you need to "take a picture" of it and
+// save it into a sequence list.
+// Parse the GUImatrix and retrieve the color for each of the points in a 2D Vector
 
+void Camel::PushGUIPattern_ToSequence()
+{
+        for ( uint BtnID = 0; BtnID < MatxRows*MatxCols; BtnID++ )
+        {
+            QVector<QRgb> inner_vector;
+            inner_vector.push_back( CurrentGUIMatrix->GetButtonColor(BtnID)     );
+            SequenceVect.push_back(inner_vector);
+        }
+
+//    PrintMatrix();
+}
 
 int Camel::Wizard()
 {
@@ -301,21 +340,7 @@ int Camel::Wizard()
 }
 
 
-// Goal : when you are happy with pattern, you need to "take a picture" of it and
-// save it into a sequence list.
-// Parse the GUImatrix and retrieve the color for each of the points in a 2D Vector
 
-void Camel::PushGUIPattern_ToSequence()
-{
-        for ( uint BtnID = 0; BtnID < MatxRows*MatxCols; BtnID++ )
-        {
-            QVector<QRgb> inner_vector;
-            inner_vector.push_back( CurrentGUIMatrix->GetButtonColor(BtnID)     );
-            SequenceVect.push_back(inner_vector);
-        }
-
-//    PrintMatrix();
-}
 
 void Camel::RemoveAllPatterns(QVector<QVector<QRgb> > &MatrixVector)
 {
