@@ -227,7 +227,7 @@ void Camel::CreateDock()
     connect(SaveGUIPattern_Action, SIGNAL(triggered()), this, SLOT(PushGUIPattern_ToSequence() ));  // and its event
 }
 
-void Camel::MatrixSnapshot(QImage &imageTest )
+void Camel::MatrixSnapshot(QImage &imageTest, uint BtnID, QRgb BtnCol )
 {
 
     // Let's create Image as the extract for the current Matrix
@@ -256,16 +256,16 @@ void Camel::MatrixSnapshot(QImage &imageTest )
     p.drawLines(GridLines);
 
     // now let's copy the current Pattern into the grid
-    uint Current_Row = 0, Current_Col=0 ;
+//    uint Current_Row = 0, Current_Col=0 ;
 
     //    p.setPen(QPen(QColor(Qt::red)));
-    for ( uint BtnID = 0; BtnID < (MatxRows*MatxCols) ; BtnID++ )
-    {
-        p.setBrush(QBrush(QColor(CurrentGUIMatrix->GetButtonColor(BtnID))));
-        Current_Row= BtnID/8 ;
-        Current_Col = BtnID -(8*Current_Row);
+//    for ( uint BtnID = 0; BtnID < (MatxRows*MatxCols) ; BtnID++ )
+//    {
+        p.setBrush(QBrush(QColor( BtnCol )));
+        uint Current_Row= BtnID/8 ;
+        uint Current_Col = BtnID -(8*Current_Row);
         p.drawRect( QRect(Current_Col*step, Current_Row*step, step-1,step-1)) ; // -1 : nicer if a rectangle is < grid rect dims
-    }
+//    }
 
     p.end();
 }
@@ -276,23 +276,20 @@ void Camel::MatrixSnapshot(QImage &imageTest )
 
 void Camel::PushGUIPattern_ToSequence()
 {
-        for ( uint BtnID = 0; BtnID < MatxRows*MatxCols; BtnID++ )
-        {
-            QVector<QRgb> inner_vector;
-            inner_vector.push_back( CurrentGUIMatrix->GetButtonColor(BtnID)     );
-            SequenceVect.push_back(inner_vector);
-        }
+    QImage imageTest(40,40, QImage::Format_RGB32);
 
-// Create a snapshot to GUI
-        QImage imageTest(40,40, QImage::Format_RGB32);
-    MatrixSnapshot(imageTest) ;
-
-        QListWidgetItem *SnapshotItem = new QListWidgetItem("Pattern1", SequenceList);
-        SnapshotItem->setData(Qt::DecorationRole, QPixmap::fromImage(imageTest));
-        SequenceList->insertItem(1, SnapshotItem);
-
-
-
+    for ( uint BtnID = 0; BtnID < MatxRows*MatxCols; BtnID++ )
+    {
+        QVector<QRgb> inner_vector;
+        QRgb BtnColor= CurrentGUIMatrix->GetButtonColor(BtnID)   ;
+        inner_vector.push_back(  BtnColor  );
+        MatrixSnapshot(imageTest,BtnID, BtnColor ) ;
+        SequenceVect.push_back(inner_vector);
+    }
+            // Create a snapshot to GUI
+    QListWidgetItem *SnapshotItem = new QListWidgetItem("Pattern1", SequenceList);
+    SnapshotItem->setData(Qt::DecorationRole, QPixmap::fromImage(imageTest));
+    SequenceList->insertItem(1, SnapshotItem);
 }
 
 int Camel::Wizard()

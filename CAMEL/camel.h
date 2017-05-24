@@ -30,7 +30,7 @@ class Camel : public QMainWindow
 private:    
     QWidget *MatrixGui ;
     QListWidget *SequenceList ;
-    void MatrixSnapshot(QImage &imageTest);
+    void MatrixSnapshot(QImage &imageTest, uint BtnID, QRgb BtnCol);
     void PrintMatrix();
     void CreateDock();
     bool LoadConfig(QString InifileName) ;
