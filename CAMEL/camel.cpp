@@ -235,7 +235,7 @@ void Camel::MatrixSnapshot(QImage &imageTest, uint BtnID, QRgb BtnCol )
     uint GridHeight = imageTest.height();
 
     //  Inutile si redessiné avec les translate ?
-    imageTest.fill(Qt::gray);
+//    imageTest.fill(Qt::gray);
 
     QPainter p;
     p.begin(&imageTest);
