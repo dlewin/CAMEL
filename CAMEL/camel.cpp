@@ -24,7 +24,7 @@ Camel::Camel(QWidget *parent) :
     setDockNestingEnabled(true);
 
     SequenceVect;
-    CreateDock();
+
 
     QWidget *MatrixGui = new QWidget();
     setCentralWidget(MatrixGui);
@@ -34,6 +34,8 @@ Camel::Camel(QWidget *parent) :
     QVector< QPair<QString, QRgb> > ColorsL = {{"Color1",16724787},{"Color2",65280},{"Color3",16753920}} ;
 
     CurrentGUIMatrix = new GuiMatrix(MatxRows,MatxCols,3,MatrixGui, ColorsL );
+
+    CreateDock();           // This MUST be defined after GUIMatrix to be able to call it thereafter
 
 
 //    SaveConfig("Camel.ini",8, 8) ;
@@ -232,34 +234,16 @@ void Camel::CreateDock()
     // now let's copy the current Pattern into the grid
      uint Current_Row = 0, Current_Col=0 ;
 
-    p.setPen(QPen(QColor(Qt::red)));
-    QRect ARectangle(0,0, (step-1), ( step -1)) ;             // -1 : nicer if a rectangle is < grid rect dims
-    QVector<QRect> MatxRects ;
-
-    for ( uint BtnID = 0; BtnID < MatxRows*MatxCols; BtnID++ )
+//    p.setPen(QPen(QColor(Qt::red)));
+    for ( uint BtnID = 0; BtnID < (MatxRows*MatxCols) ; BtnID++ )
     {
-//        p.setBrush(QBrush(QColor(CurrentGUIMatrix->GetButtonColor(BtnID))));
+        p.setBrush(QBrush(QColor(CurrentGUIMatrix->GetButtonColor(BtnID))));
+//        p.setBrush(QBrush(QColor(Qt::yellow)));
         Current_Row= BtnID/8 ;
         Current_Col = BtnID -(8*Current_Row);
-        MatxRects.append( QRect(Current_Col*step, Current_Row*step, 5,5)) ;
-//        qDebug() << "==>"  <<Current_Col*step << " / "<< Current_Row*step  ;
+        p.drawRect( QRect(Current_Col*step, Current_Row*step, step-1,step-1)) ; // -1 : nicer if a rectangle is < grid rect dims
     }
 
-//    uint BtnID = 0 ;
-//    Current_Row= BtnID/8 ;
-//    Current_Col = BtnID -(8*Current_Row);
-//    MatxRects.append( QRect(Current_Col*step, Current_Row*step, 5,5)) ;
-
-//     BtnID = 1 ;
-//    Current_Row= BtnID/8 ;
-//    Current_Col = BtnID -(8*Current_Row);
-//    MatxRects.append( QRect(Current_Col*step, Current_Row*step, 5,5)) ;
-//     BtnID = 2 ;
-//    Current_Row= BtnID/8 ;
-//    Current_Col = BtnID -(8*Current_Row);
-//    MatxRects.append( QRect(Current_Col*step, Current_Row*step, 5,5)) ;
-
-    p.drawRects(MatxRects) ;
     p.end();
 
 
