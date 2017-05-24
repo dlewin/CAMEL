@@ -201,16 +201,16 @@ void Camel::CreateDock()
     QDockWidget *dockWidget3 = new QDockWidget("--- 3 ---");
     dockWidget3->setAllowedAreas(Qt::RightDockWidgetArea) ;
 
-    QListWidget *SequenceList = new QListWidget  ;
-    QListWidgetItem *item1 = new QListWidgetItem(QIcon(":/matrix_icon"), "", SequenceList);
-    SequenceList->insertItem(0, item1);
+    SequenceList = new QListWidget  ;
+//    QListWidgetItem *item1 = new QListWidgetItem(QIcon(":/matrix_icon"), "", SequenceList);
+//    SequenceList->insertItem(0, item1);
 
-    QImage imageTest(40,40, QImage::Format_RGB32);
-MatrixSnapshot(imageTest) ;
+//    QImage imageTest(40,40, QImage::Format_RGB32);
+//MatrixSnapshot(imageTest) ;
 
-    QListWidgetItem *item2 = new QListWidgetItem("", SequenceList);
-    item2->setData(Qt::DecorationRole, QPixmap::fromImage(imageTest));
-    SequenceList->insertItem(1, item2);
+//    QListWidgetItem *item2 = new QListWidgetItem("", SequenceList);
+//    item2->setData(Qt::DecorationRole, QPixmap::fromImage(imageTest));
+//    SequenceList->insertItem(1, item2);
 
     dockWidget3->setWidget(SequenceList);
     addDockWidget(Qt::RightDockWidgetArea, dockWidget3);
@@ -283,7 +283,16 @@ void Camel::PushGUIPattern_ToSequence()
             SequenceVect.push_back(inner_vector);
         }
 
-//    PrintMatrix();
+// Create a snapshot to GUI
+        QImage imageTest(40,40, QImage::Format_RGB32);
+    MatrixSnapshot(imageTest) ;
+
+        QListWidgetItem *SnapshotItem = new QListWidgetItem("Pattern1", SequenceList);
+        SnapshotItem->setData(Qt::DecorationRole, QPixmap::fromImage(imageTest));
+        SequenceList->insertItem(1, SnapshotItem);
+
+
+
 }
 
 int Camel::Wizard()
