@@ -200,17 +200,41 @@ void Camel::CreateDock()
         // 3rd dock item----------------------------------------------
     QDockWidget *dockWidget3 = new QDockWidget("--- 3 ---");
     dockWidget3->setAllowedAreas(Qt::RightDockWidgetArea) ;
+
     QListWidget *SequenceList = new QListWidget  ;
-
-
     QListWidgetItem *item1 = new QListWidgetItem(QIcon(":/matrix_icon"), "", SequenceList);
     SequenceList->insertItem(0, item1);
 
-        // Let's create Image as the extract for the current Matrix
-    uint GridWith = 40, GridHeight = 40 ;
-    QImage imageTest(GridWith, GridHeight, QImage::Format_RGB32);
+    QImage imageTest(40,40, QImage::Format_RGB32);
+MatrixSnapshot(imageTest) ;
 
-//  Inutile si redessiné avec les translate ?
+    QListWidgetItem *item2 = new QListWidgetItem("", SequenceList);
+    item2->setData(Qt::DecorationRole, QPixmap::fromImage(imageTest));
+    SequenceList->insertItem(1, item2);
+
+    dockWidget3->setWidget(SequenceList);
+    addDockWidget(Qt::RightDockWidgetArea, dockWidget3);
+
+    QToolBar *toolbar = addToolBar("main toolbar");
+
+    Wizard_Action =toolbar->addAction (QIcon(wizard), "Wizard");        // Manage Wizard Action
+    connect(Wizard_Action, SIGNAL(triggered()), this, SLOT(Wizard() )); // and its event
+
+    SelectColors_Action =toolbar->addAction (QIcon(colors), "Select color");           // Manage Color Action
+    connect(SelectColors_Action, SIGNAL(triggered()), this, SLOT(color_selector() ));  // and its event
+
+    SaveGUIPattern_Action =toolbar->addAction (QIcon(matrix), "Save the current Pattern");           // Manage Color Action
+    connect(SaveGUIPattern_Action, SIGNAL(triggered()), this, SLOT(PushGUIPattern_ToSequence() ));  // and its event
+}
+
+void Camel::MatrixSnapshot(QImage &imageTest )
+{
+
+    // Let's create Image as the extract for the current Matrix
+    uint GridWith  = imageTest.width() ;
+    uint GridHeight = imageTest.height();
+
+    //  Inutile si redessiné avec les translate ?
     imageTest.fill(Qt::gray);
 
     QPainter p;
@@ -232,38 +256,18 @@ void Camel::CreateDock()
     p.drawLines(GridLines);
 
     // now let's copy the current Pattern into the grid
-     uint Current_Row = 0, Current_Col=0 ;
+    uint Current_Row = 0, Current_Col=0 ;
 
-//    p.setPen(QPen(QColor(Qt::red)));
+    //    p.setPen(QPen(QColor(Qt::red)));
     for ( uint BtnID = 0; BtnID < (MatxRows*MatxCols) ; BtnID++ )
     {
         p.setBrush(QBrush(QColor(CurrentGUIMatrix->GetButtonColor(BtnID))));
-//        p.setBrush(QBrush(QColor(Qt::yellow)));
         Current_Row= BtnID/8 ;
         Current_Col = BtnID -(8*Current_Row);
         p.drawRect( QRect(Current_Col*step, Current_Row*step, step-1,step-1)) ; // -1 : nicer if a rectangle is < grid rect dims
     }
 
     p.end();
-
-
-    QListWidgetItem *item2 = new QListWidgetItem("", SequenceList);
-    item2->setData(Qt::DecorationRole, QPixmap::fromImage(imageTest));
-    SequenceList->insertItem(1, item2);
-
-    dockWidget3->setWidget(SequenceList);
-    addDockWidget(Qt::RightDockWidgetArea, dockWidget3);
-
-    QToolBar *toolbar = addToolBar("main toolbar");
-
-    Wizard_Action =toolbar->addAction (QIcon(wizard), "Wizard");        // Manage Wizard Action
-    connect(Wizard_Action, SIGNAL(triggered()), this, SLOT(Wizard() )); // and its event
-
-    SelectColors_Action =toolbar->addAction (QIcon(colors), "Select color");           // Manage Color Action
-    connect(SelectColors_Action, SIGNAL(triggered()), this, SLOT(color_selector() ));  // and its event
-
-    SaveGUIPattern_Action =toolbar->addAction (QIcon(matrix), "Save the current Pattern");           // Manage Color Action
-    connect(SaveGUIPattern_Action, SIGNAL(triggered()), this, SLOT(PushGUIPattern_ToSequence() ));  // and its event
 }
 
 // Goal : when you are happy with pattern, you need to "take a picture" of it and

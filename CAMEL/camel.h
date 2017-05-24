@@ -29,6 +29,7 @@ class Camel : public QMainWindow
     Q_OBJECT
 private:    
     QWidget *MatrixGui ;
+    void MatrixSnapshot(QImage &imageTest);
     void PrintMatrix();
     void CreateDock();
     bool LoadConfig(QString InifileName) ;
