@@ -238,7 +238,7 @@ void Camel::MatrixSnapshot(QImage &imageTest, uint BtnID, QRgb BtnCol )
         uint step= GridWith/MatxCols ;
 
             // now let's copy the current Pattern into the grid
-        p.setPen(QPen(QColor(Qt::lightGray )));
+        p.setPen(QPen(QColor(Qt::gray )));
         p.setBrush(QBrush(QColor( BtnCol )));
         uint Current_Row= BtnID/8 ;
         uint Current_Col = BtnID -(8*Current_Row);
