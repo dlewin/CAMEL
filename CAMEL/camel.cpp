@@ -229,44 +229,20 @@ void Camel::CreateDock()
 
 void Camel::MatrixSnapshot(QImage &imageTest, uint BtnID, QRgb BtnCol )
 {
-
     // Let's create Image as the extract for the current Matrix
     uint GridWith  = imageTest.width() ;
     uint GridHeight = imageTest.height();
 
-    //  Inutile si redessiné avec les translate ?
-//    imageTest.fill(Qt::gray);
-
     QPainter p;
     p.begin(&imageTest);
+        uint step= GridWith/MatxCols ;
 
-    //    Draw the grid
-    p.setPen(QPen(QColor(Qt::black)));
-    QVector<QLine> GridLines ;
-    uint step= GridWith/MatxCols ;
-
-    // Vertical Lines
-    for (uint ind=0; ind < MatxCols ; ind++)
-        GridLines.append( QLine( step+(ind*step),0,step+(ind*step),GridWith ));
-
-    // Horizontal Lines
-    for (uint ind=0; ind < MatxRows ; ind++)
-        GridLines.append( QLine( 0, step +(ind*step),GridHeight,step + (ind*step) ));
-
-    p.drawLines(GridLines);
-
-    // now let's copy the current Pattern into the grid
-//    uint Current_Row = 0, Current_Col=0 ;
-
-    //    p.setPen(QPen(QColor(Qt::red)));
-//    for ( uint BtnID = 0; BtnID < (MatxRows*MatxCols) ; BtnID++ )
-//    {
+            // now let's copy the current Pattern into the grid
+        p.setPen(QPen(QColor(Qt::lightGray )));
         p.setBrush(QBrush(QColor( BtnCol )));
         uint Current_Row= BtnID/8 ;
         uint Current_Col = BtnID -(8*Current_Row);
         p.drawRect( QRect(Current_Col*step, Current_Row*step, step-1,step-1)) ; // -1 : nicer if a rectangle is < grid rect dims
-//    }
-
     p.end();
 }
 
