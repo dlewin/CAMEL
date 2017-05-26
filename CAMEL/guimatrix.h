@@ -31,7 +31,6 @@ public:
 public slots:
     void buttonClick(QAbstractButton* button) ;
     void onrightClicked() ;
-    void onBtnPressed(QAbstractButton *);
 };
 
 #endif // GUIMATRIX_H

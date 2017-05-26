@@ -39,7 +39,6 @@ private:
     int SaveSequence(QString Filename, QVector<QVector<QRgb> > &MatrixVector);
     int LoadSequence(QString Filename, QVector<QVector<QRgb> > &MatrixVector);
     int RemoveLastPattern(QVector<QVector<QRgb> > &MatrixVector) ;
-    void RemoveAllPatterns(QVector<QVector<QRgb> > &MatrixVector );
     uint MatxRows, MatxCols ;
     GuiMatrix* CurrentGUIMatrix ;
     QVector< QPair<QString, QRgb> > ColorsL ;
@@ -63,6 +62,7 @@ private slots:
     void onListRightClicked() ;
     void eraseItem();
     void addItem() ;
+    void ClearList() ;
    void showContextMenu(const QPoint &pos) ;
 };
 

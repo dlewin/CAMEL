@@ -21,7 +21,7 @@ Camel::Camel(QWidget *parent) :
     ui->setupUi(this);
     MatxRows= MatxCols = 8 ;
     setDockNestingEnabled(true);
-    SequenceVect;
+//    SequenceVect;
 
     QWidget *MatrixGui = new QWidget();
     setCentralWidget(MatrixGui);
@@ -236,6 +236,11 @@ void Camel::addItem()
 }
 
 
+void Camel::ClearList()
+{
+    SequenceList->clear();
+    SequenceVect.clear();
+}
 
 void Camel::showContextMenu(const QPoint &pos)
 {
@@ -246,6 +251,7 @@ void Camel::showContextMenu(const QPoint &pos)
         QMenu myMenu;
         myMenu.addAction("Insert", this, SLOT(addItem()));
         myMenu.addAction("Erase",  this, SLOT(eraseItem()));
+        myMenu.addAction("Clear all",  this, SLOT(ClearList()));
 
         // Show context menu at handling position
         myMenu.exec(globalPos);
@@ -255,7 +261,6 @@ void Camel::MatrixSnapshot(QImage &imageTest, uint BtnID, QRgb BtnCol )
 {
     // Let's create Image as the extract for the current Matrix
     uint GridWith  = imageTest.width() ;
-    uint GridHeight = imageTest.height();
 
     QPainter p;
     p.begin(&imageTest);
@@ -295,7 +300,7 @@ void Camel::PushGUIPattern_ToSequence()
 
 int Camel::Wizard()
 {
-    int ColorNb ;
+
     QStringList items;
     for ( int i=0; i<MatrixModels.size(); i++)
         items << MatrixModels[i].Name ;
@@ -305,6 +310,7 @@ int Camel::Wizard()
                                          tr("Select a model:"), items, 0, false, &ok);
     if (ok && !item.isEmpty())
     {
+        int ColorNb ;
         int Model_index = -1;
         for ( int i=0; i<MatrixModels.size(); i++)
         {
@@ -334,10 +340,6 @@ int Camel::Wizard()
     return -1 ;
 }
 
-void Camel::RemoveAllPatterns(QVector<QVector<QRgb> > &MatrixVector)
-{
-    MatrixVector.clear();
-}
 
 int Camel::RemoveLastPattern(QVector<QVector<QRgb> > &MatrixVector)
 {

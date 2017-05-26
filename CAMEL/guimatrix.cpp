@@ -47,8 +47,6 @@ GuiMatrix::GuiMatrix(uint Rows, uint Cols, quint32 Led_colors, QWidget * parentW
     parentWidget->setLayout(layout)                                                     ;
     connect(this , SIGNAL(buttonClicked(QAbstractButton*)),this,SLOT(buttonClick(QAbstractButton*)));
 //    connect(&MatrixButton , &MatrixButton:rightClicked(),onrightClicked() );
-
-    connect(this, SIGNAL(buttonPressed(QAbstractButton *)), this, SLOT(onBtnPressed(QAbstractButton*) ));
 }
 
 ///NOTE http://doc.qt.io/qt-5/qbuttongroup.html#removeButton
@@ -113,10 +111,7 @@ QRgb GuiMatrix::GetButtonColor(int Btn_ID)
 }
 
 
-void GuiMatrix::onBtnPressed(QAbstractButton*)
-{
-    qDebug() << "pressed" ;
-}
+
 
 
 void GuiMatrix::onrightClicked()
@@ -126,13 +121,12 @@ void GuiMatrix::onrightClicked()
 
 void GuiMatrix::buttonClick(QAbstractButton* button)
 {
-    //SHIFT    = Qt::ShiftModifier
-    //CTRL     = Qt::ControlModifier
-    //ALT      = Qt::AltModifier
+    int BtnID= abs(this->id(button)) -2 ;
+
     Qt::KeyboardModifiers modifiers  = QApplication::queryKeyboardModifiers ();
     if(modifiers.testFlag( Qt::ControlModifier ))
     {
-      qDebug() << "CTRL was hold when this function was called";
+        qDebug() << "CTRL was hold when this function was called";
     }
     else if( modifiers.testFlag( Qt::ShiftModifier ) )
     {
@@ -142,33 +136,35 @@ void GuiMatrix::buttonClick(QAbstractButton* button)
     {
         qDebug() << "ALT was hold when this function was called";
     }
-
-
-
-    int BtnID= abs(this->id(button)) -2 ;
-
-    QRgb BtnColorValue = GUIMtx_BtnColorsArray[BtnID];
-
-    int indexPalette = Palette.indexOf(BtnColorValue) ;
-
-    if (BtnColorValue == BTNCOLOR_GREY)                                // The 1st time the let button is grey (off)
-        GUIMtx_BtnColorsArray[BtnID]= Palette.first() ;
-    else if (indexPalette != -1 )                                      // we have found the color in the list
+    else        // Simple click
     {
-        if ( Palette[indexPalette] == Palette.last() )
+        QRgb BtnColorValue = GUIMtx_BtnColorsArray[BtnID];
+
+        int indexPalette = Palette.indexOf(BtnColorValue) ;
+
+        if (BtnColorValue == BTNCOLOR_GREY)                                // The 1st time the let button is grey (off)
             GUIMtx_BtnColorsArray[BtnID]= Palette.first() ;
+        else if (indexPalette != -1 )                                      // we have found the color in the list
+        {
+            if ( Palette[indexPalette] == Palette.last() )
+                GUIMtx_BtnColorsArray[BtnID]= Palette.first() ;
+            else
+                GUIMtx_BtnColorsArray[BtnID]= Palette[++indexPalette] ;
+        }
         else
-            GUIMtx_BtnColorsArray[BtnID]= Palette[++indexPalette] ;
+            qDebug() << "buttonClick problem, the color is not in the Palette list: " <<BtnColorValue ; // if not: there is a problem
+
+
+        BtnColorValue = GUIMtx_BtnColorsArray[BtnID] ;
+        QString ColorString = "QPushButton{background-color: " +   QString("#%1").arg(BtnColorValue, 6, 16, QLatin1Char( '0' ))  + ";} "
+                                                                                                                                   "QPushButton[_rightClicked = true]{background-color:#A0A0A0;} ";
+
+        button->setStyleSheet(ColorString)  ;
+
     }
-    else
-        qDebug() << "buttonClick problem, the color is not in the Palette list: " <<BtnColorValue ; // if not: there is a problem
 
 
-    BtnColorValue = GUIMtx_BtnColorsArray[BtnID] ;
-    QString ColorString = "QPushButton{background-color: " +   QString("#%1").arg(BtnColorValue, 6, 16, QLatin1Char( '0' ))  + ";} "
-                          "QPushButton[_rightClicked = true]{background-color:#A0A0A0;} ";
 
-    button->setStyleSheet(ColorString)  ;
 }
 
 
