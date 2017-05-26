@@ -20,11 +20,8 @@ Camel::Camel(QWidget *parent) :
 {
     ui->setupUi(this);
     MatxRows= MatxCols = 8 ;
-
     setDockNestingEnabled(true);
-
     SequenceVect;
-
 
     QWidget *MatrixGui = new QWidget();
     setCentralWidget(MatrixGui);
@@ -32,16 +29,18 @@ Camel::Camel(QWidget *parent) :
     MatrixGui->resize(3,3);
         // Create default instances
     QVector< QPair<QString, QRgb> > ColorsL = {{"Color1",16724787},{"Color2",65280},{"Color3",16753920}} ;
-
     CurrentGUIMatrix = new GuiMatrix(MatxRows,MatxCols,3,MatrixGui, ColorsL );
-
     CreateDock();           // This MUST be defined after GUIMatrix to be able to call it thereafter
-
 
 //    SaveConfig("Camel.ini",8, 8) ;
     LoadConfig("Camel.ini") ;
 }
 
+
+void Camel::onListRightClicked()
+{
+    qDebug()<< "Right clicked" ;
+}
 
 bool Camel::LoadConfig(QString InifileName)
 {
@@ -53,7 +52,6 @@ bool Camel::LoadConfig(QString InifileName)
         qDebug() << "The file" << Inifile.fileName() << "does not exist.";
         return false;
     }
-
 
      QStringList ModelsList, ModelText ;
      settings.beginGroup("Models");
@@ -81,7 +79,6 @@ bool Camel::LoadConfig(QString InifileName)
                    QRgb ColorValue=  QRgb(settings.value(iter).toUInt()) ;
 
                 Temp_Model.ColorsList << QPair<QString, QRgb> ( ColorName,ColorValue ) ;
-//                   qDebug()<< "Colors: " <<  buffer.remove(QRegExp("Colors/")) << ".=." << settings.value(iter).toString() ;
                }
                else
                {
@@ -91,7 +88,6 @@ bool Camel::LoadConfig(QString InifileName)
                         Temp_Model.Rows = settings.value(iter).toUInt() ;
                    else if ( buffer.contains("colorsdepth") )                        // Looking for a ColorDepth = Value
                         Temp_Model.ColorsDepth = settings.value(iter).toUInt() ;
-//                   qDebug() << buffer << "=>" <<settings.value(iter).toString()  ;
                }
             }
 
@@ -161,8 +157,6 @@ bool Camel::SaveConfig(const QString InifileName, quint16 Rows ,quint16 Cols  )
     return true ;
 }
 
-
-
 Camel::~Camel()
 {
     delete ui;
@@ -202,16 +196,6 @@ void Camel::CreateDock()
     dockWidget3->setAllowedAreas(Qt::RightDockWidgetArea) ;
 
     SequenceList = new QListWidget  ;
-//    QListWidgetItem *item1 = new QListWidgetItem(QIcon(":/matrix_icon"), "", SequenceList);
-//    SequenceList->insertItem(0, item1);
-
-//    QImage imageTest(40,40, QImage::Format_RGB32);
-//MatrixSnapshot(imageTest) ;
-
-//    QListWidgetItem *item2 = new QListWidgetItem("", SequenceList);
-//    item2->setData(Qt::DecorationRole, QPixmap::fromImage(imageTest));
-//    SequenceList->insertItem(1, item2);
-
     dockWidget3->setWidget(SequenceList);
     addDockWidget(Qt::RightDockWidgetArea, dockWidget3);
 
@@ -225,6 +209,44 @@ void Camel::CreateDock()
 
     SaveGUIPattern_Action =toolbar->addAction (QIcon(matrix), "Save the current Pattern");           // Manage Color Action
     connect(SaveGUIPattern_Action, SIGNAL(triggered()), this, SLOT(PushGUIPattern_ToSequence() ));  // and its event
+
+     SequenceList->setContextMenuPolicy(Qt::CustomContextMenu);
+        connect(SequenceList, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
+}
+
+/* we need to realize slots for adding and removing QListWidget elements
+    we iterate all selected items (for set multiple selection mode use setSelectionMode() method) and delete it by ourself, because docs says that
+    Items removed from a list widget will not be managed by Qt, and will need to be deleted manually. */
+
+void Camel::eraseItem()
+{
+    // If multiple selection is on, we need to erase all selected items
+    for (int i = 0; i < SequenceList->selectedItems().size(); ++i)
+    {
+        QListWidgetItem *item = SequenceList->takeItem(SequenceList->currentRow());  // Get curent item on selected row
+        delete item;        // And remove it
+    }
+}
+
+void Camel::addItem()
+{
+       PushGUIPattern_ToSequence();
+}
+
+
+
+void Camel::showContextMenu(const QPoint &pos)
+{
+    // Handle global position
+        QPoint globalPos = SequenceList->mapToGlobal(pos);
+
+        // Create menu and insert some actions
+        QMenu myMenu;
+        myMenu.addAction("Insert", this, SLOT(addItem()));
+        myMenu.addAction("Erase",  this, SLOT(eraseItem()));
+
+        // Show context menu at handling position
+        myMenu.exec(globalPos);
 }
 
 void Camel::MatrixSnapshot(QImage &imageTest, uint BtnID, QRgb BtnCol )
@@ -246,9 +268,9 @@ void Camel::MatrixSnapshot(QImage &imageTest, uint BtnID, QRgb BtnCol )
     p.end();
 }
 
-// Goal : when you are happy with pattern, you need to "take a picture" of it and
-// save it into a sequence list.
-// Parse the GUImatrix and retrieve the color for each of the points in a 2D Vector
+/* Goal : when you are happy with pattern, you need to "take a picture" of it and
+ save it into a sequence list.
+ Parse the GUImatrix and retrieve the color for each of the points in a 2D Vector  */
 
 void Camel::PushGUIPattern_ToSequence()
 {
@@ -299,23 +321,16 @@ int Camel::Wizard()
         MatxCols = MatrixModels[Model_index].Cols ;
 
         /// FIXME need to resize matrix and GUImatrix from wizard & from LoadSequence
-
         //        QWidget *MatrixGui = new QWidget();
         //        setCentralWidget(MatrixGui);
 
         ColorsL.clear();
         ColorsL = MatrixModels[Model_index].ColorsList ;
-        //Debug        CurrentGUIMatrix->Reset(MatxRows,MatxCols,ColorNb, ColorsL );
-        //         CurrentGUIMatrix->deleteLater();
-        //                 CurrentGUIMatrix->Reset(10,MatxCols,ColorNb, ColorsL );
 
         return 0 ;
     }
     return -1 ;
 }
-
-
-
 
 void Camel::RemoveAllPatterns(QVector<QVector<QRgb> > &MatrixVector)
 {
@@ -432,7 +447,6 @@ void Camel::color_selector()
         qDebug() << "Color Choosen : " << color.name();
     }
 }
-
 
 void Camel::PrintMatrix()
 {

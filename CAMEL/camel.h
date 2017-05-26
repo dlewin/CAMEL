@@ -28,6 +28,7 @@ class Camel : public QMainWindow
 {
     Q_OBJECT
 private:    
+
     QWidget *MatrixGui ;
     QListWidget *SequenceList ;
     void MatrixSnapshot(QImage &imageTest, uint BtnID, QRgb BtnCol);
@@ -59,6 +60,10 @@ private slots:
     void color_selector();
     int Wizard();
     void PushGUIPattern_ToSequence();
+    void onListRightClicked() ;
+    void eraseItem();
+    void addItem() ;
+   void showContextMenu(const QPoint &pos) ;
 };
 
 #endif // CAMEL_H
