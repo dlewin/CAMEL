@@ -1,5 +1,7 @@
+
 #include "guimatrix.h"
 #include "matrixbutton.h"
+#include <QApplication>
 #include <QDebug>
 
 #define BTNCOLOR_GREY 10526880
@@ -44,10 +46,12 @@ GuiMatrix::GuiMatrix(uint Rows, uint Cols, quint32 Led_colors, QWidget * parentW
 
     parentWidget->setLayout(layout)                                                     ;
     connect(this , SIGNAL(buttonClicked(QAbstractButton*)),this,SLOT(buttonClick(QAbstractButton*)));
-    connect(this , SIGNAL(rightClicked()),this,SLOT(rightClicked()));
+//    connect(&MatrixButton , &MatrixButton:rightClicked(),onrightClicked() );
+
+    connect(this, SIGNAL(buttonPressed(QAbstractButton *)), this, SLOT(onBtnPressed(QAbstractButton*) ));
 }
 
-
+///NOTE http://doc.qt.io/qt-5/qbuttongroup.html#removeButton
 void GuiMatrix::Reset(uint Rows, uint Cols, quint32 Led_colors, QVector<QPair<QString, QRgb> > &ColorsList)
 {
 
@@ -108,13 +112,39 @@ QRgb GuiMatrix::GetButtonColor(int Btn_ID)
     return GUIMtx_BtnColorsArray[Btn_ID] ;
 }
 
-void GuiMatrix::rightClicked()
+
+void GuiMatrix::onBtnPressed(QAbstractButton*)
+{
+    qDebug() << "pressed" ;
+}
+
+
+void GuiMatrix::onrightClicked()
 {
     qDebug() <<"right click" ;
 }
 
 void GuiMatrix::buttonClick(QAbstractButton* button)
 {
+    //SHIFT    = Qt::ShiftModifier
+    //CTRL     = Qt::ControlModifier
+    //ALT      = Qt::AltModifier
+    Qt::KeyboardModifiers modifiers  = QApplication::queryKeyboardModifiers ();
+    if(modifiers.testFlag( Qt::ControlModifier ))
+    {
+      qDebug() << "CTRL was hold when this function was called";
+    }
+    else if( modifiers.testFlag( Qt::ShiftModifier ) )
+    {
+        qDebug() << "Shift was hold when this function was called";
+    }
+    else if( modifiers.testFlag( Qt::AltModifier ) )
+    {
+        qDebug() << "ALT was hold when this function was called";
+    }
+
+
+
     int BtnID= abs(this->id(button)) -2 ;
 
     QRgb BtnColorValue = GUIMtx_BtnColorsArray[BtnID];
