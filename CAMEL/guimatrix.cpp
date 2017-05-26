@@ -44,8 +44,7 @@ GuiMatrix::GuiMatrix(uint Rows, uint Cols, quint32 Led_colors, QWidget * parentW
 
     parentWidget->setLayout(layout)                                                     ;
     connect(this , SIGNAL(buttonClicked(QAbstractButton*)),this,SLOT(buttonClick(QAbstractButton*)));
-
-
+    connect(this , SIGNAL(rightClicked()),this,SLOT(rightClicked()));
 }
 
 
@@ -93,6 +92,7 @@ void GuiMatrix::Populate(QGridLayout *layout, const int rows, const int cols)
         {
             MatrixButton *btn= new MatrixButton();
             btn->setFixedWidth(20);
+            btn->setFixedHeight(20);
             btn->setStyleSheet("QPushButton{background-color:#A0A0A0;}"
                                "QPushButton[_rightClicked = true]{background-color:#A0A0A0;}")      ;
 
@@ -106,6 +106,11 @@ void GuiMatrix::Populate(QGridLayout *layout, const int rows, const int cols)
 QRgb GuiMatrix::GetButtonColor(int Btn_ID)
 {
     return GUIMtx_BtnColorsArray[Btn_ID] ;
+}
+
+void GuiMatrix::rightClicked()
+{
+    qDebug() <<"right click" ;
 }
 
 void GuiMatrix::buttonClick(QAbstractButton* button)
@@ -135,8 +140,6 @@ void GuiMatrix::buttonClick(QAbstractButton* button)
 
     button->setStyleSheet(ColorString)  ;
 }
-
-
 
 
 GuiMatrix::~GuiMatrix()

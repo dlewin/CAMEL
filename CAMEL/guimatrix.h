@@ -30,6 +30,7 @@ public:
 
 public slots:
     void buttonClick(QAbstractButton* button) ;
+    void rightClicked() ;
 };
 
 #endif // GUIMATRIX_H
