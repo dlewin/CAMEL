@@ -223,8 +223,10 @@ void Camel::eraseItem()
     // If multiple selection is on, we need to erase all selected items
     for (int i = 0; i < SequenceList->selectedItems().size(); ++i)
     {
-        QListWidgetItem *item = SequenceList->takeItem(SequenceList->currentRow());  // Get curent item on selected row
+        int CurRow = SequenceList->currentRow() ;
+        QListWidgetItem *item = SequenceList->takeItem( CurRow);  // Get curent item on selected row
         delete item;        // And remove it
+        SequenceVect.removeAt(CurRow);
     }
 }
 
