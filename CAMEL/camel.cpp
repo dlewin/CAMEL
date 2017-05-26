@@ -263,7 +263,8 @@ void Camel::PushGUIPattern_ToSequence()
         SequenceVect.push_back(inner_vector);
     }
             // Create a snapshot to GUI
-    QListWidgetItem *SnapshotItem = new QListWidgetItem("Pattern1", SequenceList);
+    QString PatSring = "Pattern" + QString::number(SequenceList->count() +1) ;     // Retrieve the order of the pattern
+    QListWidgetItem *SnapshotItem = new QListWidgetItem(PatSring, SequenceList);
     SnapshotItem->setData(Qt::DecorationRole, QPixmap::fromImage(imageTest));
     SequenceList->insertItem(1, SnapshotItem);
 }
