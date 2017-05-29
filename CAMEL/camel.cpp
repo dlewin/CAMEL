@@ -33,7 +33,7 @@ Camel::Camel(QWidget *parent) :
     CreateDock();           // This MUST be defined after GUIMatrix to be able to call it thereafter
 
 //    SaveConfig("Camel.ini",8, 8) ;
-    LoadConfig("Camel.ini") ;
+//    LoadConfig("Camel.ini") ;
 }
 
 
@@ -42,16 +42,24 @@ void Camel::onListRightClicked()
     qDebug()<< "Right clicked" ;
 }
 
-bool Camel::LoadConfig(QString InifileName)
+void Camel::LoadingConfig()
 {
-    QSettings settings( InifileName , QSettings::IniFormat ) ;
-    QFile Inifile(InifileName) ;
+    LoadConfig();
+}
 
-    if ( !Inifile.exists() )        // Checks if the ini file exists
+bool Camel::LoadConfig()
+{
+
+    QString InifileName = QFileDialog::getOpenFileName(this,
+        tr("Open Matrix configuration"), "", tr("Matrix Config Files (*.mtx, *.*)"));
+
+    if ( InifileName.isEmpty() )        // Checks if the ini file exists
     {
-        qDebug() << "The file" << Inifile.fileName() << "does not exist.";
+        qDebug() << "No file selected";
         return false;
     }
+
+    QSettings settings( InifileName , QSettings::IniFormat ) ;
 
      QStringList ModelsList, ModelText ;
      settings.beginGroup("Models");
@@ -169,18 +177,14 @@ void Camel::CreateDock()
     QPixmap wizard(":/wizard");
     QPixmap magic(":/magic");
     QPixmap colors(":/colors");
+    QPixmap loadconfig(":/loadfile");
 
 
     ///NOTE For MVD List, check example:
     /// http://doc.qt.io/qt-5/qtwidgets-itemviews-puzzle-mainwindow-cpp.html
     ///
 
-        // 1st dock item ---------------------------------------------
-    QDockWidget *dockWidget = new QDockWidget("--- 1 ---");
-    dockWidget->setWidget(new QTextEdit);
-    addDockWidget(Qt::LeftDockWidgetArea, dockWidget);
-
-        // 2nd dock item ---------------------------------------------
+            // 2nd dock item ---------------------------------------------
     QDockWidget *dockWidget2 = new QDockWidget("--- 2 ---");
     dockWidget2->setWidget(new QPushButton );
     QListWidget *ColorList = new QListWidget  ;
@@ -199,6 +203,7 @@ void Camel::CreateDock()
     dockWidget3->setWidget(SequenceList);
     addDockWidget(Qt::RightDockWidgetArea, dockWidget3);
 
+        // Toolbar set up
     QToolBar *toolbar = addToolBar("main toolbar");
 
     Wizard_Action =toolbar->addAction (QIcon(wizard), "Wizard");        // Manage Wizard Action
@@ -207,11 +212,14 @@ void Camel::CreateDock()
     SelectColors_Action =toolbar->addAction (QIcon(colors), "Select color");           // Manage Color Action
     connect(SelectColors_Action, SIGNAL(triggered()), this, SLOT(color_selector() ));  // and its event
 
-    SaveGUIPattern_Action =toolbar->addAction (QIcon(matrix), "Save the current Pattern");           // Manage Color Action
+    SaveGUIPattern_Action =toolbar->addAction (QIcon(matrix), "Save the current Pattern");           // Manage the Pattern save Action
     connect(SaveGUIPattern_Action, SIGNAL(triggered()), this, SLOT(PushGUIPattern_ToSequence() ));  // and its event
 
-     SequenceList->setContextMenuPolicy(Qt::CustomContextMenu);
-        connect(SequenceList, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
+    SequenceList->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(SequenceList, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
+
+    LoadFile_Action =toolbar->addAction (QIcon(loadconfig), "Load a configuration") ;           // Manage Load configuration Action
+    connect(LoadFile_Action, SIGNAL(triggered()), this, SLOT(LoadingConfig() ))     ;           // and its event
 }
 
 /* we need to realize slots for adding and removing QListWidget elements
@@ -341,14 +349,6 @@ int Camel::Wizard()
 }
 
 
-int Camel::RemoveLastPattern(QVector<QVector<QRgb> > &MatrixVector)
-{
-    if (MatrixVector.isEmpty() )
-        return EMPTY_SEQUENCE ;
-
-    MatrixVector.removeLast();
-    return 0 ;
-}
 
 // Save all the patterns in the 2D Vector into the Sequence binary file
 

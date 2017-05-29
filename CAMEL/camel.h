@@ -34,11 +34,10 @@ private:
     void MatrixSnapshot(QImage &imageTest, uint BtnID, QRgb BtnCol);
     void PrintMatrix();
     void CreateDock();
-    bool LoadConfig(QString InifileName) ;
+    bool LoadConfig() ;
     bool SaveConfig(const QString InifileName , quint16 Rows, quint16 Cols);
     int SaveSequence(QString Filename, QVector<QVector<QRgb> > &MatrixVector);
     int LoadSequence(QString Filename, QVector<QVector<QRgb> > &MatrixVector);
-    int RemoveLastPattern(QVector<QVector<QRgb> > &MatrixVector) ;
     uint MatxRows, MatxCols ;
     GuiMatrix* CurrentGUIMatrix ;
     QVector< QPair<QString, QRgb> > ColorsL ;
@@ -46,6 +45,7 @@ private:
     QVector<Matrix_Model> MatrixModels ;
     QAction* SelectColors_Action;
     QAction*  SaveGUIPattern_Action ;
+    QAction*  LoadFile_Action ;
     QAction* Wizard_Action;
     Ui::Camel *ui;
 
@@ -63,7 +63,8 @@ private slots:
     void eraseItem();
     void addItem() ;
     void ClearList() ;
-   void showContextMenu(const QPoint &pos) ;
+    void showContextMenu(const QPoint &pos) ;
+    void LoadingConfig();
 };
 
 #endif // CAMEL_H

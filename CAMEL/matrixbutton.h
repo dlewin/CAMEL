@@ -42,7 +42,11 @@ protected:
             changeState(false);
         }
         QPushButton::mousePressEvent(e);
+
     }
+
+
+
 
 private:
     bool _rightClicked = false;
