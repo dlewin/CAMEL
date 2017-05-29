@@ -28,12 +28,10 @@ Camel::Camel(QWidget *parent) :
 
     MatrixGui->resize(3,3);
         // Create default instances
-    QVector< QPair<QString, QRgb> > ColorsL = {{"Color1",16724787},{"Color2",65280},{"Color3",16753920}} ;
+    QVector< QPair<QString, QRgb> > ColorsL = {{"Color1",16724787},{"Color2",65280},{"Color3",16753920},{"EraseColor",10526880}} ;
     CurrentGUIMatrix = new GuiMatrix(MatxRows,MatxCols,3,MatrixGui, ColorsL );
-    CreateDock();           // This MUST be defined after GUIMatrix to be able to call it thereafter
 
-//    SaveConfig("Camel.ini",8, 8) ;
-//    LoadConfig("Camel.ini") ;
+    CreateDock();           // This MUST be defined after GUIMatrix to be able to call it thereafter
 }
 
 
@@ -47,11 +45,8 @@ void Camel::LoadingConfig()
     LoadConfig();
 }
 
-
-
 bool Camel::LoadConfig()
 {
-
     QString InifileName = QFileDialog::getOpenFileName(this,
         tr("Open Matrix configuration"), "", tr("Matrix Config Files (*.mtx);;All Files (*)") );
 
