@@ -41,7 +41,7 @@ private:
     uint MatxRows, MatxCols ;
     GuiMatrix* CurrentGUIMatrix ;
     QVector< QPair<QString, QRgb> > ColorsL ;
-    QVector<QVector<QRgb>> SequenceVect;
+    QVector<QVector<QRgb> > SequenceVect;
     QVector<Matrix_Model> MatrixModels ;
     QAction* SelectColors_Action;
     QAction*  SaveGUIPattern_Action ;

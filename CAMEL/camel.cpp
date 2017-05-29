@@ -350,16 +350,18 @@ void Camel::MatrixSnapshot(QImage &imageTest, uint BtnID, QRgb BtnCol )
 void Camel::PushGUIPattern_ToSequence()
 {
     QImage imageTest(40,40, QImage::Format_RGB32);
+    QVector<QRgb> row_vector;
 
     for ( uint BtnID = 0; BtnID < MatxRows*MatxCols; BtnID++ )
     {
-        QVector<QRgb> inner_vector;
         QRgb BtnColor= CurrentGUIMatrix->GetButtonColor(BtnID)   ;
-        inner_vector.push_back(  BtnColor  );
+        row_vector.push_back(  BtnColor  );
         MatrixSnapshot(imageTest,BtnID, BtnColor ) ;
-        SequenceVect.push_back(inner_vector);
     }
-            // Create a snapshot to GUI
+
+    SequenceVect.push_back(row_vector);
+
+    // Create a snapshot to GUI
     QString PatSring = "Pattern" + QString::number(SequenceList->count() +1) ;     // Retrieve the order of the pattern
     QListWidgetItem *SnapshotItem = new QListWidgetItem(PatSring, SequenceList);
     SnapshotItem->setData(Qt::DecorationRole, QPixmap::fromImage(imageTest));

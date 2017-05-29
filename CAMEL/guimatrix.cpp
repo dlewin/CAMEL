@@ -167,9 +167,6 @@ void GuiMatrix::Fill(QRgb BtnColorValue)
 
     for (auto iter: BtnsList )
         iter->setStyleSheet(ColorString)      ;
-
-
-
 }
 
 
