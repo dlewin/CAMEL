@@ -49,6 +49,7 @@ private:
     QAction*  SaveFile_Action ;
     QAction* Wizard_Action;
     QAction* RunSequence_Action;
+    QAction * ClearMtx_Action;
     Ui::Camel *ui;
 
 
@@ -69,6 +70,7 @@ private slots:
     void LoadingConfig();
     void SavingConfig();
     void PlayingSequence();
+    void ClearMatrix();
 };
 
 #endif // CAMEL_H

@@ -28,6 +28,7 @@ public:
     ~GuiMatrix();
     void Populate(QGridLayout *layout, const int rows, const int cols)                       ;
     void Colorize(int BtnPos, QRgb CurValue) ;
+    void Clear();
 
 public slots:
     void buttonClick(QAbstractButton* button) ;

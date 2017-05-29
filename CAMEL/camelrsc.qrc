@@ -8,5 +8,6 @@
         <file alias="loadconfig">Images/LoadFile.png</file>
         <file alias="saveconfig">Images/saveFile.png</file>
         <file alias="runsequence">Images/play.png</file>
+        <file alias="clearmatrix">Images/edit_clear.png</file>
     </qresource>
 </RCC>

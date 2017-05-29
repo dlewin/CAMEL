@@ -189,6 +189,7 @@ void Camel::CreateDock()
     QPixmap loadconfig(":/loadconfig");
     QPixmap saveconfig(":/saveconfig");
     QPixmap runsequence(":/runsequence");
+    QPixmap clearmatrix(":/clearmatrix");
 
     ///NOTE For MVD List, check example:
     /// http://doc.qt.io/qt-5/qtwidgets-itemviews-puzzle-mainwindow-cpp.html
@@ -231,11 +232,14 @@ void Camel::CreateDock()
     LoadFile_Action =toolbar->addAction(QIcon(loadconfig), "Load a configuration") ;           // Manage Load configuration Action
     connect(LoadFile_Action, SIGNAL(triggered()), this, SLOT(LoadingConfig() ))     ;           // and its event
 
-    SaveFile_Action =toolbar->addAction(QIcon(saveconfig), "Save a configuration") ;           // Manage Load configuration Action
-    connect(SaveFile_Action, SIGNAL(triggered()), this, SLOT(SavingConfig() ))     ;           // and its event
+    SaveFile_Action =toolbar->addAction(QIcon(saveconfig), "Save a configuration") ;
+    connect(SaveFile_Action, SIGNAL(triggered()), this, SLOT(SavingConfig() ))     ;
 
-    RunSequence_Action =toolbar->addAction(QIcon(runsequence), "Play the sequence") ;           // Manage Load configuration Action
-    connect(RunSequence_Action, SIGNAL(triggered()), this, SLOT(PlayingSequence() ))     ;           // and its event
+    RunSequence_Action =toolbar->addAction(QIcon(runsequence), "Play the sequence") ;
+    connect(RunSequence_Action, SIGNAL(triggered()), this, SLOT(PlayingSequence() ))     ;
+
+    ClearMtx_Action =toolbar->addAction(QIcon(clearmatrix), "Clear the Matrix") ;
+    connect(ClearMtx_Action, SIGNAL(triggered()), this, SLOT(ClearMatrix() ))     ;
 
 }
 
@@ -255,9 +259,13 @@ void Camel::PlayingSequence()
          for ( int indCol = 0; indCol <SequenceVect[indRow].size() ; ++indCol )
          {
                CurrentGUIMatrix->Colorize(indRow, SequenceVect[indRow][indCol]) ;
-               qDebug()<< indRow <<" - " << SequenceVect[indRow][indCol] ;
          }
 
+}
+
+void Camel::ClearMatrix()
+{
+ CurrentGUIMatrix->Clear();
 }
 
 /* we need to realize slots for adding and removing QListWidget elements

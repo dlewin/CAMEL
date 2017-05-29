@@ -162,6 +162,16 @@ void GuiMatrix::buttonClick(QAbstractButton* button)
     }
 }
 
+void GuiMatrix::Clear()
+{
+    QList<QAbstractButton *>  BtnsList = buttons();
+    for (auto iter: BtnsList )
+        iter->setStyleSheet("QPushButton{background-color:#A0A0A0;}"
+                            "QPushButton[_rightClicked = true]{background-color:#A0A0A0;}")      ;
+
+//    btn->setStyleSheet("QPushButton{background-color:#A0A0A0;}"
+//                       "QPushButton[_rightClicked = true]{background-color:#A0A0A0;}")      ;
+}
 void GuiMatrix::Colorize(int BtnPos, QRgb CurValue)
 {
 //    QRgb BtnColorValue ;
@@ -172,7 +182,7 @@ void GuiMatrix::Colorize(int BtnPos, QRgb CurValue)
     QString ColorString = "QPushButton{background-color: " +   QString("#%1").arg(CurValue, 6, 16, QLatin1Char( '0' ))  + ";} "
                                                                                                                                "QPushButton[_rightClicked = true]{background-color:#A0A0A0;} ";
 
-     BtnsList.at(BtnPos)->setStyleSheet(ColorString)  ;
+    BtnsList.at(BtnPos)->setStyleSheet(ColorString)  ;
 
 }
 
