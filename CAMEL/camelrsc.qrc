@@ -5,6 +5,7 @@
         <file alias="magic">Images/8145.jpg</file>
         <file alias="exit">Images/O4YIGZ0.jpg</file>
         <file alias="colors">Images/Color-picker-icon.png</file>
-        <file alias="loadfile">Images/LoadFile.png</file>
+        <file alias="loadconfig">Images/LoadFile.png</file>
+        <file alias="saveconfig">Images/saveFile.png</file>
     </qresource>
 </RCC>

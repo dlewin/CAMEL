@@ -46,6 +46,7 @@ private:
     QAction* SelectColors_Action;
     QAction*  SaveGUIPattern_Action ;
     QAction*  LoadFile_Action ;
+    QAction*  SaveFile_Action ;
     QAction* Wizard_Action;
     Ui::Camel *ui;
 
@@ -65,6 +66,7 @@ private slots:
     void ClearList() ;
     void showContextMenu(const QPoint &pos) ;
     void LoadingConfig();
+    void SavingConfig();
 };
 
 #endif // CAMEL_H

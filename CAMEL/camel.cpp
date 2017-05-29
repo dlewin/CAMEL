@@ -47,6 +47,8 @@ void Camel::LoadingConfig()
     LoadConfig();
 }
 
+
+
 bool Camel::LoadConfig()
 {
 
@@ -114,6 +116,18 @@ bool Camel::LoadConfig()
     return true ;
 }
 
+void Camel::SavingConfig()
+{
+    QString InifileName = QFileDialog::getSaveFileName(this,
+                                                       tr("Save Matrix configuration"), "",
+                                                       tr("Matrix Config Files (*.mtx);;All Files (*)")
+                                                      );
+
+    if ( InifileName.isEmpty() )        // Checks if the ini file exists
+        qDebug() << "No file selected for saving";
+    else
+        SaveConfig(InifileName, MatxRows, MatxCols ) ;
+}
 
 /* Models section is where each model, ie: the physical leds matrix, is described
  a model is :
@@ -177,7 +191,8 @@ void Camel::CreateDock()
     QPixmap wizard(":/wizard");
     QPixmap magic(":/magic");
     QPixmap colors(":/colors");
-    QPixmap loadconfig(":/loadfile");
+    QPixmap loadconfig(":/loadconfig");
+    QPixmap saveconfig(":/saveconfig");
 
 
     ///NOTE For MVD List, check example:
@@ -206,20 +221,23 @@ void Camel::CreateDock()
         // Toolbar set up
     QToolBar *toolbar = addToolBar("main toolbar");
 
-    Wizard_Action =toolbar->addAction (QIcon(wizard), "Wizard");        // Manage Wizard Action
+    Wizard_Action =toolbar->addAction(QIcon(wizard), "Wizard");        // Manage Wizard Action
     connect(Wizard_Action, SIGNAL(triggered()), this, SLOT(Wizard() )); // and its event
 
-    SelectColors_Action =toolbar->addAction (QIcon(colors), "Select color");           // Manage Color Action
+    SelectColors_Action =toolbar->addAction(QIcon(colors), "Select color");           // Manage Color Action
     connect(SelectColors_Action, SIGNAL(triggered()), this, SLOT(color_selector() ));  // and its event
 
-    SaveGUIPattern_Action =toolbar->addAction (QIcon(matrix), "Save the current Pattern");           // Manage the Pattern save Action
+    SaveGUIPattern_Action =toolbar->addAction(QIcon(matrix), "Save the current Pattern");           // Manage the Pattern save Action
     connect(SaveGUIPattern_Action, SIGNAL(triggered()), this, SLOT(PushGUIPattern_ToSequence() ));  // and its event
 
     SequenceList->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(SequenceList, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 
-    LoadFile_Action =toolbar->addAction (QIcon(loadconfig), "Load a configuration") ;           // Manage Load configuration Action
+    LoadFile_Action =toolbar->addAction(QIcon(loadconfig), "Load a configuration") ;           // Manage Load configuration Action
     connect(LoadFile_Action, SIGNAL(triggered()), this, SLOT(LoadingConfig() ))     ;           // and its event
+
+    SaveFile_Action =toolbar->addAction(QIcon(saveconfig), "Save a configuration") ;           // Manage Load configuration Action
+    connect(SaveFile_Action, SIGNAL(triggered()), this, SLOT(SavingConfig() ))     ;           // and its event
 }
 
 /* we need to realize slots for adding and removing QListWidget elements
