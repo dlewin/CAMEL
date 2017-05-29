@@ -190,6 +190,7 @@ void Camel::CreateDock()
     QPixmap saveconfig(":/saveconfig");
     QPixmap runsequence(":/runsequence");
     QPixmap clearmatrix(":/clearmatrix");
+    QPixmap fillmatrix(":/fillmatrix");
 
     ///NOTE For MVD List, check example:
     /// http://doc.qt.io/qt-5/qtwidgets-itemviews-puzzle-mainwindow-cpp.html
@@ -241,6 +242,9 @@ void Camel::CreateDock()
     ClearMtx_Action =toolbar->addAction(QIcon(clearmatrix), "Clear the Matrix") ;
     connect(ClearMtx_Action, SIGNAL(triggered()), this, SLOT(ClearMatrix() ))     ;
 
+    FillMtx_Action =toolbar->addAction(QIcon(fillmatrix), "Fill all the Matrix with a color") ;
+    connect(FillMtx_Action, SIGNAL(triggered()), this, SLOT(FillMatrix() ))     ;
+
 }
 
 
@@ -261,6 +265,16 @@ void Camel::PlayingSequence()
                CurrentGUIMatrix->Colorize(indRow, SequenceVect[indRow][indCol]) ;
          }
 
+}
+
+void Camel::FillMatrix()
+{
+    QColor color = QColorDialog::getColor(Qt::yellow, this );
+    if( color.isValid() )
+    {
+
+        CurrentGUIMatrix->Fill(color.rgb() );
+    }
 }
 
 void Camel::ClearMatrix()

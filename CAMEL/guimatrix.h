@@ -29,6 +29,7 @@ public:
     void Populate(QGridLayout *layout, const int rows, const int cols)                       ;
     void Colorize(int BtnPos, QRgb CurValue) ;
     void Clear();
+    void Fill(QRgb BtnColorValue) ;
 
 public slots:
     void buttonClick(QAbstractButton* button) ;
