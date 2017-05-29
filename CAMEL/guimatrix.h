@@ -27,6 +27,7 @@ public:
     GuiMatrix(uint Rows, uint Cols, quint32 Led_colors, QWidget *parentWidget, QVector<QPair<QString, QRgb> > &ColorsList);
     ~GuiMatrix();
     void Populate(QGridLayout *layout, const int rows, const int cols)                       ;
+    void Colorize(int BtnPos, QRgb CurValue) ;
 
 public slots:
     void buttonClick(QAbstractButton* button) ;

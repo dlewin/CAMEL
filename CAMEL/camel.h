@@ -48,6 +48,7 @@ private:
     QAction*  LoadFile_Action ;
     QAction*  SaveFile_Action ;
     QAction* Wizard_Action;
+    QAction* RunSequence_Action;
     Ui::Camel *ui;
 
 
@@ -67,6 +68,7 @@ private slots:
     void showContextMenu(const QPoint &pos) ;
     void LoadingConfig();
     void SavingConfig();
+    void PlayingSequence();
 };
 
 #endif // CAMEL_H

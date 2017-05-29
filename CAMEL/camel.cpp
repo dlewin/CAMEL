@@ -188,7 +188,7 @@ void Camel::CreateDock()
     QPixmap colors(":/colors");
     QPixmap loadconfig(":/loadconfig");
     QPixmap saveconfig(":/saveconfig");
-
+    QPixmap runsequence(":/runsequence");
 
     ///NOTE For MVD List, check example:
     /// http://doc.qt.io/qt-5/qtwidgets-itemviews-puzzle-mainwindow-cpp.html
@@ -233,6 +233,31 @@ void Camel::CreateDock()
 
     SaveFile_Action =toolbar->addAction(QIcon(saveconfig), "Save a configuration") ;           // Manage Load configuration Action
     connect(SaveFile_Action, SIGNAL(triggered()), this, SLOT(SavingConfig() ))     ;           // and its event
+
+    RunSequence_Action =toolbar->addAction(QIcon(runsequence), "Play the sequence") ;           // Manage Load configuration Action
+    connect(RunSequence_Action, SIGNAL(triggered()), this, SLOT(PlayingSequence() ))     ;           // and its event
+
+}
+
+
+/* Visualizer : plays all patterns that are in the SequenceList  */
+
+void Camel::PlayingSequence()
+{
+
+//     for (int ind=0; ind< SequenceVect.size(); ind++ )
+//     {
+//        CurrentGUIMatrix->Colorize( SequenceVect[ind]);
+//        qDebug() << "play no " <<  ind ;
+//     }
+
+     for ( int indRow = 0; indRow < SequenceVect.size()  ; ++indRow )
+         for ( int indCol = 0; indCol <SequenceVect[indRow].size() ; ++indCol )
+         {
+               CurrentGUIMatrix->Colorize(indRow, SequenceVect[indRow][indCol]) ;
+               qDebug()<< indRow <<" - " << SequenceVect[indRow][indCol] ;
+         }
+
 }
 
 /* we need to realize slots for adding and removing QListWidget elements

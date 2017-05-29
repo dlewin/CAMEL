@@ -7,5 +7,6 @@
         <file alias="colors">Images/Color-picker-icon.png</file>
         <file alias="loadconfig">Images/LoadFile.png</file>
         <file alias="saveconfig">Images/saveFile.png</file>
+        <file alias="runsequence">Images/play.png</file>
     </qresource>
 </RCC>
