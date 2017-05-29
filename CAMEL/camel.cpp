@@ -51,7 +51,7 @@ bool Camel::LoadConfig()
 {
 
     QString InifileName = QFileDialog::getOpenFileName(this,
-        tr("Open Matrix configuration"), "", tr("Matrix Config Files (*.mtx, *.*)"));
+        tr("Open Matrix configuration"), "", tr("Matrix Config Files (*.mtx);;All Files (*)") );
 
     if ( InifileName.isEmpty() )        // Checks if the ini file exists
     {
