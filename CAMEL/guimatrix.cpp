@@ -167,6 +167,14 @@ void GuiMatrix::Fill(QRgb BtnColorValue)
 
     for (auto iter: BtnsList )
         iter->setStyleSheet(ColorString)      ;
+
+    for (auto &coliter: GUIMtx_BtnColorsArray)
+        coliter= BtnColorValue ;
+
+    for (auto &coliter: GUIMtx_BtnColorsArray)
+        qDebug() << "coliter" << coliter ;
+
+
 }
 
 
