@@ -252,19 +252,10 @@ void Camel::CreateDock()
 
 void Camel::PlayingSequence()
 {
-
-//     for (int ind=0; ind< SequenceVect.size(); ind++ )
-//     {
-//        CurrentGUIMatrix->Colorize( SequenceVect[ind]);
-//        qDebug() << "play no " <<  ind ;
-//     }
-
-     for ( int indRow = 0; indRow < SequenceVect.size()  ; ++indRow )
-         for ( int indCol = 0; indCol <SequenceVect[indRow].size() ; ++indCol )
-         {
-               CurrentGUIMatrix->Colorize(indRow, SequenceVect[indRow][indCol]) ;
-         }
-
+    for (auto &iter : SequenceVect)
+     {
+        CurrentGUIMatrix->Colorize( iter );
+     }
 }
 
 void Camel::FillMatrix()
@@ -409,8 +400,6 @@ int Camel::Wizard()
     }
     return -1 ;
 }
-
-
 
 // Save all the patterns in the 2D Vector into the Sequence binary file
 
