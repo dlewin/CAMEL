@@ -11,6 +11,8 @@ private:
     QTcpSocket* MainSocket ;
 public:
     explicit NetSender(QObject *parent = 0);
+    uint CreateConnection(QString address, quint16 port) ;
+    uint SendData(QString DataToSend) ;
 
 signals:
 
