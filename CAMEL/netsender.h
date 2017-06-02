@@ -12,7 +12,7 @@ private:
 public:
     explicit NetSender(QObject *parent = 0);
     uint CreateConnection(QString address, quint16 port) ;
-    uint SendData(QString DataToSend) ;
+    uint SendData(QVector<QRgb> &PaternVect);
 
 signals:
 
