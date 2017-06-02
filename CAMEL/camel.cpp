@@ -12,8 +12,6 @@
 #define EMPTY_SEQUENCE          -11
 
 
-///NOTE : For the network sender = the code is in MyButtonGroup.Send
-
 Camel::Camel(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Camel)
