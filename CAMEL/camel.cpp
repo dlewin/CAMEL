@@ -189,6 +189,8 @@ void Camel::CreateDock()
     QPixmap runsequence(":/runsequence");
     QPixmap clearmatrix(":/clearmatrix");
     QPixmap fillmatrix(":/fillmatrix");
+    QPixmap timeraction(":/timeraction");
+
 
     ///NOTE For MVD List, check example:
     /// http://doc.qt.io/qt-5/qtwidgets-itemviews-puzzle-mainwindow-cpp.html
@@ -243,8 +245,26 @@ void Camel::CreateDock()
     FillMtx_Action =toolbar->addAction(QIcon(fillmatrix), "Fill all the Matrix with a color") ;
     connect(FillMtx_Action, SIGNAL(triggered()), this, SLOT(FillMatrix() ))     ;
 
+    Timer_Action =toolbar->addAction(QIcon(timeraction), "Create and add a timer") ;
+    connect(Timer_Action, SIGNAL(triggered()), this, SLOT( AddTimer() ))     ;
+
+
 }
 
+
+void Camel::AddTimer()
+{
+    QListWidget* listw = new QListWidget();
+    QImage Image1(":/timeimage");
+    QImage scaled = Image1.scaled(QSize(60,60) , Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+
+    QListWidgetItem *item1 = new QListWidgetItem("", SequenceList) ;
+    item1->setData(Qt::DecorationRole, QPixmap::fromImage(scaled));
+    SequenceList->insertItem(0, item1);
+
+
+
+}
 
 /* Visualizer : plays all patterns that are in the SequenceList  */
 

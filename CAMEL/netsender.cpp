@@ -11,15 +11,15 @@ uint NetSender::CreateConnection(QString address, quint16 port)
     return  0 ;
 }
 
-uint NetSender::SendData(QVector<QRgb> &PaternVect)
+uint NetSender::SendData(QVector<uint> &PaternVect)
 {
     if ( MainSocket->waitForConnected() )
     {
         QString DataToSend ;
         qDebug() << "Connected to Server" ;
-        foreach (QString QSValue, PaternVect)
+   //     foreach (QString QSValue, PaternVect)
         {
-            ICI
+            ///TODO ICI
         }
     }
 

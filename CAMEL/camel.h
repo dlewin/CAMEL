@@ -51,6 +51,7 @@ private:
     QAction* RunSequence_Action;
     QAction * ClearMtx_Action;
     QAction * FillMtx_Action ;
+    QAction * Timer_Action ;
     Ui::Camel *ui;
 
 
@@ -73,6 +74,7 @@ private slots:
     void PlayingSequence();
     void ClearMatrix();
     void FillMatrix() ;
+    void AddTimer() ;
 };
 
 #endif // CAMEL_H

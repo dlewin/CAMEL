@@ -10,5 +10,7 @@
         <file alias="runsequence">Images/play.png</file>
         <file alias="clearmatrix">Images/edit_clear.png</file>
         <file alias="fillmatrix">Images/fill.png</file>
+        <file alias="timeimage">Images/timer2.png</file>
+        <file alias="timeraction">Images/timer.png</file>
     </qresource>
 </RCC>
