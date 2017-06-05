@@ -254,16 +254,20 @@ void Camel::CreateDock()
 
 void Camel::AddTimer()
 {
-    QImage Image1(":/timerwidget") ;
-    QImage scaled = Image1.scaled(QSize(60,60) , Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    bool ok;
+    int TimeValue = QInputDialog::getInt(this, tr("Matrix Selection"),
+                                         tr("Select a model:"), 2, 0,999,1, &ok);
+    if (ok )
+    {
+        QImage Image1(":/timerwidget") ;
+        QImage scaled = Image1.scaled(QSize(60,60) , Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
-    QListWidgetItem *TimerItem = new QListWidgetItem("2 S", SequenceList) ;
-    TimerItem->setData(Qt::DecorationRole, QPixmap::fromImage(scaled));
+        QString TimeSring =  QString::number(TimeValue) +" S";     // Retrieve the order of the pattern TimeValue
+        QListWidgetItem *TimerItem = new QListWidgetItem(TimeSring, SequenceList) ;
+        TimerItem->setData(Qt::DecorationRole, QPixmap::fromImage(scaled));
 
-    SequenceList->insertItem(SequenceList->count(), TimerItem);
-
-
-
+        SequenceList->insertItem(SequenceList->count(), TimerItem);
+    }
 }
 
 /* Visualizer : plays all patterns that are in the SequenceList  */
@@ -311,7 +315,6 @@ void Camel::addItem()
 {
        PushGUIPattern_ToSequence();
 }
-
 
 void Camel::ClearList()
 {
