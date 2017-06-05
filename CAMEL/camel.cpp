@@ -189,7 +189,7 @@ void Camel::CreateDock()
     QPixmap runsequence(":/runsequence");
     QPixmap clearmatrix(":/clearmatrix");
     QPixmap fillmatrix(":/fillmatrix");
-    QPixmap timeraction(":/timeraction");
+    QPixmap timeraction(":/timericon");
 
 
     ///NOTE For MVD List, check example:
@@ -254,8 +254,7 @@ void Camel::CreateDock()
 
 void Camel::AddTimer()
 {
-    QListWidget* listw = new QListWidget();
-    QImage Image1(":/timeimage");
+    QImage Image1(":/timerwidget");
     QImage scaled = Image1.scaled(QSize(60,60) , Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
     QListWidgetItem *item1 = new QListWidgetItem("", SequenceList) ;
