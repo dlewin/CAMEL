@@ -254,12 +254,13 @@ void Camel::CreateDock()
 
 void Camel::AddTimer()
 {
-    QImage Image1(":/timerwidget");
+    QImage Image1(":/timerwidget") ;
     QImage scaled = Image1.scaled(QSize(60,60) , Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
-    QListWidgetItem *item1 = new QListWidgetItem("", SequenceList) ;
-    item1->setData(Qt::DecorationRole, QPixmap::fromImage(scaled));
-    SequenceList->insertItem(0, item1);
+    QListWidgetItem *TimerItem = new QListWidgetItem("2 S", SequenceList) ;
+    TimerItem->setData(Qt::DecorationRole, QPixmap::fromImage(scaled));
+
+    SequenceList->insertItem(SequenceList->count(), TimerItem);
 
 
 
