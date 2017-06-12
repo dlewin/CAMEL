@@ -12,5 +12,6 @@
         <file alias="fillmatrix">Images/fill.png</file>
         <file alias="timerwidget">Images/timer.png</file>
         <file alias="timericon">Images/timericon.png</file>
+        <file alias="connection">Images/connection.png</file>
     </qresource>
 </RCC>

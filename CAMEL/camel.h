@@ -52,6 +52,7 @@ private:
     QAction * ClearMtx_Action;
     QAction * FillMtx_Action ;
     QAction * Timer_Action ;
+    QAction * Connect_Action ;
     Ui::Camel *ui;
 
 
@@ -75,6 +76,7 @@ private slots:
     void ClearMatrix();
     void FillMatrix() ;
     void AddTimer() ;
+    void StartConnection() ;
 };
 
 #endif // CAMEL_H

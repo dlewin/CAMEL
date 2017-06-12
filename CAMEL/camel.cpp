@@ -1,5 +1,5 @@
 #include "camel.h"
-
+#include "netsender.h"
 #include "ui_camel.h"
 
 #define MAGIC_NUMBER            0xDEADFACE
@@ -190,7 +190,7 @@ void Camel::CreateDock()
     QPixmap clearmatrix(":/clearmatrix");
     QPixmap fillmatrix(":/fillmatrix");
     QPixmap timeraction(":/timericon");
-
+    QPixmap connection(":/connection");
 
     ///NOTE For MVD List, check example:
     /// http://doc.qt.io/qt-5/qtwidgets-itemviews-puzzle-mainwindow-cpp.html
@@ -248,9 +248,19 @@ void Camel::CreateDock()
     Timer_Action =toolbar->addAction(QIcon(timeraction), "Create and add a timer") ;
     connect(Timer_Action, SIGNAL(triggered()), this, SLOT( AddTimer() ))     ;
 
+    Connect_Action =toolbar->addAction(QIcon(connection), "Create and add a timer") ;
+    connect(Connect_Action, SIGNAL(triggered()), this, SLOT( StartConnection() ))     ;
 
 }
 
+void Camel::StartConnection()
+{
+ NetSender BoardSender ;
+ BoardSender.CreateConnection("192.168.0.9", 8888)  ;
+     QVector<QRgb>  testMatrix ;
+     BoardSender.SendData( testMatrix);
+
+}
 
 void Camel::AddTimer()
 {

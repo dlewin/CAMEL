@@ -10,9 +10,11 @@ class NetSender : public QObject
 private:
     QTcpSocket* MainSocket ;
 public:
+    ~NetSender() ;
     explicit NetSender(QObject *parent = 0);
     uint CreateConnection(QString address, quint16 port) ;
     uint SendData(QVector<uint> &PaternVect);
+    Test();
 
 signals:
 
