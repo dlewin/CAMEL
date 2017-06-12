@@ -25,3 +25,8 @@ uint NetSender::SendData(QVector<uint> &PaternVect)
 
     return  0 ;
 }
+
+NetSender::~NetSender()
+{
+    MainSocket->close();
+}

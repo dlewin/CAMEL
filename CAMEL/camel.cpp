@@ -255,18 +255,20 @@ void Camel::CreateDock()
 void Camel::AddTimer()
 {
     bool ok;
-    int TimeValue = QInputDialog::getInt(this, tr("Matrix Selection"),
-                                         tr("Select a model:"), 2, 0,999,1, &ok);
+    int TimeValue = QInputDialog::getInt(this, tr("Time definition"), tr("Pause time (in S) :"),
+                                         2, 0,999,1, &ok);
     if (ok )
     {
         QImage Image1(":/timerwidget") ;
         QImage scaled = Image1.scaled(QSize(60,60) , Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
-        QString TimeSring =  QString::number(TimeValue) +" S";     // Retrieve the order of the pattern TimeValue
+        QString TimeSring =  QString::number(TimeValue) +" S";
         QListWidgetItem *TimerItem = new QListWidgetItem(TimeSring, SequenceList) ;
         TimerItem->setData(Qt::DecorationRole, QPixmap::fromImage(scaled));
 
         SequenceList->insertItem(SequenceList->count(), TimerItem);
+
+        ///FIXME Ajouter timer au SequenceVect
     }
 }
 
@@ -274,6 +276,8 @@ void Camel::AddTimer()
 
 void Camel::PlayingSequence()
 {
+    ///FIXME detecter timer ici
+
     for (auto &iter : SequenceVect)
      {
         CurrentGUIMatrix->Colorize( iter );
